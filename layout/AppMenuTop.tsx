@@ -97,74 +97,47 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
             ]
         },
        
-        {
-            label: 'Reports',
-            icon: 'pi pi-chart-bar',
-            visible: checkPermission((user) => get(user, 'role') === 'admin' || get(user, 'isSuperAdmin')),
-            items: [
-                {
-                    label: 'Sales Report',
-                    icon: 'pi pi-dollar',
-                    command: () => handleNavigation('/reports/sales'),
-                    visible: checkPermission('view_sales_reports')
-                },
-                {
-                    label: 'User Analytics',
-                    icon: 'pi pi-users',
-                    command: () => handleNavigation('/reports/analytics'),
-                    visible: checkPermission('view_analytics')
-                },
-                {
-                    separator: true
-                },
-                {
-                    label: 'Export Data',
-                    icon: 'pi pi-download',
-                    items: [
-                        {
-                            label: 'CSV Export',
-                            icon: 'pi pi-file',
-                            command: () => handleNavigation('/export/csv'),
-                            visible: checkPermission('export_data')
-                        },
-                        {
-                            label: 'PDF Export',
-                            icon: 'pi pi-file-pdf',
-                            command: () => handleNavigation('/export/pdf'),
-                            visible: checkPermission('export_data')
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            label: 'Settings',
-            icon: 'pi pi-cog',
-            visible: checkPermission('manage_settings'),
-            items: [
-                {
-                    label: 'User Management',
-                    icon: 'pi pi-users',
-                    command: () => handleNavigation('/settings/users'),
-                    visible: checkPermission('manage_users')
-                },
-                {
-                    label: 'System Config',
-                    icon: 'pi pi-sliders-h',
-                    command: () => handleNavigation('/settings/system'),
-                    visible: checkPermission('manage_system')
-                },
-                {
-                    separator: true
-                },
-                {
-                    label: 'Permissions',
-                    icon: 'pi pi-shield',
-                    command: () => handleNavigation('/settings/permissions'),
-                    visible: checkPermission('manage_permissions')
-                }
-            ]
-        }
+        // {
+        //     label: 'Reports',
+        //     icon: 'pi pi-chart-bar',
+        //     visible: checkPermission((user) => get(user, 'role') === 'admin' || get(user, 'isSuperAdmin')),
+        //     items: [
+        //         {
+        //             label: 'Sales Report',
+        //             icon: 'pi pi-dollar',
+        //             command: () => handleNavigation('/'),
+        //             visible: checkPermission('view_sales_reports')
+        //         },
+        //         {
+        //             label: 'User Analytics',
+        //             icon: 'pi pi-users',
+        //             command: () => handleNavigation('/'),
+        //             visible: checkPermission('view_analytics')
+        //         },
+        //         {
+        //             separator: true
+        //         },
+        //         {
+        //             label: 'Export Data',
+        //             icon: 'pi pi-download',
+        //             items: [
+        //                 {
+        //                     label: 'CSV Export',
+        //                     icon: 'pi pi-file',
+        //                     command: () => handleNavigation('/'),
+        //                     visible: checkPermission('export_data')
+        //                 },
+        //                 {
+        //                     label: 'PDF Export',
+        //                     icon: 'pi pi-file-pdf',
+        //                     command: () => handleNavigation('/'),
+        //                     visible: checkPermission('export_data')
+        //                 }
+        //             ]
+        //         }
+        //     ]
+        // },
+       
     ];
 
     // Filter menu items based on visibility
