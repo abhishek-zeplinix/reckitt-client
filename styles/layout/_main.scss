@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: var(--surface-ground);
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+}
+
+a {
+    text-decoration: none;
+    color: #6c757d;
+}
+
+.layout-wrapper {
+    min-height: 100vh;
+}
+
+.custom-bordered-datatable .p-datatable-table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+
+.p-checkbox[data-indeterminate] .p-checkbox-box::before {
+    content: '';
+    background-color: rgb(197, 197, 197);
+    height: 5px;
+    width: 16px;
+    border-radius: 5px;
+    position: absolute;
+    // top: 4px;
+    // left: 4px;
+}

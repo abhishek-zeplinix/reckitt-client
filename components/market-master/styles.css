@@ -1,0 +1,160 @@
+:root {
+  --active-tab-color: #DF177C;
+  --inactive-tab-color: #6b7280;
+  --inactive-tab-hover-bg: #f3f4f6;
+  --inactive-tab-hover-color: #374151;
+  --header-border-color: #e5e7eb;
+  --action-button-pink-bg-hover: #fde7f3; /* Lighter pink for hover background */
+  --action-button-pink-color-hover: #c02975; /* Darker pink for hover text/icon */
+}
+
+/* Custom TabView Container */
+.custom-tabview-container {
+  width: 100%;
+  background: white;
+  border-radius: 6px; /* Kept from original, common for panel components */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Kept from original */
+}
+
+/* Tab Headers Container */
+.custom-tab-headers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--header-border-color);
+  background: white; /* Changed from light grey to white to match image */
+  border-radius: 6px 6px 0 0; /* Kept from original, matches container */
+  padding: 0 16px; /* Horizontal padding for the entire header bar */
+  min-height: 50px; /* Adjusted for potentially taller tabs */
+}
+
+/* Tab Navigation */
+.custom-tab-nav {
+  display: flex;
+  gap: 8px; /* Increased gap between tab items for better spacing */
+}
+
+/* Individual Tab Header */
+.custom-tab-header {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text if icon is present */
+  padding: 14px 16px; /* Increased vertical padding for better presence */
+  background: transparent;
+  border: none;
+  border-radius: 0; /* Tabs in image are not rounded */
+  cursor: pointer;
+  color: var(--inactive-tab-color);
+  /* font-size: 1rem; */
+  font-weight: 700;
+  /* transition: color 0.2s ease, background-color 0.2s ease; */
+  position: relative; /* For the ::after pseudo-element */
+  white-space: nowrap; /* Prevent tab text from wrapping */
+  font-size: large
+}
+
+
+
+.custom-tab-header:hover {
+  background: var(--inactive-tab-hover-bg);
+  color: var(--inactive-tab-hover-color);
+}
+
+.custom-tab-header.active {
+  color: var(--active-tab-color);
+}
+
+.custom-tab-header.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; /* Sits on top of the parent's border-bottom */
+  left: 0;
+  right: 0;
+  height: 3px; /* Thickness of the active border */
+  background: var(--active-tab-color);
+}
+
+/* Tab Actions Area */
+.custom-tab-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Action Button Styling (PrimeReact Button with 'text' prop) */
+.custom-tab-action-btn {
+  color: var(--inactive-tab-color) !important; /* Default color for action buttons */
+  padding: 6px 12px !important;
+  border-radius: 4px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease;
+}
+
+.custom-tab-action-btn:hover:not(.p-disabled) { /* :not(.p-disabled) for PrimeReact */
+  background: var(--inactive-tab-hover-bg) !important;
+  color: var(--inactive-tab-hover-color) !important;
+}
+
+/* Action Button Color Variants */
+/* Pink variant for action buttons like "Bulk Upload" */
+.custom-tab-action-btn.pink {
+  color: var(--active-tab-color) !important;
+}
+
+.custom-tab-action-btn.pink:hover:not(.p-disabled) {
+  background: var(--action-button-pink-bg-hover) !important;
+  color: var(--action-button-pink-color-hover) !important;
+}
+
+
+
+/* Tab Content */
+.custom-tab-content {
+  padding: 20px;
+  min-height: 200px; /* Or adjust as needed */
+  background: white; /* Ensure content area is white if not transparent */
+}
+
+/* Responsive Design (Kept from original, may need minor tweaks if padding changes affect layout significantly) */
+@media (max-width: 568px) {
+  .custom-tab-headers {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch; /* Stretch items in column layout */
+    min-height: auto; /* Allow height to be determined by content */
+  }
+  
+  .custom-tab-nav {
+    justify-content: center;/* Align tabs to start on smaller screens */
+    /* flex-wrap: wrap; */
+    gap: 4px; /* Reduce gap for wrapped tabs */
+  }
+  
+  .custom-tab-actions {
+    justify-content: center; /* Align actions to start */
+  }
+  
+  
+  .custom-tab-header.active::after {
+    bottom: -1px; /* Ensure border is still positioned correctly */
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-tab-nav {
+    flex-direction: column; /* Stack tabs vertically */
+    width: 100%;
+    align-items: stretch; /* Make tabs full width */
+  }
+  
+  .custom-tab-header {
+    justify-content: center; /* Center text in full-width tabs */
+    width: 100%;
+  }
+  
+  .custom-tab-actions {
+    padding-top: 12px;
+    justify-content: center; /* Center actions button */
+  }
+}
