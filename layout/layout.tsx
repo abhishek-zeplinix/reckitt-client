@@ -112,6 +112,7 @@ const Layout = ({ children }: ChildContainerProps) => {
         unbindProfileMenuOutsideClickListener();
     });
 
+    
 
     if (!user) {
         return (
@@ -128,7 +129,8 @@ const Layout = ({ children }: ChildContainerProps) => {
                 <AppTopbar ref={topbarRef} />
 
                 <div className="layout-main-container">
-                    <AppMenuTop  className=''/>
+                    <AppMenuTop className='' />
+
                     <div className="layout-main">
                         {children}
                     </div>
