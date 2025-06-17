@@ -95,40 +95,66 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                             label: 'Brand Master',
                             icon: 'pi pi-file',
                             command: () => handleNavigation('/marketing/master/brand-master'),
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/'),
+                            visible: checkPermission('export_data')
+                        },
+                        {
+                            label: 'Evaluation Type',
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/'),
+                            visible: checkPermission('export_data')
+                        },
+                        {
+                            label: 'BU Master',
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/'),
+                            visible: checkPermission('export_data')
+                        },
+                        {
+                            label: 'Year',
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/'),
+                            visible: checkPermission('export_data')
+                        },
+                        {
+                            label: 'Evaluation Period',
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/'),
                             visible: checkPermission('export_data')
                         }
                     ]
                 },
                 {
-                    label: 'Marketing Questions',
-                    icon: 'pi pi-question-circle',
-                    command: () => handleNavigation('/marketing-questions'),
-                    visible: checkPermission('manage_supply_glossary')
-                },
-                {
-                    label: 'Evaluation Name',
+                    label: 'Employee Data',
                     icon: 'pi pi-file-edit',
                     command: () => handleNavigation('/marketing-evaluation'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 {
-                    label: 'Details',
+                    label: 'Vendor Base',
                     icon: 'pi pi-info-circle',
                     command: () => handleNavigation('/marketing-details'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 {
-                    separator: true,
+                    label: 'Question Base',
+                    icon: 'pi pi-question-circle',
+                    command: () => handleNavigation('marketing/marketing-details-dev'),
                     visible: checkPermission('manage_supply_glossary')
                 },
+                // {
+                //     separator: true,
+                //     visible: checkPermission('manage_supply_glossary')
+                // },
                 {
-                    label: 'Evaluation Setup',
+                    label: 'Escalation',
                     icon: 'pi pi-wrench',
                     command: () => handleNavigation('/evaluation-setup'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 {
-                    label: 'Evaluation Progress',
+                    label: 'Analysis & Setup',
                     icon: 'pi pi-chart-line',
                     command: () => handleNavigation('/evaluation-progress'),
                     visible: checkPermission('manage_supply_glossary')

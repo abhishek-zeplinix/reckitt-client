@@ -1082,6 +1082,9 @@ div[style*="cursor: pointer"]:hover {
   color: var(--primary-color) !important;
 }
 
+ .p-submenu-list {
+    z-index: 5 !important;
+ }
 //input fields panel
 .input-fields-add-new{
   background-color: #F8FAFC;

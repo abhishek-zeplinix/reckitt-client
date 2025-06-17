@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { Dropdown } from 'primereact/dropdown';
 import { TabPanel, TabView } from 'primereact/tabview';
 import { InputText } from 'primereact/inputtext';
+import ImportExportButton from '@/components/buttons/import-export';
  
 const ACTIONS = {
     ADD: 'add',
@@ -28,6 +29,7 @@ const MarketingQuestionsTable = () => {
     const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState(false);
     const [selectedAccountForDelete, setSelectedAccountForDelete] = useState<any>(null);
     const [isQuestionsDialogVisible, setIsQuestionsDialogVisible] = useState(false);
+    const [togglePanel, setTogglePanel] = useState(false)
     const { setAlert, setLoading, isLoading, } = useAppContext();
     const router = useRouter();
     const [totalRecords, setTotalRecords] = useState(0);
@@ -188,6 +190,9 @@ const MarketingQuestionsTable = () => {
             />
         );
     };
+    const handleTogglePanel = () => {
+        setTogglePanel((prev) => !prev)
+    }
  
     const getSelectedTemplateTypes = () => {
         if (!selectedAccount?.accountMappedTemplate) return [];
@@ -268,14 +273,25 @@ const MarketingQuestionsTable = () => {
             />
         );
     };
+    
  
     return (
         <div className="">
-            <div className="flex justify-content-between items-center mb-4">
+            <div className="flex justify-content-between items-center m-4">
                 <h3>Account Details</h3>
                 <div className="flex gap-2">
+                    <ImportExportButton
+                            label='Import'
+                            icon="pi pi-upload"
+                            onClick={handleTogglePanel}
+                        />
+                        <ImportExportButton
+                            label='Export'
+                            icon="pi pi-download"
+                            onClick={handleTogglePanel}
+                        />
                     <Button
-                        label="Create Configuration"
+                        label="Add New"
                         icon="pi pi-plus"
                         onClick={handleCreateNavigation}
                     />
