@@ -23,6 +23,48 @@ const ACTIONS = {
     VIEW: 'view',
     DELETE: 'delete'
 };
+const BrandMasterList = [
+    {
+        brandName: 'Brand A',
+        bu: 'Nutrition',
+        category: 'Health Supplements',
+        brandSegment: 'Premium',
+        ifNotPowerBrandWhere: 'Local Market Only',
+        effectiveDate: '2/2/2024'
+    },
+    {
+        brandName: 'Brand B',
+        bu: 'Reckitt',
+        category: 'Cleaning',
+        brandSegment: 'Mass',
+        ifNotPowerBrandWhere: 'Online Only',
+        effectiveDate: '12/2/2025'
+    },
+    {
+        brandName: 'Brand C',
+        bu: 'Essential Home',
+        category: 'Home Essentials',
+        brandSegment: 'Value',
+        ifNotPowerBrandWhere: 'Export Only',
+        effectiveDate: '4/12/2024'
+    },
+    {
+        brandName: 'Brand D',
+        bu: 'Health',
+        category: 'OTC',
+        brandSegment: 'Premium',
+        ifNotPowerBrandWhere: 'Pharmacy Chains',
+        effectiveDate: '6/3/2024'
+    },
+    {
+        brandName: 'Brand E',
+        bu: 'Hygiene',
+        category: 'Personal Care',
+        brandSegment: 'Mass',
+        ifNotPowerBrandWhere: 'Tier 2 Cities',
+        effectiveDate: '13/2/2024'
+    }
+];
 
 function BrandMaster() {
     const [category, setCategory] = useState<any>('');
@@ -273,10 +315,11 @@ function BrandMaster() {
                             isView={false}
                             isEdit={true} // show edit button
                             isDelete={true} // show delete button
-                            data={regionList?.map((item: any) => ({
-                                regionId: item?.regionId,
-                                regionName: item?.regionName
-                            }))}
+                            // data={regionList?.map((item: any) => ({
+                            //     regionId: item?.regionId,
+                            //     regionName: item?.regionName
+                            // }))}
+                            data={BrandMasterList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             columns={[
@@ -300,42 +343,42 @@ function BrandMaster() {
                                 },
                                 {
                                     header: 'Brand Name',
-                                    field: 'regionName',
+                                    field: 'brandName',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'
                                 },
                                 {
                                     header: 'BU',
-                                    field: 'regionName',
+                                    field: 'bu',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'
                                 },
                                 {
                                     header: 'Category',
-                                    field: 'regionName',
+                                    field: 'category',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'
                                 },
                                 {
                                     header: 'Brand Segment',
-                                    field: 'regionName',
+                                    field: 'brandSegment',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'
                                 },
                                 {
                                     header: 'If not power brand where',
-                                    field: 'regionName',
+                                    field: 'ifNotPowerBrandWhere',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'
                                 },
                                 {
                                     header: 'Effective Date',
-                                    field: 'regionName',
+                                    field: 'effectiveDate',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'

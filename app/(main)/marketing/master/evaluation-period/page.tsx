@@ -23,7 +23,62 @@ const ACTIONS = {
     VIEW: 'view',
     DELETE: 'delete'
 };
-
+const EvaluationPeriodList = [
+    {
+        evaluationPeriod: 'H1 '
+    },
+    {
+        evaluationPeriod: 'H2'
+    },
+    {
+        evaluationPeriod: 'Q1'
+    },
+    {
+        evaluationPeriod: 'Q2'
+    },
+    {
+        evaluationPeriod: 'Q3'
+    },
+    {
+        evaluationPeriod: 'Q4'
+    },
+    {
+        evaluationPeriod: 'JAN'
+    },
+    {
+        evaluationPeriod: 'FEB'
+    },
+    {
+        evaluationPeriod: 'MAR'
+    },
+    {
+        evaluationPeriod: 'APR'
+    },
+    {
+        evaluationPeriod: 'MAY'
+    },
+    {
+        evaluationPeriod: 'JUN'
+    },
+    {
+        evaluationPeriod: 'JUL'
+    },
+    {
+        evaluationPeriod: 'AUG'
+    },
+    {
+        evaluationPeriod: 'SEP'
+    },
+    {
+        evaluationPeriod: 'OCT'
+    },
+    {
+        evaluationPeriod: 'NOV'
+    },
+    {
+        evaluationPeriod: 'DEC'
+    }
+];
 function EvaluationPeriod() {
     const [region, setRegion] = useState<any>('');
     const [evaluationPeriod, setEvaluationPeriod] = useState<any>('');
@@ -241,10 +296,11 @@ function EvaluationPeriod() {
                             isView={false}
                             isEdit={true} // show edit button
                             isDelete={true} // show delete button
-                            data={regionList?.map((item: any) => ({
-                                regionId: item?.regionId,
-                                regionName: item?.regionName
-                            }))}
+                            // data={regionList?.map((item: any) => ({
+                            //     regionId: item?.regionId,
+                            //     regionName: item?.regionName
+                            // }))}
+                            data={EvaluationPeriodList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             columns={[
@@ -268,7 +324,7 @@ function EvaluationPeriod() {
                                 },
                                 {
                                     header: 'Evaluation Period',
-                                    field: 'regionName',
+                                    field: 'evaluationPeriod',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'

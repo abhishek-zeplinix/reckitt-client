@@ -23,7 +23,36 @@ const ACTIONS = {
     VIEW: 'view',
     DELETE: 'delete'
 };
-
+const EvaluationTypeList = [
+    {
+        parentEvaluationType: 'Media ',
+        evaluationType: 'Media-TV'
+    },
+    {
+        parentEvaluationType: 'Creative',
+        evaluationType: 'Creative-CMM/BM'
+    },
+    {
+        parentEvaluationType: 'Media ',
+        evaluationType: 'Media-Digital'
+    },
+    {
+        parentEvaluationType: 'Brand Experience ',
+        evaluationType: 'Brand Experience'
+    },
+    {
+        parentEvaluationType: 'Content Studio ',
+        evaluationType: '-'
+    },
+    {
+        parentEvaluationType: 'Media ',
+        evaluationType: '-'
+    },
+    {
+        parentEvaluationType: 'Digital Inhouse ',
+        evaluationType: '-'
+    }
+];
 function EvaluationType() {
     const [region, setRegion] = useState<any>('');
     const [parentEvalutionType, setParentEvalutionType] = useState<any>('');
@@ -249,10 +278,11 @@ function EvaluationType() {
                             isView={false}
                             isEdit={true} // show edit button
                             isDelete={true} // show delete button
-                            data={regionList?.map((item: any) => ({
-                                regionId: item?.regionId,
-                                regionName: item?.regionName
-                            }))}
+                            // data={regionList?.map((item: any) => ({
+                            //     regionId: item?.regionId,
+                            //     regionName: item?.regionName
+                            // }))}
+                            data={EvaluationTypeList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             columns={[
