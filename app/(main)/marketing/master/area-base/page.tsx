@@ -24,11 +24,74 @@ const ACTIONS = {
     DELETE: 'delete'
 };
 
+const AreaList = [
+    {
+        country: "AR-Argentina",
+        areaScorecard: "Latin America",
+        region: "LATAM",
+        comment: "Comment 1"
+    },
+    {
+        country: "IN-India",
+        areaScorecard: "Asia",
+        region: "APAC",
+        comment: "Comment 2"
+    },
+    {
+        country: "US-United States",
+        areaScorecard: "North America",
+        region: "NA",
+        comment: "Comment 3"
+    },
+    {
+        country: "CN-China",
+        areaScorecard: "Asia",
+        region: "APAC",
+        comment: "Comment 4"
+    },
+    {
+        country: "BR-Brazil",
+        areaScorecard: "Latin America",
+        region: "LATAM",
+        comment: "Comment 5"
+    },
+    {
+        country: "GB-United Kingdom",
+        areaScorecard: "Europe",
+        region: "EMEA",
+        comment: "Comment 6"
+    },
+    {
+        country: "DE-Germany",
+        areaScorecard: "Europe",
+        region: "EMEA",
+        comment: "Comment 7"
+    },
+    {
+        country: "ZA-South Africa",
+        areaScorecard: "Africa",
+        region: "MEA",
+        comment: "Comment 8"
+    },
+    {
+        country: "JP-Japan",
+        areaScorecard: "Asia",
+        region: "APAC",
+        comment: "Comment 9"
+    },
+    {
+        country: "AU-Australia",
+        areaScorecard: "Oceania",
+        region: "APAC",
+        comment: "Comment 10"
+    }
+]
 
 function AreaBase() {
     const [region, setRegion] = useState<any>('');
     const [country, setCountry] = useState<any>('');
     const [area, setArea] = useState<any>('');
+    const [comment, setComment] = useState<any>('');
     const [togglePanel, setTogglePanel] = useState(false)
     const [showFileUploadDialog, setShowFileUploadDialog] = useState(false)
     // const [regionList, setRegionList] = useState<any>([]);
@@ -171,8 +234,11 @@ function AreaBase() {
             setSelectedRegionId(perm.regionId);
         }
         if (action === ACTIONS.EDIT) {
-            setRegion(perm.regionName);
-            setSelectedRegionId(perm.regionId);
+            setCountry(perm.country);
+            setArea(perm.areaScorecard);
+            setRegion(perm.region)
+            setComment(perm.comment)
+            // setSelectedRegionId(perm.regionId);
             setIsEditMode(true);
         }
     };
@@ -203,7 +269,7 @@ function AreaBase() {
                         <ImportExportButton
                             label='Import'
                             icon="pi pi-upload"
-                            onClick={()=>setShowFileUploadDialog(true)}
+                            onClick={() => setShowFileUploadDialog(true)}
                         />
                         <ImportExportButton
                             label='Export'
@@ -224,7 +290,7 @@ function AreaBase() {
                     <div className="flex flex-column gap-4 w-full border-1 border-round surface-border p-3 input-fields-add-new">
                         {/* Input Fields */}
                         <div className="flex flex-wrap w-full justify-content-between gap-4 ">
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 20%' }}>
                                 <label htmlFor="country">Country <span style={{ color: 'red' }}>*</span></label>
                                 <InputText
                                     id="country"
@@ -236,7 +302,7 @@ function AreaBase() {
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 20%' }}>
                                 <label htmlFor="area">Area Scorecard <span style={{ color: 'red' }}>*</span></label>
                                 <InputText
                                     id="area"
@@ -248,7 +314,7 @@ function AreaBase() {
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 20%' }}>
                                 <label htmlFor="region">Region <span style={{ color: 'red' }}>*</span></label>
                                 <InputText
                                     id="region"
@@ -259,11 +325,22 @@ function AreaBase() {
                                 />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 20%' }}>
+                                <label htmlFor="comment">Comment <span style={{ color: 'red' }}>*</span></label>
+                                <InputText
+                                    id="comment"
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                    className="w-full"
+                                    placeholder="Enter Comment"
+                                />
+                                {regionError && <small className="p-error">{regionError}</small>}
+                            </div>
                         </div>
 
                         {/* Action Buttons */}
                         <div className="flex justify-content-end gap-3 mt-3">
-                            <Button label="Cancel" className="cancle-btn-outline" />
+                            <Button label="Cancel" className="cancle-btn-outline" onClick={handleTogglePanel}/>
                             <Button label="Save" className='save-btn' />
                         </div>
                     </div>
@@ -283,21 +360,15 @@ function AreaBase() {
                             isView={false}
                             isEdit={true} // show edit button
                             isDelete={true} // show delete button
-                            data={regionList?.map((item: any) => ({
-                                regionId: item?.regionId,
-                                regionName: item?.regionName
-                            }))}
+                            // data={regionList?.map((item: any) => ({
+                            //     regionId: item?.regionId,
+                            //     regionName: item?.regionName
+                            // }))}
+                            data={AreaList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             columns={[
-                                // {
-                                //     header: 'Role ID',
-                                //     field: 'roleId',
-                                //     filter: true,
-                                //     sortable: true,
-                                //     bodyStyle: { minWidth: 150, maxWidth: 150 },
-                                //     filterPlaceholder: 'Role ID'
-                                // },
+                              
                                 {
                                     header: 'Sr. No.',
                                     body: (data: any, options: any) => {
@@ -309,12 +380,33 @@ function AreaBase() {
                                     bodyStyle: { minWidth: 50, maxWidth: 50 }
                                 },
                                 {
-                                    header: 'Region Name',
-                                    field: 'regionName',
+                                    header: 'COUNTRY',
+                                    field: 'country',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
-                                    filterPlaceholder: 'Role'
-                                }
+                                    filterPlaceholder: 'Country'
+                                },
+                                {
+                                    header: 'AREA SCORECARD',
+                                    field: 'areaScorecard',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Area Scorecard'
+                                },
+                                {
+                                    header: 'REGION',
+                                    field: 'region',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Region'
+                                },
+                                 {
+                                    header: 'COMMENT',
+                                    field: 'comment',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Comment'
+                                },
                             ]}
                             // onLoad={(params: any) => fetchData(params)}
                             onDelete={(item: any) => onRowSelect(item, 'delete')}
@@ -349,19 +441,19 @@ function AreaBase() {
             </div>
 
 
-           {showFileUploadDialog && (
+            {showFileUploadDialog && (
                 <ReusableFileUploadDialog
                     visible={showFileUploadDialog}
                     // These props would be dynamically set based on which "upload" button was clicked,
                     // or which master data type the user intends to upload.
                     header={'Upload Bulk Area List'}
                     uploadContextLabel="This is Context Label"
-                    demoFileLink= "Link"
+                    demoFileLink="Link"
                     demoFileLabel="Download sample Template"
                     apiEndpoint="/mrkt/api/mrkt/bulkuploadmaster"
                     maxFileSizeInBytes={1 * 1024 * 1024} // 1MB
                     acceptedFileExtensions={['xlsx', 'xls', 'xlsm']}
-                    
+
                     onHideDialog={() => setShowFileUploadDialog(false)}
                     // onUploadSuccess={handleDialogUploadSuccess}
                     onUploadSuccess={() => setShowFileUploadDialog(false)}
