@@ -27,7 +27,7 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
         setMobileMenuVisible(false);
     };
 
-    // Check if user has permission for menu item
+    // check if user has permission for menu item
     const checkPermission = (permissions: string | string[] | ((user: any) => boolean)) => {
         if (typeof permissions === 'function') {
             return permissions(user);
@@ -59,6 +59,24 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                     icon: 'pi pi-cog',
                     command: () => handleNavigation('/marketing-master'),
                     visible: checkPermission('manage_faq')
+                },
+                {
+                    label: 'Master',
+                    icon: 'pi pi-download',
+                    items: [
+                        {
+                            label: 'Area Base',
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/marketing/master/area-base'),
+                            visible: checkPermission('export_data')
+                        },
+                        {
+                            label: 'Review Type',
+                            icon: 'pi pi-file-pdf',
+                            command: () => handleNavigation('/'),
+                            visible: checkPermission('export_data')
+                        }
+                    ]
                 },
                 {
                     label: 'Marketing Questions',

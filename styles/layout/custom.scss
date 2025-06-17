@@ -951,74 +951,6 @@ div[style*="cursor: pointer"]:hover {
 
 
 
-// //marketing layout tabview 
-// .custom-tabview .p-tabview-nav {
-//   border-bottom: 1px solid #dee2e6;
-//   /* Match PrimeReact's default border */
-// }
-
-// .custom-tabview .p-tabview-nav li .p-tabview-nav-link {
-//   border-bottom-width: 0;
-//   /* Remove default bottom border on inactive tabs */
-//   color: #495057;
-//   /* Default text color for inactive tabs */
-//   font-weight: normal;
-//   padding-top: 0.75rem;
-//   padding-bottom: 0.75rem;
-//   padding-left: 0.25rem;
-//   /* Slightly less padding for a tighter look */
-//   padding-right: 0.25rem;
-//   margin-right: 1.2rem;
-//   /* Space between tabs */
-//   transition: color 0.2s, border-color 0.2s;
-// }
-
-// .custom-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
-//   box-shadow: none;
-//   /* Remove focus ring for cleaner look if desired */
-// }
-
-// .custom-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-//   background-color: transparent;
-//   /* Ensure no background on active tab header */
-//   border-color: var(--primary-color);
-//   /* Your pink color for the underline */
-//   border-bottom-width: 4px;
-//   /* Make the underline thicker */
-//   color: var(--primary-color);
-//   /* Pink color for active tab text */
-//   font-weight: 600;
-//   /* Bolder text for active tab */
-// }
-
-// .custom-tabview .p-tabview-nav li .p-tabview-nav-link:hover {
-//   background-color: transparent;
-//   border-color: var(--primary-color);
-//   /* Pink color on hover */
-//   color: var(--primary-color);
-// }
-
-// .custom-tabview .p-tabview-panels {
-//   padding: 1rem 0 0 0;
-//   /* Adjust padding for the content area below tabs */
-// }
-
-// .custom-tabview .p-highlight {
-//   box-shadow: none;
-// }
-
-// .custom-tabview .p-tabview-nav .p-tabview-ink-bar {
-//   display: none !important;
-// }
-
-// .custom-tabview .p-tabview-title {
-//   font-weight: 600;
-//   font-size: large;
-// }
-
-
-
-
 //master sub tabView
 .master-sub-tabview .p-tabview-nav {
   background-color: #ffff;
@@ -1030,7 +962,7 @@ div[style*="cursor: pointer"]:hover {
   gap: 2;
   /* Or 'flex' if you want it to take available width */
   margin: 0 0 1.5rem 0;
-  padding: 0; 
+  padding: 0;
   // flex-wrap: wrap; 
 }
 
@@ -1067,20 +999,20 @@ div[style*="cursor: pointer"]:hover {
   /* Content components might have their own padding */
 }
 
-.master-sub-tabview .p-tabview-title{
+.master-sub-tabview .p-tabview-title {
   font-weight: 400;
   font-size: small;
 }
 
 
-.master-sub-tabview .p-highlight{
+.master-sub-tabview .p-highlight {
   box-shadow: none;
 }
 
 
 /* Custom Tooltip container */
 .p-tooltip {
-  background: transparent !important; 
+  background: transparent !important;
   padding: 8px 12px !important;
   border-radius: 8px !important;
   font-size: 10px !important;
@@ -1099,7 +1031,8 @@ div[style*="cursor: pointer"]:hover {
 }
 
 .p-tooltip .p-tooltip-text {
-  background-color: var(--primary-color) !important; /* Your desired background */
+  background-color: var(--primary-color) !important;
+  /* Your desired background */
   color: #ffffff !important;
   padding: 8px 12px !important;
   border-radius: 6px !important;
@@ -1110,10 +1043,10 @@ div[style*="cursor: pointer"]:hover {
 
 
 .custom-panel-viewaccounts .p-panel-content {
-  background-color:#F8FAFC;
+  background-color: #F8FAFC;
 }
 
-.custom-panel-viewaccounts.p-panel .p-panel-header{
+.custom-panel-viewaccounts.p-panel .p-panel-header {
   border: 1px 1px 0px 1px solid #E5E7EB !important;
   border-bottom: none !important;
 }
@@ -1121,9 +1054,9 @@ div[style*="cursor: pointer"]:hover {
 
 //topmenu highlight on select
 .active-menu-item {
-    // background-color: var(--primary-color) !important;
-    background-color: #e9f2fb;
-    // color: white !important;
+  // background-color: var(--primary-color) !important;
+  background-color: #e9f2fb;
+  // color: white !important;
 }
 
 // .active-menu-item .p-menuitem-icon {
@@ -1131,16 +1064,49 @@ div[style*="cursor: pointer"]:hover {
 // }
 
 .active-submenu-item {
-    background-color: rgba(0, 0, 0, 0.1) !important;
-    font-weight: bold !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  font-weight: bold !important;
 }
 
 .p-menu .p-menuitem-content {
-    font-size: 10px !important;
-    background-color: red !important;
+  font-size: 10px !important;
+  background-color: red !important;
 }
 
 //apptopmenu 
-.p-submenu-list .p-menuitem .p-menuitem-link{
+.p-submenu-list .p-menuitem .p-menuitem-link {
   font-weight: 400;
+}
+
+.p-button.p-button-outlined {
+  color: var(--primary-color) !important;
+}
+
+//input fields panel
+.input-fields-add-new{
+  background-color: #F8FAFC;
+}
+
+//import export black btn
+.custom-black-text .p-button-label {
+    color: #121212 !important;
+    font-weight: 700 !important;
+}
+
+.custom-black-text.p-button.p-button-outlined{
+  color: #121212 !important;
+  font-weight: 700 !important;
+}
+
+.save-btn{
+  background-color: #415A6C !important;
+  color: white;
+  border: none;
+}
+
+.cancle-btn-outline{
+  background-color: transparent;
+  border: 1px solid #415A6C;
+  color: #415A6C;
+  font-weight: bold !important;
 }
