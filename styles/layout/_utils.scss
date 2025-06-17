@@ -6,7 +6,8 @@
 }
 
 .card {
-    background: var(--surface-card);
+    // background: var(--surface-card);
+    background-color: #E7E9EE;
     border: 1px solid var(--surface-border);
     padding: 2rem;
     margin-bottom: 2rem;
@@ -30,4 +31,8 @@
     background-color: white;
     color: #333333;
     border-color: #333333;
+}
+
+.inner{
+    background-color: #ffff;
 }
