@@ -553,6 +553,7 @@ function EmployeeData() {
                             data={EmployeeList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
                             columns={[
                                 {
                                     header: 'Sr. No.',

@@ -401,6 +401,7 @@ function AreaBase() {
                             data={AreaList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
                             columns={[
 
                                 {

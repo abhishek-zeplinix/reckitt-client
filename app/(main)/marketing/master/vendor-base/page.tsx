@@ -531,6 +531,7 @@ function AreaBase() {
                             data={vendorList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
                             columns={[
 
                                 {
