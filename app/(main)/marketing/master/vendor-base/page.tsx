@@ -14,6 +14,7 @@ import { reviewTypeSchema } from '@/utils/validationSchemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog';
+import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import React, { useContext, useState } from 'react'
 
@@ -26,9 +27,16 @@ const ACTIONS = {
 
 
 function AreaBase() {
-    const [region, setRegion] = useState<any>('');
-    const [country, setCountry] = useState<any>('');
-    const [area, setArea] = useState<any>('');
+    const [region, setRegion] = useState<string>('');
+    const [vendorCode, setVendorCode] = useState<string>('');
+    const [area, setArea] = useState<string>('');
+    const [country, setCountry] = useState<string>('');
+    const [vendorName, setVendorName] = useState<string>('');
+    const [defaultParentVendor, setDefaultParentVendor] = useState<string>('');
+    const [vendorNameGiven, setVendorNameGiven] = useState<string>('');
+    const [company, setCompany] = useState<string>('');
+    const [bu, setBU] = useState<string>('');
+
     const [togglePanel, setTogglePanel] = useState(false)
     const [showFileUploadDialog, setShowFileUploadDialog] = useState(false)
     // const [regionList, setRegionList] = useState<any>([]);
@@ -41,6 +49,8 @@ function AreaBase() {
     const { setAlert, setLoading, isLoading } = useAppContext();
     const { error: regionError, validate: validateRegion, resetError } = useZodValidation(reviewTypeSchema);
     const queryClient: any = useQueryClient();
+
+
     const [filters, setFilters] = useState({});
     const [searchText, setSearchText] = useState('');
 
@@ -193,7 +203,7 @@ function AreaBase() {
                 <div className="flex flex-wrap justify-content-between align-items-center mb-4">
                     {/* Title + Breadcrumb Block */}
                     <div className="flex flex-column">
-                        <h2 className="m-0">Area Base List</h2>
+                        <h2 className="m-0">Vendor Base</h2>
                         <p className="text-sm text-gray-600 mt-1"><Breadcrumbs /></p>
                     </div>
 
@@ -203,7 +213,7 @@ function AreaBase() {
                         <ImportExportButton
                             label='Import'
                             icon="pi pi-upload"
-                            onClick={()=>setShowFileUploadDialog(true)}
+                            onClick={() => setShowFileUploadDialog(true)}
                         />
                         <ImportExportButton
                             label='Export'
@@ -222,8 +232,38 @@ function AreaBase() {
                 {
                     togglePanel &&
                     <div className="flex flex-column gap-4 w-full border-1 border-round surface-border p-3 input-fields-add-new">
+
                         {/* Input Fields */}
                         <div className="flex flex-wrap w-full justify-content-between gap-4 ">
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                                <label htmlFor="country">Vendor Code<span style={{ color: 'red' }}>*</span></label>
+                                <InputText
+                                    id="vendor-code"
+                                    value={vendorCode}
+                                    onChange={(e) => setVendorCode(e.target.value)}
+                                    className="w-full"
+                                    placeholder="Enter Vendor Code"
+                                />
+                                {regionError && <small className="p-error">{regionError}</small>}
+                            </div>
+
+
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                                <label htmlFor="BU">BU <span style={{ color: 'red' }}>*</span></label>
+                                <Dropdown
+                                    id="bu"
+                                    // value={templateTypeId}
+                                    // options={templateTypeOptions}
+                                    onChange={(e) => setBU(e.value)}
+                                    placeholder="Select BU"
+                                    className="w-full sm:w-30rem"
+                                    filter
+                                    showClear
+                                    // disabled={loading || !reviewTypeId}
+                                />
+                               
+                            </div>
+
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
                                 <label htmlFor="country">Country <span style={{ color: 'red' }}>*</span></label>
                                 <InputText
@@ -237,28 +277,53 @@ function AreaBase() {
                             </div>
 
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="area">Area Scorecard <span style={{ color: 'red' }}>*</span></label>
+                                <label htmlFor="country">Vendor Name<span style={{ color: 'red' }}>*</span></label>
                                 <InputText
-                                    id="area"
-                                    value={area}
-                                    onChange={(e) => setArea(e.target.value)}
+                                    id="vendor-name"
+                                    value={vendorName}
+                                    onChange={(e) => setVendorName(e.target.value)}
                                     className="w-full"
-                                    placeholder="Enter Area"
+                                    placeholder="Enter Vendor Name"
                                 />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="region">Region <span style={{ color: 'red' }}>*</span></label>
+                                <label htmlFor="country">Default Parent Vendor<span style={{ color: 'red' }}>*</span></label>
                                 <InputText
-                                    id="region"
-                                    value={region}
-                                    onChange={(e) => setRegion(e.target.value)}
+                                    id="default-parent"
+                                    value={defaultParentVendor}
+                                    onChange={(e) => setDefaultParentVendor(e.target.value)}
                                     className="w-full"
-                                    placeholder="Enter Region"
+                                    placeholder="Enter Default Parent Vendor"
                                 />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
+
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                                <label htmlFor="country">Vendor Name Given<span style={{ color: 'red' }}>*</span></label>
+                                <InputText
+                                    id="vendor-name-given"
+                                    value={vendorNameGiven}
+                                    onChange={(e) => setVendorNameGiven(e.target.value)}
+                                    className="w-full"
+                                    placeholder="Enter Vendor Name Given"
+                                />
+                                {regionError && <small className="p-error">{regionError}</small>}
+                            </div>
+
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                                <label htmlFor="country">Company</label>
+                                <InputText
+                                    id="comapany"
+                                    value={company}
+                                    onChange={(e) => setCompany(e.target.value)}
+                                    className="w-full"
+                                    placeholder="Enter Company"
+                                />
+                                {regionError && <small className="p-error">{regionError}</small>}
+                            </div>
+
                         </div>
 
                         {/* Action Buttons */}
@@ -268,8 +333,6 @@ function AreaBase() {
                         </div>
                     </div>
                 }
-
-
 
                 <div className="mt-4">
                     {isFetchingRegions ? (
@@ -349,19 +412,19 @@ function AreaBase() {
             </div>
 
 
-           {showFileUploadDialog && (
+            {showFileUploadDialog && (
                 <ReusableFileUploadDialog
                     visible={showFileUploadDialog}
                     // These props would be dynamically set based on which "upload" button was clicked,
                     // or which master data type the user intends to upload.
-                    header={'Upload Bulk Area List'}
+                    header={'Upload Vendors List'}
                     uploadContextLabel="This is Context Label"
-                    demoFileLink= "Link"
-                    demoFileLabel="Download sample Template"
+                    demoFileLink="https://aistudio.google.com/"
+                    demoFileLabel="Download Vendors Sample Template"
                     apiEndpoint="/mrkt/api/mrkt/bulkuploadmaster"
                     maxFileSizeInBytes={1 * 1024 * 1024} // 1MB
                     acceptedFileExtensions={['xlsx', 'xls', 'xlsm']}
-                    
+
                     onHideDialog={() => setShowFileUploadDialog(false)}
                     // onUploadSuccess={handleDialogUploadSuccess}
                     onUploadSuccess={() => setShowFileUploadDialog(false)}
