@@ -95,32 +95,6 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                             label: 'Brand Master',
                             icon: 'pi pi-file',
                             command: () => handleNavigation('/marketing/master/brand-master'),
-                            icon: 'pi pi-file',
-                            command: () => handleNavigation('/'),
-                            visible: checkPermission('export_data')
-                        },
-                        {
-                            label: 'Evaluation Type',
-                            icon: 'pi pi-file',
-                            command: () => handleNavigation('/'),
-                            visible: checkPermission('export_data')
-                        },
-                        {
-                            label: 'BU Master',
-                            icon: 'pi pi-file',
-                            command: () => handleNavigation('/'),
-                            visible: checkPermission('export_data')
-                        },
-                        {
-                            label: 'Year',
-                            icon: 'pi pi-file',
-                            command: () => handleNavigation('/'),
-                            visible: checkPermission('export_data')
-                        },
-                        {
-                            label: 'Evaluation Period',
-                            icon: 'pi pi-file',
-                            command: () => handleNavigation('/'),
                             visible: checkPermission('export_data')
                         }
                     ]

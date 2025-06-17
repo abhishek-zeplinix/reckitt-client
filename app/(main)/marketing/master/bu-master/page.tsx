@@ -25,7 +25,33 @@ const ACTIONS = {
     VIEW: 'view',
     DELETE: 'delete'
 };
-
+const BuMasterList = [
+    {
+        bu: 'Nutrition ',
+        buNew: '-',
+        effectiveDate: '2/2/2024'
+    },
+    {
+        bu: 'Reckitt',
+        buNew: '-',
+        effectiveDate: '12/2/2025'
+    },
+    {
+        bu: 'Essential Home',
+        buNew: '-',
+        effectiveDate: '4/12/2024'
+    },
+    {
+        bu: 'Health',
+        buNew: '-',
+        effectiveDate: '6/3/2024'
+    },
+    {
+        bu: 'Hygiene',
+        buNew: '-',
+        effectiveDate: '13/2/2024'
+    }
+];
 function BUMaster() {
     const [effectiveDate, setEffectiveDate] = useState<any>('');
     const [buNew, setBuNew] = useState<any>('');
@@ -259,10 +285,11 @@ function BUMaster() {
                             isView={false}
                             isEdit={true} // show edit button
                             isDelete={true} // show delete button
-                            data={regionList?.map((item: any) => ({
-                                regionId: item?.regionId,
-                                regionName: item?.regionName
-                            }))}
+                            // data={regionList?.map((item: any) => ({
+                            //     regionId: item?.regionId,
+                            //     regionName: item?.regionName
+                            // }))}
+                            data={BuMasterList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             columns={[
@@ -286,21 +313,21 @@ function BUMaster() {
                                 },
                                 {
                                     header: 'BU',
-                                    field: 'regionName',
+                                    field: 'bu',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'
                                 },
                                 {
                                     header: 'BU New',
-                                    field: 'regionName',
+                                    field: 'buNew',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'
                                 },
                                 {
                                     header: 'Effective Date',
-                                    field: 'regionName',
+                                    field: 'effectiveDate',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'

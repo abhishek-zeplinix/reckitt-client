@@ -28,7 +28,20 @@ const ACTIONS = {
     VIEW: 'view',
     DELETE: 'delete'
 };
-
+const ReviewTypeList = [
+    {
+        reviewType: 'Reckitt To Agency '
+    },
+    {
+        reviewType: 'Agency To Reckitt'
+    },
+    {
+        reviewType: 'Reckitt Self To Agency '
+    },
+    {
+        reviewType: 'Agency Self To Reckitt '
+    }
+];
 function ReviewType() {
     const [region, setRegion] = useState<any>('');
     const [reviewType, setReviewType] = useState<any>('');
@@ -382,10 +395,11 @@ function ReviewType() {
                             isView={false}
                             isEdit={true} // show edit button
                             isDelete={true} // show delete button
-                            data={regionList?.map((item: any) => ({
-                                regionId: item?.regionId,
-                                regionName: item?.regionName
-                            }))}
+                            // data={regionList?.map((item: any) => ({
+                            //     regionId: item?.regionId,
+                            //     regionName: item?.regionName
+                            // }))}
+                            data={ReviewTypeList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             columns={[
