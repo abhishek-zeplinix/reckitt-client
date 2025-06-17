@@ -44,11 +44,8 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
         return hasPermission(permissions);
     };
 
- 
-
     // menu items configuration with permissions
     const menuItems: MenuItem[] = [
-
         {
             label: 'Marketing',
             icon: 'pi pi-megaphone',
@@ -72,49 +69,73 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                         },
                         {
                             label: 'Review Type',
-                            icon: 'pi pi-file-pdf',
-                            command: () => handleNavigation('/'),
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/marketing/master/review-type'),
+                            visible: checkPermission('export_data')
+                        },
+                        {
+                            label: 'Evaluation Type',
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/marketing/master/evaluation-type'),
+                            visible: checkPermission('export_data')
+                        },
+                        {
+                            label: 'BU Master',
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/marketing/master/bu-master'),
+                            visible: checkPermission('export_data')
+                        },
+                        {
+                            label: 'Evaluation Period',
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/marketing/master/evaluation-period'),
+                            visible: checkPermission('export_data')
+                        },
+                        {
+                            label: 'Brand Master',
+                            icon: 'pi pi-file',
+                            command: () => handleNavigation('/marketing/master/brand-master'),
                             visible: checkPermission('export_data')
                         }
                     ]
                 },
                 {
-                    label: 'Marketing Questions',
-                    icon: 'pi pi-question-circle',
-                    command: () => handleNavigation('/marketing-questions'),
-                    visible: checkPermission('manage_supply_glossary')
-                },
-                {
-                    label: 'Evaluation Name',
+                    label: 'Employee Data',
                     icon: 'pi pi-file-edit',
                     command: () => handleNavigation('/marketing-evaluation'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 {
-                    label: 'Details',
+                    label: 'Vendor Base',
                     icon: 'pi pi-info-circle',
                     command: () => handleNavigation('/marketing-details'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 {
-                    separator: true,
+                    label: 'Question Base',
+                    icon: 'pi pi-question-circle',
+                    command: () => handleNavigation('marketing/marketing-details-dev'),
                     visible: checkPermission('manage_supply_glossary')
                 },
+                // {
+                //     separator: true,
+                //     visible: checkPermission('manage_supply_glossary')
+                // },
                 {
-                    label: 'Evaluation Setup',
+                    label: 'Escalation',
                     icon: 'pi pi-wrench',
                     command: () => handleNavigation('/evaluation-setup'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 {
-                    label: 'Evaluation Progress',
+                    label: 'Analysis & Setup',
                     icon: 'pi pi-chart-line',
                     command: () => handleNavigation('/evaluation-progress'),
                     visible: checkPermission('manage_supply_glossary')
                 }
             ]
-        },
-       
+        }
+
         // {
         //     label: 'Reports',
         //     icon: 'pi pi-chart-bar',
@@ -155,18 +176,17 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
         //         }
         //     ]
         // },
-       
     ];
 
     // Filter menu items based on visibility
     const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
         return items
-            .filter(item => item.visible !== false)
-            .map(item => ({
+            .filter((item) => item.visible !== false)
+            .map((item) => ({
                 ...item,
                 items: item.items ? filterMenuItems(item.items as any) : undefined
             }))
-            .filter(item => !item.items || item.items.length > 0);
+            .filter((item) => !item.items || item.items.length > 0);
     };
 
     const filteredMenuItems = filterMenuItems(menuItems);
@@ -176,7 +196,7 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
         const flattenItems = (items: MenuItem[], level = 0): MenuItem[] => {
             const result: MenuItem[] = [];
 
-            items.forEach(item => {
+            items.forEach((item) => {
                 if (item.visible === false) return;
 
                 if (item.separator) {
@@ -204,7 +224,6 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
         return flattenItems(filteredMenuItems);
     };
 
-
     const isActive = (url: string) => {
         return pathname === url || (url !== '/' && pathname.startsWith(url));
     };
@@ -221,9 +240,7 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
             {/* User info */}
             <div className="flex align-items-center gap-2 mr-3">
                 <i className="pi pi-user text-600"></i>
-                <span className="text-sm text-600 hidden md:inline">
-                    {get(user, 'name', 'User')}
-                </span>
+                <span className="text-sm text-600 hidden md:inline">{get(user, 'name', 'User')}</span>
             </div>
 
             {/* Mobile menu toggle */}
@@ -238,13 +255,7 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
             />
 
             {/* Mobile menu */}
-            <Menu
-                ref={mobileMenuRef}
-                model={getMobileMenuItems()}
-                popup
-                className="md:hidden"
-                style={{ width: '250px' }}
-            />
+            <Menu ref={mobileMenuRef} model={getMobileMenuItems()} popup className="md:hidden" style={{ width: '250px' }} />
         </div>
     );
 
@@ -259,8 +270,6 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                     padding: '0.75rem 1rem',
                     borderRadius: '0'
                 }}
-                
-                
             />
         </div>
     );
