@@ -14,6 +14,7 @@ import { reviewTypeSchema } from '@/utils/validationSchemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import React, { useContext, useState } from 'react';
 
@@ -234,7 +235,7 @@ function BrandMaster() {
     return (
         <div className="card">
             <div className="inner p-4 border-1 surface-border border-round">
-                <div className="flex flex-wrap justify-content-between align-items-center mb-4">
+                <div className="flex flex-wrap justify-content-between align-items-center mb-2">
                     {/* Title + Breadcrumb Block */}
                     <div className="flex flex-column">
                         <h2 className="m-0">Brand Master</h2>
@@ -302,8 +303,22 @@ function BrandMaster() {
                         </div>
                     </div>
                 )}
+                <div className="flex gap-2 justify-content-between align-items-center mt-2">
+                    <div className="flex gap-2">
+                        <Dropdown placeholder="Filter" className="w-10rem" showClear />
+                        <Dropdown placeholder="Filter" className="w-10rem" showClear />
 
-                <div className="mt-4">
+                        <Dropdown placeholder="Filter" className="w-10rem" showClear />
+                    </div>
+
+                    <div className="flex">
+                        <span className="p-input-icon-left">
+                            <i className="pi pi-search" />
+                            <InputText value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search" className="w-full" />
+                        </span>
+                    </div>
+                </div>
+                <div className="mt-2">
                     {isFetchingRegions ? (
                         <TableSkeletonSimple columns={2} rows={5} />
                     ) : (
