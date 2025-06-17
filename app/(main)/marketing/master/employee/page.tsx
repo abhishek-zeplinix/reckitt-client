@@ -50,7 +50,7 @@ const EmployeeList = [
         userGroup: "Procurement/Indirect/Global/marketing",
         scorecardRole: "Admin",
         department: "Procurement",
-        status: "Active", 
+        status: "Active",
         firstName: "Employee",
         lastName: "Employee jr.",
         email: "employee1@reckitt.com",
@@ -104,7 +104,7 @@ const EmployeeList = [
         userGroup: "Procurement/Indirect/Global/marketing",
         scorecardRole: "Admin",
         department: "Procurement",
-        status: "Active", 
+        status: "Active",
         firstName: "Employee",
         lastName: "Employee jr.",
         email: "employee1@reckitt.com",
@@ -117,7 +117,7 @@ const EmployeeList = [
         division: "Marketing",
         seniority: "LT"
     },
-     {
+    {
         assessorGroup: "Agency",
         userGroup: "Procurement/Indirect/Global/marketing",
         scorecardRole: "Evaluator",
@@ -348,7 +348,7 @@ function EmployeeData() {
     return (
         <div className='card'>
             <div className='inner p-4 border-1 surface-border border-round'>
-                <div className="flex flex-wrap justify-content-between align-items-center mb-4">
+                <div className="flex flex-wrap justify-content-between align-items-center mb-2">
                     {/* Title + Breadcrumb Block */}
                     <div className="flex flex-column">
                         <h2 className="m-0">Employee Data</h2>
@@ -379,7 +379,7 @@ function EmployeeData() {
 
                 {
                     togglePanel &&
-                    <div className="flex flex-column gap-4 w-full border-1 border-round surface-border p-3 input-fields-add-new">
+                    <div className="relative  flex flex-column gap-4 w-full border-1 border-round surface-border p-3 input-fields-add-new">
 
                         {/* Input Fields */}
                         <div className="flex flex-wrap w-full justify-content-between gap-4 ">
@@ -503,7 +503,42 @@ function EmployeeData() {
                     </div>
                 }
 
-                <div className="mt-4">
+                <div className="flex gap-2 justify-content-between align-items-center mt-3">
+
+                    <div className='flex gap-2'>
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+                    </div>
+
+                    <div className='flex'>
+                        <span className="p-input-icon-left">
+                            <i className="pi pi-search" />
+                            <InputText
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
+                                placeholder="Search"
+                                className="w-full"
+                            />
+                        </span>
+                    </div>
+
+                </div>
+
+                <div className="mt-3">
                     {isFetchingRegions ? (
                         <TableSkeletonSimple columns={2} rows={5} />
                     ) : (
@@ -540,7 +575,7 @@ function EmployeeData() {
                                     header: 'User Group',
                                     field: 'userGroup',
                                     filter: true,
-                                    bodyStyle: { minWidth: 150, maxWidth: 180, overflowWrap: 'break-word'},
+                                    bodyStyle: { minWidth: 150, maxWidth: 180, overflowWrap: 'break-word' },
                                     filterPlaceholder: 'User Group'
                                 },
                                 {

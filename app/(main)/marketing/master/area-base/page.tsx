@@ -14,6 +14,7 @@ import { reviewTypeSchema } from '@/utils/validationSchemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog';
+import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import React, { useContext, useState } from 'react'
 
@@ -256,7 +257,7 @@ function AreaBase() {
     return (
         <div className='card'>
             <div className='inner p-4 border-1 surface-border border-round'>
-                <div className="flex flex-wrap justify-content-between align-items-center mb-4">
+                <div className="flex flex-wrap justify-content-between align-items-center mb-2">
                     {/* Title + Breadcrumb Block */}
                     <div className="flex flex-column">
                         <h2 className="m-0">Area Base List</h2>
@@ -340,15 +341,48 @@ function AreaBase() {
 
                         {/* Action Buttons */}
                         <div className="flex justify-content-end gap-3 mt-3">
-                            <Button label="Cancel" className="cancle-btn-outline" onClick={handleTogglePanel}/>
+                            <Button label="Cancel" className="cancle-btn-outline" onClick={handleTogglePanel} />
                             <Button label="Save" className='save-btn' />
                         </div>
                     </div>
                 }
 
+                <div className="flex gap-2 justify-content-between align-items-center mt-3">
 
+                    <div className='flex gap-2'>
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
 
-                <div className="mt-4">
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+                    </div>
+
+                    <div className='flex'>
+                        <span className="p-input-icon-left">
+                            <i className="pi pi-search" />
+                            <InputText
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
+                                placeholder="Search"
+                                className="w-full"
+                            />
+                        </span>
+                    </div>
+
+                </div>
+
+                <div className="mt-3">
                     {isFetchingRegions ? (
                         <TableSkeletonSimple columns={2} rows={5} />
                     ) : (
@@ -368,7 +402,7 @@ function AreaBase() {
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             columns={[
-                              
+
                                 {
                                     header: 'Sr. No.',
                                     body: (data: any, options: any) => {
@@ -400,7 +434,7 @@ function AreaBase() {
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Region'
                                 },
-                                 {
+                                {
                                     header: 'COMMENT',
                                     field: 'comment',
                                     filter: true,
