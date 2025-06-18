@@ -26,73 +26,104 @@ const ACTIONS = {
 };
 
 const AreaList = [
-    {
-        country: "AR-Argentina",
-        areaScorecard: "Latin America",
-        region: "LATAM",
-        comment: "Comment 1"
-    },
-    {
-        country: "IN-India",
-        areaScorecard: "Asia",
-        region: "APAC",
-        comment: "Comment 2"
-    },
-    {
-        country: "US-United States",
-        areaScorecard: "North America",
-        region: "NA",
+     {
+        country: "AT-Austria",
+        areaScorecard: "Europe",
+        region: "Central Europe",
         comment: "Comment 3"
     },
     {
-        country: "CN-China",
-        areaScorecard: "Asia",
-        region: "APAC",
+        country: "AE-Utd.Arab Emir.",
+        areaScorecard: "Emerging Markets",
+        region: "MENARP",
+        comment: "Comment 1"
+    },
+    {
+        country: "AR-Argentina",
+        areaScorecard: "Emerging Markets",
+        region: "LATAM",
+        comment: "Comment 2"
+    },
+   
+    {
+        country: "AU-Australia",
+        areaScorecard: "Europe", 
+        region: "Global",
         comment: "Comment 4"
     },
     {
-        country: "BR-Brazil",
-        areaScorecard: "Latin America",
-        region: "LATAM",
+        country: "AU-Australia",
+        areaScorecard: "Europe",
+        region: "Australia & NZ",
         comment: "Comment 5"
     },
     {
-        country: "GB-United Kingdom",
-        areaScorecard: "Europe",
-        region: "EMEA",
+        country: "BD-Bangladesh",
+        areaScorecard: "Emerging Markets",
+        region: "South Asia",
         comment: "Comment 6"
     },
     {
-        country: "DE-Germany",
+        country: "BE-Belgium",
         areaScorecard: "Europe",
-        region: "EMEA",
+        region: "West Europe", 
         comment: "Comment 7"
     },
     {
-        country: "ZA-South Africa",
-        areaScorecard: "Africa",
-        region: "MEA",
+        country: "BH-Bahrain",
+        areaScorecard: "Emerging Markets",
+        region: "MENARP",
         comment: "Comment 8"
     },
     {
-        country: "JP-Japan",
-        areaScorecard: "Asia",
-        region: "APAC",
+        country: "BR-Brazil",
+        areaScorecard: "Emerging Markets",
+        region: "LATAM",
         comment: "Comment 9"
     },
     {
-        country: "AU-Australia",
-        areaScorecard: "Oceania",
-        region: "APAC",
+        country: "CA-Canada", 
+        areaScorecard: "North America",
+        region: "North America",
         comment: "Comment 10"
+    },
+    {
+        country: "CH-Switzerland",
+        areaScorecard: "Europe",
+        region: "Central Europe",
+        comment: "Comment 11"
+    },
+    {
+        country: "CL-Chile",
+        areaScorecard: "Emerging Markets",
+        region: "LATAM",
+        comment: "Comment 12"
+    },
+    {
+        country: "CN-China",
+        areaScorecard: "Emerging Markets",
+        region: "Greater China and North Asia",
+        comment: "Comment 13"
+    },
+    {
+        country: "CO-Colombia",
+        areaScorecard: "Emerging Markets",
+        region: "LATAM",
+        comment: "Comment 14"
+    },
+    {
+        country: "CR-Costa Rica",
+        areaScorecard: "Emerging Markets", 
+        region: "LATAM",
+        comment: "Comment 15"
     }
 ]
 
 function AreaBase() {
-    const [region, setRegion] = useState<any>('');
-    const [country, setCountry] = useState<any>('');
-    const [area, setArea] = useState<any>('');
-    const [comment, setComment] = useState<any>('');
+    const [region, setRegion] = useState<any>('Central Europe');
+    const [country, setCountry] = useState<any>('AT-Austria');
+    const [area, setArea] = useState<any>('Europe');
+    const [comment, setComment] = useState<any>('Comment 3');
     const [togglePanel, setTogglePanel] = useState(false)
     const [showFileUploadDialog, setShowFileUploadDialog] = useState(false)
     // const [regionList, setRegionList] = useState<any>([]);

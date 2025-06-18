@@ -151,7 +151,7 @@ const Layout = ({ children }: ChildContainerProps) => {
                     <div className="layout-main">
                         {children}
                     </div>
-                    <AppFooter />
+                    {/* <AppFooter /> */}
                 </div>
                 <AppConfig />
                 <div className="layout-mask"></div>

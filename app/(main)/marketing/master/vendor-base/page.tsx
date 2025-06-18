@@ -25,6 +25,34 @@ const ACTIONS = {
     DELETE: 'delete'
 };
 
+const BuMasterList = [
+    {
+        bu: 'Nutrition ',
+        buNew: '-',
+        effectiveDate: '2/2/2024'
+    },
+    {
+        bu: 'Reckitt',
+        buNew: '-',
+        effectiveDate: '12/2/2025'
+    },
+    {
+        bu: 'Essential Home',
+        buNew: '-',
+        effectiveDate: '4/12/2024'
+    },
+    {
+        bu: 'Health',
+        buNew: '-',
+        effectiveDate: '6/3/2024'
+    },
+    {
+        bu: 'Hygiene',
+        buNew: '-',
+        effectiveDate: '13/2/2024'
+    }
+];
+
 const vendorList = [
     {
         vendorCode: "0000345575",
@@ -173,14 +201,14 @@ const vendorList = [
 
 function AreaBase() {
     const [region, setRegion] = useState<string>('');
-    const [vendorCode, setVendorCode] = useState<string>('');
-    const [area, setArea] = useState<string>('');
-    const [country, setCountry] = useState<string>('');
+    const [vendorCode, setVendorCode] = useState<string>('0000345575');
+    const [area, setArea] = useState<string>('Europe');
+    const [country, setCountry] = useState<string>('ES-Spain	');
     const [vendorName, setVendorName] = useState<string>('');
-    const [defaultParentVendor, setDefaultParentVendor] = useState<string>('');
-    const [vendorNameGiven, setVendorNameGiven] = useState<string>('');
-    const [company, setCompany] = useState<string>('');
-    const [bu, setBU] = useState<string>('');
+    const [defaultParentVendor, setDefaultParentVendor] = useState<string>('Havas Group');
+    const [vendorNameGiven, setVendorNameGiven] = useState<string>('Havas Media');
+    const [company, setCompany] = useState<string>('PE02-RB Peru');
+    const [bu, setBU] = useState<string>('Health');
 
     const [togglePanel, setTogglePanel] = useState(false)
     const [showFileUploadDialog, setShowFileUploadDialog] = useState(false)
