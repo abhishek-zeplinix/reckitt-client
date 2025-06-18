@@ -384,7 +384,7 @@ function AreaBase() {
 
                 <div className="mt-3">
                     {isFetchingRegions ? (
-                        <TableSkeletonSimple columns={2} rows={5} />
+                        <TableSkeletonSimple columns={6} rows={10} />
                     ) : (
                         <CustomDataTable
                             ref={regionList}
@@ -402,6 +402,7 @@ function AreaBase() {
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             showGridlines
+                            stripedRows
                             columns={[
 
                                 {
