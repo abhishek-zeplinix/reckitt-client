@@ -85,6 +85,106 @@ const MarketingDetails = () => {
     const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
     const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
 
+    const evaluationData = [
+  "Media - TV",
+  "Media - Digital",
+  "Media - TV/Digital/Planning",
+  "Media - Strategy",
+  "Media - Agency",
+  "Creative - CMM/BM",
+  "Creative - CDM",
+  "Creative - PD",
+  "Creative - CDO",
+  "Creative - MX",
+  "Creative - PRO"
+];
+
+const buMapping: Record<string, string[]> = {
+  "Media - TV": ["Reckitt", "Hygiene"],
+  "Media - Digital": ["Health", "Nutrition"],
+  "Media - TV/Digital/Planning": ["Essential Home", "Health"],
+  "Media - Strategy": ["Reckitt"],
+  "Media - Agency": ["Nutrition"],
+  "Creative - CMM/BM": ["Health"],
+  "Creative - CDM": ["Reckitt", "Essential Home"],
+  "Creative - PD": ["Hygiene"],
+  "Creative - CDO": ["Health"],
+  "Creative - MX": ["Essential Home"],
+  "Creative - PRO": ["Reckitt"]
+};
+
+const countryMapping: Record<string, string[]> = {
+  Reckitt: ["AE-Utd.Arab Emir.", "BE-Belgium", "BH-Bahrain"],
+  Nutrition: ["BD-Bangladesh", "BR-Brazil"],
+  Essential: ["AT-Austria", "AU-Australia", "CL-Chile"],
+  Health: ["AR-Argentina", "CA-Canada", "CH-Switzerland"],
+  Hygiene: ["AU-Australia", "BR-Brazil", "CL-Chile"]
+};
+
+const versionMapping: Record<string, string[]> = {
+  "AE-Utd.Arab Emir.": ["Original"],
+  "AR-Argentina": ["Original"],
+  "AT-Austria": ["BENELUX"],
+  "AU-Australia": ["Mexico Hygiene"],
+  "BD-Bangladesh": ["Poland Health"],
+  "BE-Belgium": ["Vietnam Health"],
+  "BH-Bahrain": ["Original"],
+  "BR-Brazil": ["Original"],
+  "CA-Canada": ["Original"],
+  "CH-Switzerland": ["Original"],
+  "CL-Chile": ["Original"]
+};
+
+useEffect(() => {
+    // Step 1: Set Evaluation Type
+    const evalOptions = evaluationData.map((e) => ({ label: e, value: e }));
+    setVendorOptions(evalOptions);
+}, []);
+
+useEffect(() => {
+    if (!selectedVendor) {
+        setChildVendorOptions([]);
+        setSelectedChildVendor('');
+        return;
+    }
+
+    const buList = buMapping[selectedVendor] || [];
+    setChildVendorOptions(buList.map(b => ({ label: b, value: b })));
+    setSelectedChildVendor('');
+    setCountryOptions([]);
+    setSelectedCountry('');
+    setBuOptions([]);
+    setSelectedBU('');
+}, [selectedVendor]);
+
+useEffect(() => {
+    if (!selectedChildVendor) {
+        setCountryOptions([]);
+        setSelectedCountry('');
+        return;
+    }
+
+    const countries = countryMapping[selectedChildVendor] || [];
+    setCountryOptions(countries.map(c => ({ label: c, value: c })));
+    setSelectedCountry('');
+    setBuOptions([]);
+    setSelectedBU('');
+}, [selectedChildVendor]);
+
+useEffect(() => {
+    if (!selectedCountry) {
+        setBuOptions([]);
+        setSelectedBU('');
+        return;
+    }
+
+    const versions = versionMapping[selectedCountry] || [];
+    setBuOptions(versions.map(v => ({ label: v, value: v })));
+    setSelectedBU('');
+}, [selectedCountry]);
+
+
+
     useEffect(() => {
         // Flatten all questions from all template types
         const allQuestions = Object.values(questionsByTemplateType).flat();
@@ -98,25 +198,25 @@ const MarketingDetails = () => {
 
         setEvaluationOptions(
             evaluations.map((e: string) => ({
-                label: e,
+                label: formatLabel(e),
                 value: e
             }))
         );
 
         // Load vendors and child vendors
-        const vendorsData = JSON.parse(localStorage.getItem('vendors') || '[]');
-        setVendorOptions(
-            vendorsData.map((v: any) => ({
-                label: v.name,
-                value: v.name
-            }))
-        );
+        // const vendorsData = JSON.parse(localStorage.getItem('vendors') || '[]');
+        // setVendorOptions(
+        //     vendorsData.map((v: any) => ({
+        //         label: v.name,
+        //         value: v.name
+        //     }))
+        // );
 
         // Load other options
-        setCountryOptions(getStoredOptions('Country'));
-        setBuOptions(getStoredOptions('BU'));
-        setBrandOptions(getStoredOptions('Brand'));
-        setReviewTypeOptions(getStoredOptions('Review Type'));
+        // setCountryOptions(getStoredOptions('Country'));
+        // setBuOptions(getStoredOptions('BU'));
+        // setBrandOptions(getStoredOptions('Brand'));
+        // setReviewTypeOptions(getStoredOptions('Review Type'));
 
         // Load questions
         const savedQuestions = JSON.parse(localStorage.getItem(STORAGE_KEYS.MARKETING_TEMPLATE_QUESTIONS) || '[]');
@@ -141,29 +241,35 @@ const MarketingDetails = () => {
             return [];
         }
     };
+    const formatLabel = (val: string) => {
+    if (val === "2025-1-H1, Creative-Ind") return "Reckitt to Agency";
+    if (val === "2025-1-H1, Brand Experience-Ind") return "Agency to Reckitt";
+    return val;
+};
+
 
     // Update child vendors when vendor changes
-    useEffect(() => {
-        if (!selectedVendor) {
-            setChildVendorOptions([]);
-            return;
-        }
+    // useEffect(() => {
+    //     if (!selectedVendor) {
+    //         setChildVendorOptions([]);
+    //         return;
+    //     }
 
-        const vendorsData = JSON.parse(localStorage.getItem('vendors') || '[]');
-        const selectedVendorData = vendorsData.find((v: any) => v.name === selectedVendor);
+    //     const vendorsData = JSON.parse(localStorage.getItem('vendors') || '[]');
+    //     const selectedVendorData = vendorsData.find((v: any) => v.name === selectedVendor);
 
-        if (selectedVendorData?.children) {
-            setChildVendorOptions(
-                selectedVendorData.children.map((child: any) => ({
-                    label: child.name,
-                    value: child.name
-                }))
-            );
-        } else {
-            setChildVendorOptions([]);
-        }
-        setSelectedChildVendor(null);
-    }, [selectedVendor]);
+    //     if (selectedVendorData?.children) {
+    //         setChildVendorOptions(
+    //             selectedVendorData.children.map((child: any) => ({
+    //                 label: child.name,
+    //                 value: child.name
+    //             }))
+    //         );
+    //     } else {
+    //         setChildVendorOptions([]);
+    //     }
+    //     setSelectedChildVendor(null);
+    // }, [selectedVendor]);
 
     // Update template types when evaluation name changes
     useEffect(() => {
@@ -242,7 +348,7 @@ const MarketingDetails = () => {
         }
     };
     const handleFinalSave = () => {
-        if (!selectedEval || !selectedVendor || !administrator || !selectedCountry || !selectedBU || !selectedStatus || !selectedBrand || !selectedTemplateTypes.length) {
+        if (!selectedEval || !selectedVendor || !selectedChildVendor || !selectedCountry || !selectedBU ) {
             toast.current?.show({
                 severity: 'warn',
                 summary: 'Missing!',
@@ -567,6 +673,9 @@ const MarketingDetails = () => {
         setEditingCombo(null);
         // Reset form fields if needed
     };
+    const handleCancel = () => {
+       setSelectedEval('');
+    };
 
 
     const renderHeader = () => {
@@ -616,35 +725,35 @@ const MarketingDetails = () => {
     };
 
     const header = renderHeader();
-
+console.log(savedCombos,'savedCombos');
     return (
-        <div className="p-4 card">
+        <div className="p-4 card bg-bluegray-50">
             <Toast ref={toast} />
 
-            <div className="flex justify-content-between items-center mb-4">
-                <h2 className="text-xl font-semibold">Final Review Configuration</h2>
+            <div className="flex justify-content-between items-center mb-4 ">
+                <h2 className="text-xl font-semibold">Create Question</h2>
                 {/* <Button label="View Saved Reviews" icon="pi pi-eye" onClick={handleViewSaved} className="" /> */}
             </div>
-
+        <div className="card p-fluid bg-white border-round">
             <div className="grid formgrid gap-3 mb-4">
                 <div className="flex row col-12">
                     <div className="col-4">
-                        <label>Evaluation Name</label>
-                        <Dropdown value={selectedEval} options={evaluationOptions} onChange={(e) => setSelectedEval(e.value)} placeholder="Select Evaluation" className="w-full mt-2" filter />
+                        <label>Review Type</label>
+                        <Dropdown value={selectedEval} options={evaluationOptions} onChange={(e) => setSelectedEval(e.value)} placeholder="Select Review Type" className="w-full mt-2" filter />
                     </div>
                     <div className="col-4">
-                        <label>Vendor</label>
-                        <Dropdown value={selectedVendor} options={vendorOptions} onChange={(e) => setSelectedVendor(e.value)} placeholder="Select Vendor" className="w-full mt-2" filter />
+                        <label>Evaluation Type</label>
+                        <Dropdown value={selectedVendor} options={vendorOptions} onChange={(e) => setSelectedVendor(e.value)} placeholder="Select Evaluation Type" className="w-full mt-2" filter />
                     </div>
                     <div className="col-4">
-                        <label>Child Vendor (Optional)</label>
+                        <label>BU</label>
                         <Dropdown
                             value={selectedChildVendor}
                             options={childVendorOptions}
                             onChange={(e) => setSelectedChildVendor(e.value)}
-                            placeholder="Select Child Vendor"
+                            placeholder="Select BU"
                             className="w-full mt-2"
-                            disabled={!selectedVendor || childVendorOptions.length === 0}
+                            // disabled={!selectedVendor || childVendorOptions.length === 0}
                             filter
                         />
                     </div>
@@ -652,34 +761,15 @@ const MarketingDetails = () => {
 
                 <div className="flex row col-12">
                     <div className="col-4">
-                        <label>Administrator</label>
-                        <InputText value={administrator} onChange={(e) => setAdministrator(e.target.value)} placeholder="Enter Administrator" className="w-full mt-2" />
-                    </div>
-                    <div className="col-4">
                         <label>Country</label>
                         <Dropdown value={selectedCountry} options={countryOptions} onChange={(e) => setSelectedCountry(e.value)} placeholder="Select Country" className="w-full mt-2" filter />
                     </div>
                     <div className="col-4">
-                        <label>BU</label>
-                        <Dropdown value={selectedBU} options={buOptions} onChange={(e) => setSelectedBU(e.value)} placeholder="Select BU" className="w-full mt-2" filter />
+                        <label>Version</label>
+                        <Dropdown value={selectedBU} options={buOptions} onChange={(e) => setSelectedBU(e.value)} placeholder="Select Version" className="w-full mt-2" filter />
                     </div>
                 </div>
-
-                <div className="flex row col-12">
-                    <div className="col-4">
-                        <label>Brand</label>
-                        <Dropdown value={selectedBrand} options={brandOptions} onChange={(e) => setSelectedBrand(e.value)} placeholder="Select Brand" className="w-full mt-2" filter />
-                    </div>
-                    <div className="col-4">
-                        <label>Status</label>
-                        <Dropdown value={selectedStatus} options={statusOptions} onChange={(e) => setSelectedStatus(e.value)} placeholder="Select Status" className="w-full mt-2" />
-                    </div>
-                    {/* <div className="col-4">
-                        <label>Review Type</label>
-                        <InputText value={selectedReviewType || ''} readOnly className="w-full mt-2" />
-                    </div> */}
                 </div>
-
                 {selectedReviewType && (
                     <div className="flex row col-12">
                         <div className="col-12">
@@ -698,14 +788,21 @@ const MarketingDetails = () => {
                     </p>
 
                     {Object.keys(questionsByTemplateType).length > 0 ? renderQuestionsTables() : <p>No questions found for the selected criteria.</p>}
-
+                    <div className="flex justify-content-end mt-4 gap-2">
                     <Button
-                        label={isEditing ? "Update Review" : "Save Final Review"}
+                        label='Cancel'
+                        className="cancle-btn-outline mt-4"
+                        onClick={handleCancel}
+                    />
+                    <Button
+                    
+                        label={isEditing ? "Update" : "Save"}
                         icon={isEditing ? "pi pi-check" : "pi pi-save"}
                         className="mt-4"
                         onClick={isEditing ? handleUpdate : handleFinalSave}
                         disabled={selectedQuestions.length === 0}
                     />
+                    
                     {isEditing && (
                         <Button
                             label="Cancel"
@@ -715,9 +812,11 @@ const MarketingDetails = () => {
                         />
                         
                     )}
+                    </div>
                     {/* <Button label="Save Final Review" icon="pi pi-save" className="mt-4" onClick={handleFinalSave} disabled={selectedQuestions.length === 0} /> */}
                 </div>
             )}
+            
             <hr className="my-4" />
             {savedCombos.length > 0 ? (
                 <DataTable
@@ -758,57 +857,11 @@ const MarketingDetails = () => {
                     />
                     <Column expander style={{ width: '3em' }} />
                     <Column header="#" body={(_, { rowIndex }) => rowIndex + 1} />
-                    <Column field="accountName" header="Account Name" sortable filter filterField="accountName" />
-                    <Column field="evaluation" header="Evaluation" sortable filter filterField="evaluation" />
-                    <Column field="vendor" header="Vendor" sortable filter filterField="vendor" />
-                    <Column
-                        field="country"
-                        header="Country"
-                        sortable
-                        filter
-                        filterField="country"
-                        filterElement={(options) => (
-                            <MultiSelect
-                                value={options.value}
-                                options={countryOptions}
-                                onChange={(e) => options.filterCallback(e.value)}
-                                placeholder="Any"
-                                className="p-column-filter"
-                            />
-                        )}
-                    />
-                    <Column
-                        field="brand"
-                        header="Brand"
-                        sortable
-                        filter
-                        filterField="brand"
-                        filterElement={(options) => (
-                            <MultiSelect
-                                value={options.value}
-                                options={brandOptions}
-                                onChange={(e) => options.filterCallback(e.value)}
-                                placeholder="Any"
-                                className="p-column-filter"
-                            />
-                        )}
-                    />
-                    <Column
-                        field="status"
-                        header="Status"
-                        sortable
-                        filter
-                        filterField="status"
-                        filterElement={(options) => (
-                            <MultiSelect
-                                value={options.value}
-                                options={statusOptions}
-                                onChange={(e) => options.filterCallback(e.value)}
-                                placeholder="Any"
-                                className="p-column-filter"
-                            />
-                        )}
-                    />
+                    <Column field="templateTypes" header="Review Type"  />
+                    <Column field="vendor" header="Evaluation Type"   />
+                    <Column field="childVendor" header="BU"  />
+                    <Column field="country" header="Country"   />
+                    <Column field="bu" header="Version"  />
                 </DataTable>
             ) : (
                 <p>No saved reviews found.</p>

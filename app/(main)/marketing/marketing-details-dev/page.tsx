@@ -273,7 +273,6 @@ const MarketingQuestionsTable = () => {
             />
         );
     };
-    
  
     return (
         <div className="">
