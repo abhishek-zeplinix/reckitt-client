@@ -540,7 +540,7 @@ function EmployeeData() {
 
                 <div className="mt-3">
                     {isFetchingRegions ? (
-                        <TableSkeletonSimple columns={2} rows={5} />
+                        <TableSkeletonSimple columns={8} rows={10} />
                     ) : (
                         <CustomDataTable
                             ref={regionList}
@@ -554,6 +554,7 @@ function EmployeeData() {
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             showGridlines
+                            stripedRows
                             columns={[
                                 {
                                     header: 'Sr. No.',
