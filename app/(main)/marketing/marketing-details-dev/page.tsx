@@ -37,6 +37,7 @@ const MarketingQuestionsTable = () => {
     const [searchText, setSearchText] = useState('');
     const { layoutState } = useContext(LayoutContext);
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const [savedCombos, setSavedCombos] = useState<any[]>([]);
  
     //filters
     const [filters, setFilters] = useState<any>({
@@ -46,11 +47,15 @@ const MarketingQuestionsTable = () => {
     });
     const [countryOptions, setCountryOptions] = useState<any>([]);
     const [brandOptions, setBrandOptions] = useState<any>([]);
+    const STORAGE_KEYS = {
+    MARKETING_TEMPLATE_QUESTIONS: 'marketingTemplateQuestions',
+    FINAL_REVIEW_DATA: 'finalReviewData'
+};
  
  
     useEffect(() => {
-        fetchData();
-        fetchOptions();
+        // fetchData();
+        // fetchOptions();
     }, []);
  
     useEffect(() => {
@@ -64,86 +69,94 @@ const MarketingQuestionsTable = () => {
             ...(filters.status && { 'filters.status': filters.status }),
             searchText: searchText ? searchText.trim().toLowerCase() : ''
         };
-        fetchData(params);
+        // fetchData(params);
     }, [filters, searchText]);
+
+        useEffect(() => {
+            // Flatten all questions from all template types
+             const savedData = localStorage.getItem(STORAGE_KEYS.FINAL_REVIEW_DATA);
+
+            const parsedData = savedData ? JSON.parse(savedData) : [];
+            setSavedCombos(Array.isArray(parsedData) ? parsedData : []);
+        }, []);
  
     const handleCreateNavigation = () => {
         router.push('marketing-details-dev/configure');
     };
  
-    const fetchOptions = async () => {
-        try {
-            const params = { pagination: false };
-            const queryString = buildQueryParams(params);
-            const responseCountries = await GetCall(`/mrkt/api/mrkt/country?${queryString}`);
-            if (responseCountries.code?.toLowerCase() === 'success') {
-                setCountryOptions(responseCountries.data);
-            } else {
-                setCountryOptions([]);
-                setAlert('error', responseCountries.message || 'Failed to load country options');
-            }
+    // const fetchOptions = async () => {
+    //     try {
+    //         const params = { pagination: false };
+    //         const queryString = buildQueryParams(params);
+    //         const responseCountries = await GetCall(`/mrkt/api/mrkt/country?${queryString}`);
+    //         if (responseCountries.code?.toLowerCase() === 'success') {
+    //             setCountryOptions(responseCountries.data);
+    //         } else {
+    //             setCountryOptions([]);
+    //             setAlert('error', responseCountries.message || 'Failed to load country options');
+    //         }
  
  
-            const responseBrands = await GetCall(`/mrkt/api/mrkt/brand?${queryString}`);
-            if (responseBrands.code?.toLowerCase() === 'success') {
-                setBrandOptions(responseBrands.data);
-            } else {
-                setBrandOptions([]);
-                setAlert('error', responseBrands.message || 'Failed to load brand options');
-            }
-        } catch (err) {
-            setAlert('error', 'Failed to load filter options');
-        }
-    };
+    //         const responseBrands = await GetCall(`/mrkt/api/mrkt/brand?${queryString}`);
+    //         if (responseBrands.code?.toLowerCase() === 'success') {
+    //             setBrandOptions(responseBrands.data);
+    //         } else {
+    //             setBrandOptions([]);
+    //             setAlert('error', responseBrands.message || 'Failed to load brand options');
+    //         }
+    //     } catch (err) {
+    //         setAlert('error', 'Failed to load filter options');
+    //     }
+    // };
  
     console.log(filters, 'filters');
  
-    const fetchData = async (params?: any) => {
-        setLoading(true);
-        if (!params) {
-            params = {
-                page: page,
-                limit: limit,
-                ...(filters.brandId && { 'filters.brandId': filters.brandId }),
-                ...(filters.masterCountryId && { 'filters.countryId': filters.masterCountryId }),
-                ...(filters.status && { 'filters.status': filters.status }),
-                searchText: searchText ? searchText.trim().toLowerCase() : ''
-            };
-        }
+    // const fetchData = async (params?: any) => {
+    //     setLoading(true);
+    //     if (!params) {
+    //         params = {
+    //             page: page,
+    //             limit: limit,
+    //             ...(filters.brandId && { 'filters.brandId': filters.brandId }),
+    //             ...(filters.masterCountryId && { 'filters.countryId': filters.masterCountryId }),
+    //             ...(filters.status && { 'filters.status': filters.status }),
+    //             searchText: searchText ? searchText.trim().toLowerCase() : ''
+    //         };
+    //     }
  
-        console.log(params.filters, 'params.filters');
+    //     console.log(params.filters, 'params.filters');
  
-        const queryString = buildQueryParams(params);
+    //     const queryString = buildQueryParams(params);
  
-        try {
-            const response = await GetCall(`/mrkt/api/mrkt/evaluation-details?${queryString}`);
-            if (response.code?.toLowerCase() === 'success') {
-                setAccounts(response.data);
-                setTotalRecords(response.total || response.data.length);
-            } else {
-                setAlert('error', response.message || 'Failed to fetch data');
-                setAccounts([]);
-                setTotalRecords(0);
-            }
-        } catch (err) {
-            setAlert('error', 'Something went wrong!');
-        } finally {
-            setLoading(false);
-        }
-    };
+    //     try {
+    //         const response = await GetCall(`/mrkt/api/mrkt/evaluation-details?${queryString}`);
+    //         if (response.code?.toLowerCase() === 'success') {
+    //             setAccounts(response.data);
+    //             setTotalRecords(response.total || response.data.length);
+    //         } else {
+    //             setAlert('error', response.message || 'Failed to fetch data');
+    //             setAccounts([]);
+    //             setTotalRecords(0);
+    //         }
+    //     } catch (err) {
+    //         setAlert('error', 'Something went wrong!');
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
  
-    const handleDeleteAccount = async (accountToDelete: { evaluationAccountId: any; }) => {
-        try {
-            await DeleteCall(`/mrkt/api/mrkt/evaluation-account/${accountToDelete.evaluationAccountId}`);
-            await fetchData();
-            setAlert('success', 'Account deleted successfully!');
-        } catch (err) {
-            setAlert('error', 'Something went wrong!');
-        } finally {
-            setIsDeleteDialogVisible(false);
-            setSelectedAccountForDelete(null);
-        }
-    };
+    // const handleDeleteAccount = async (accountToDelete: { evaluationAccountId: any; }) => {
+    //     try {
+    //         await DeleteCall(`/mrkt/api/mrkt/evaluation-account/${accountToDelete.evaluationAccountId}`);
+    //         await fetchData();
+    //         setAlert('success', 'Account deleted successfully!');
+    //     } catch (err) {
+    //         setAlert('error', 'Something went wrong!');
+    //     } finally {
+    //         setIsDeleteDialogVisible(false);
+    //         setSelectedAccountForDelete(null);
+    //     }
+    // };
  
     const openDeleteDialog = (account: any) => {
         setSelectedAccountForDelete(account);
@@ -355,7 +368,7 @@ const MarketingQuestionsTable = () => {
                 isView={true}
                 isEdit={false}
                 isDelete={false}
-                data={accounts}
+                data={savedCombos}
                 columns={[
                     {
                         header: '#',
@@ -367,39 +380,34 @@ const MarketingQuestionsTable = () => {
                         bodyStyle: { minWidth: 60, maxWidth: 60 }
                     },
                     {
-                        header: 'Account Name',
-                        field: 'accountName',
+                        header: 'Review Type',
+                        field: 'templateTypes',
                         filter: true,
                         bodyStyle: { minWidth: 150, maxWidth: 200 },
-                        filterPlaceholder: 'Account Name'
+                        filterPlaceholder: 'Review Type'
                     },
                     {
-                        header: 'Evaluation Combination',
-                        body: (data: any) => data.evaluationCombination?.label || '',
+                        header: 'Evaluation Type',
+                        field: 'vendor',
                         bodyStyle: { minWidth: 200, maxWidth: 250 }
                     },
                     {
-                        header: 'Vendor Name',
-                        body: (data: any) => data.vendor?.vendorName || '',
+                        header: 'BU',
+                        field: 'childVendor',
                         bodyStyle: { minWidth: 120, maxWidth: 150 }
                     },
                     {
                         header: 'Country',
-                        body: (data: any) => data.evaluationCombination?.country?.countryName || '',
+                        field: 'country',
                         bodyStyle: { minWidth: 100, maxWidth: 120 }
                     },
                     {
-                        header: 'Brand',
-                        body: (data: any) => data.brand?.brandName || '',
+                        header: 'Version',
+                        field: 'bu',
                         bodyStyle: { minWidth: 100, maxWidth: 120 }
-                    },
-                    {
-                        header: 'Status',
-                        body: statusBodyTemplate,
-                        bodyStyle: { minWidth: 80, maxWidth: 100 }
                     }
                 ]}
-                onLoad={(params: any) => fetchData(params)}
+                // onLoad={(params: any) => fetchData(params)}
                 onDelete={(item: any) => onRowSelect(item, ACTIONS.DELETE)}
                 onEdit={(item: any) => onRowSelect(item, ACTIONS.EDIT)}
                 onView={(item: any) => onRowSelect(item, ACTIONS.VIEW)}
@@ -423,7 +431,7 @@ const MarketingQuestionsTable = () => {
                             label="Delete"
                             style={{ backgroundColor: '#DF1740', border: 'none' }}
                             className="px-7 hover:text-white"
-                            onClick={() => handleDeleteAccount(selectedAccountForDelete)}
+                            // onClick={() => }
                             loading={isLoading}
                         />
                     </div>

@@ -11,6 +11,7 @@ import { MultiSelect } from 'primereact/multiselect';
 import { DataTableExpandedRows } from 'primereact/datatable';
 import { Panel } from 'primereact/panel';
 import { FilterMatchMode } from 'primereact/api';
+import { useRouter } from 'next/navigation';
 
 const STORAGE_KEYS = {
     MARKETING_TEMPLATE_QUESTIONS: 'marketingTemplateQuestions',
@@ -64,6 +65,7 @@ const MarketingDetails = () => {
     const [selectedQuestions, setSelectedQuestions] = useState<any[]>([]);
     const [comboList, setComboList] = useState<any[]>([]);
     const [savedCombos, setSavedCombos] = useState<any[]>([]);
+    const router = useRouter();
 
     const [editingCombo, setEditingCombo] = useState<any>(null);
     const [isEditing, setIsEditing] = useState(false);
@@ -396,6 +398,7 @@ useEffect(() => {
             detail: 'Final review saved successfully',
             life: 3000
         });
+        router.push('/marketing/marketing-details-dev');
 
         // Reset form (except vendor and administrator)
         setSelectedEval(null);
@@ -817,8 +820,8 @@ console.log(savedCombos,'savedCombos');
                 </div>
             )}
             
-            <hr className="my-4" />
-            {savedCombos.length > 0 ? (
+            {/* <hr className="my-4" /> */}
+            {/* {savedCombos.length > 0 ? (
                 <DataTable
                     value={savedCombos}
                     expandedRows={expandedRows}
@@ -865,7 +868,7 @@ console.log(savedCombos,'savedCombos');
                 </DataTable>
             ) : (
                 <p>No saved reviews found.</p>
-            )}
+            )} */}
         </div>
     );
 };
