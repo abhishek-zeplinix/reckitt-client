@@ -14,21 +14,21 @@ import { encodeRouteParams } from '@/utils/base64';
 
 const defaultContext: AppContextType = {
     displayName: '',
-    setDisplayName: () => {},
+    setDisplayName: () => { },
     user: null,
-    setUser: () => {},
+    setUser: () => { },
     company: null,
-    setCompany: () => {},
+    setCompany: () => { },
     isLoading: true,
-    setLoading: () => {},
-    signOut: () => {},
-    setAlert: () => {},
+    setLoading: () => { },
+    signOut: () => { },
+    setAlert: () => { },
     authToken: null,
-    setAuthToken: () => {},
+    setAuthToken: () => { },
     isScroll: true,
-    setScroll: () => {},
+    setScroll: () => { },
     selectedSubLocation: null,
-    setSelectedSubLocation: () => {}
+    setSelectedSubLocation: () => { }
 };
 const AppContext = createContext(defaultContext);
 
@@ -55,6 +55,31 @@ export const AppWrapper = React.memo(({ children }: any) => {
     const [toasts, setToasts] = useState<Array<{ id: number; type: string; message: string }>>([]);
 
     // Handle authentication routing
+    // useEffect(() => {
+    //     const isValid = isTokenValid(authToken);
+
+    //     if (!isValid) {
+    //         if (authRoutes.includes(pathname)) {
+    //             return;
+    //         }
+    //         router.replace('/login');
+    //     } else if (authToken && isValid) {
+    //         if (authRoutes.includes(pathname)) {
+    //             const userData = getUserDetails();
+
+    //             if (userData?.role === userRoles.SUPPLIER) {
+    //                 const { categoryId, subCategoryId, supplierId } = userData;
+    //                 const params: any = { supId: supplierId, catId: categoryId, subCatId: subCategoryId };
+    //                 const encodedParams = encodeRouteParams(params);
+    //                 router.replace(`/supplier-scoreboard-summary/${encodedParams}`);
+    //             } else {
+    //                 router.replace(get(isValid, 'portalLink', '/'));
+    //             }
+    //         }
+    //     }
+    // }, [authToken]);
+
+
     useEffect(() => {
         const isValid = isTokenValid(authToken);
 
@@ -63,58 +88,94 @@ export const AppWrapper = React.memo(({ children }: any) => {
                 return;
             }
             router.replace('/login');
-        } else if (authToken && isValid) {
-            if (authRoutes.includes(pathname)) {
-                const userData = getUserDetails();
-
-                if (userData?.role === userRoles.SUPPLIER) {
-                    const { categoryId, subCategoryId, supplierId } = userData;
-                    const params: any = { supId: supplierId, catId: categoryId, subCatId: subCategoryId };
-                    const encodedParams = encodeRouteParams(params);
-                    router.replace(`/supplier-scoreboard-summary/${encodedParams}`);
-                } else {
-                    router.replace(get(isValid, 'portalLink', '/'));
-                }
-            }
+            // router.replace('/login/kau');
+        } else if (authToken && isValid && authRoutes.includes(pathname)) {
+            // router.replace('https://reckittserver.vercel.app/');
+            router.replace(get(isValid, 'portalLink', '/'));
         }
     }, [authToken]);
 
-    // Handle initial user data loading
-    useEffect(() => {
-        setLoading(false);
 
-        const userToken: string = getAuthToken();
-        if (userToken) {
-            if (!isTokenValid(userToken)) {
-                signOut();
-                setLoading(false);
+    // // Handle initial user data loading
+    // useEffect(() => {
+    //     setLoading(false);
+
+    //     const userToken: string = getAuthToken();
+    //     if (userToken) {
+    //         if (!isTokenValid(userToken)) {
+    //             signOut();
+    //             setLoading(false);
+    //             return;
+    //         }
+    //     } else {
+    //         setLoading(false);
+    //     }
+
+    //     const userData = getUserDetails();
+    //     console.log(userData);
+
+    //     if (userData) {
+    //         try {
+    //             setUser(userData);
+    //         } catch (error) { }
+
+    //         if (userData && userData.company) {
+    //             try {
+    //                 setCompany(userData.company);
+    //             } catch (error) { }
+    //         }
+    //     }
+
+    //     eventEmitter.on('signOut', (data: any) => {
+    //         removeAuthData();
+    //         signOut();
+    //         setAlert('info', 'Session expired');
+    //     });
+    // }, []);
+
+
+    useEffect(() => {
+        const initializeUser = () => {
+            const userToken: string = getAuthToken();
+
+            if (userToken) {
+                if (!isTokenValid(userToken)) {
+                    signOut();
+                    setLoading(false); // Set loading after handling invalid token
+                    return;
+                }
+            } else {
+                setLoading(false); // No token, done
                 return;
             }
-        } else {
-            setLoading(false);
-        }
 
-        const userData = getUserDetails();
-        console.log(userData);
+            const userData = getUserDetails();
+            console.log(userData);
 
-        if (userData) {
-            try {
-                setUser(userData);
-            } catch (error) {}
-
-            if (userData && userData.company) {
+            if (userData) {
                 try {
-                    setCompany(userData.company);
-                } catch (error) {}
-            }
-        }
+                    setUser(userData);
+                } catch (error) { }
 
-        eventEmitter.on('signOut', (data: any) => {
+                if (userData.company) {
+                    try {
+                        setCompany(userData.company);
+                    } catch (error) { }
+                }
+            }
+
+            setLoading(false); // ✅ Only mark loading complete after all checks
+        };
+
+        initializeUser();
+
+        eventEmitter.on('signOut', () => {
             removeAuthData();
             signOut();
             setAlert('info', 'Session expired');
         });
     }, []);
+
 
     const signOut = async () => {
         await removeAuthData();
