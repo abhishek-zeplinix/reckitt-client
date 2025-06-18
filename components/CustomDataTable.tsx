@@ -436,6 +436,10 @@ const CustomDataTable = forwardRef<CustomDataTableRef, CustomTableOption>((props
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
             >
                 {/* Actions Column */}
+                
+                {props.columns.map((item: ColumnProps, index: any) => (
+                    <Column key={index} {...item} header={<span style={{ fontSize: '13px' }}>{item.header?.toString().toUpperCase()}</span>}></Column>
+                ))}
                 {(props.isEdit || props.isView || props.isDelete || props.extraButtons?.length) && (
                     <Column
                         header={
@@ -452,9 +456,6 @@ const CustomDataTable = forwardRef<CustomDataTableRef, CustomTableOption>((props
                         body={renderActions}
                     ></Column>
                 )}
-                {props.columns.map((item: ColumnProps, index: any) => (
-                    <Column key={index} {...item} header={<span style={{ fontSize: '13px' }}>{item.header?.toString().toUpperCase()}</span>}></Column>
-                ))}
             </DataTable>
         </div>
     );
