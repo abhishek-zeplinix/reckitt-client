@@ -109,8 +109,6 @@ const MarketingQuestionsTable = () => {
     //     }
     // };
  
-    console.log(filters, 'filters');
- 
     // const fetchData = async (params?: any) => {
     //     setLoading(true);
     //     if (!params) {
@@ -286,11 +284,11 @@ const MarketingQuestionsTable = () => {
             />
         );
     };
- 
+ console.log('countryOptions:', savedCombos);
     return (
         <div className="">
             <div className="flex justify-content-between items-center m-4">
-                <h3>Account Details</h3>
+                <h3>Question Base</h3>
                 <div className="flex gap-2">
                     <ImportExportButton
                             label='Import'
@@ -381,7 +379,7 @@ const MarketingQuestionsTable = () => {
                     },
                     {
                         header: 'Review Type',
-                        field: 'templateTypes',
+                        field: 'evaluation',
                         filter: true,
                         bodyStyle: { minWidth: 150, maxWidth: 200 },
                         filterPlaceholder: 'Review Type'
