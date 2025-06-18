@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { DeleteCall, GetCall, PostCall, PutCall } from '@/app/api-config/ApiKit';
 import Breadcrumbs from '@/components/breadcrumbs/breadcrumbs';
 import ImportExportButton from '@/components/buttons/import-export';
@@ -12,11 +12,11 @@ import { LayoutContext } from '@/layout/context/layoutcontext';
 import { buildQueryParams, getRowLimitWithScreenHeight } from '@/utils/utils';
 import { reviewTypeSchema } from '@/utils/validationSchemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button } from 'primereact/button'
+import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState } from 'react';
 
 const ACTIONS = {
     ADD: 'add',
@@ -24,77 +24,42 @@ const ACTIONS = {
     VIEW: 'view',
     DELETE: 'delete'
 };
-
-const AreaList = [
+const EvaluationTypeList = [
     {
-        country: "AR-Argentina",
-        areaScorecard: "Latin America",
-        region: "LATAM",
-        comment: "Comment 1"
+        parentEvaluationType: 'Media ',
+        evaluationType: 'Media-TV'
     },
     {
-        country: "IN-India",
-        areaScorecard: "Asia",
-        region: "APAC",
-        comment: "Comment 2"
+        parentEvaluationType: 'Creative',
+        evaluationType: 'Creative-CMM/BM'
     },
     {
-        country: "US-United States",
-        areaScorecard: "North America",
-        region: "NA",
-        comment: "Comment 3"
+        parentEvaluationType: 'Media ',
+        evaluationType: 'Media-Digital'
     },
     {
-        country: "CN-China",
-        areaScorecard: "Asia",
-        region: "APAC",
-        comment: "Comment 4"
+        parentEvaluationType: 'Brand Experience ',
+        evaluationType: 'Brand Experience'
     },
     {
-        country: "BR-Brazil",
-        areaScorecard: "Latin America",
-        region: "LATAM",
-        comment: "Comment 5"
+        parentEvaluationType: 'Content Studio ',
+        evaluationType: '-'
     },
     {
-        country: "GB-United Kingdom",
-        areaScorecard: "Europe",
-        region: "EMEA",
-        comment: "Comment 6"
+        parentEvaluationType: 'Media ',
+        evaluationType: '-'
     },
     {
-        country: "DE-Germany",
-        areaScorecard: "Europe",
-        region: "EMEA",
-        comment: "Comment 7"
-    },
-    {
-        country: "ZA-South Africa",
-        areaScorecard: "Africa",
-        region: "MEA",
-        comment: "Comment 8"
-    },
-    {
-        country: "JP-Japan",
-        areaScorecard: "Asia",
-        region: "APAC",
-        comment: "Comment 9"
-    },
-    {
-        country: "AU-Australia",
-        areaScorecard: "Oceania",
-        region: "APAC",
-        comment: "Comment 10"
+        parentEvaluationType: 'Digital Inhouse ',
+        evaluationType: '-'
     }
-]
-
-function AreaBase() {
+];
+function EvaluationType() {
     const [region, setRegion] = useState<any>('');
-    const [country, setCountry] = useState<any>('');
-    const [area, setArea] = useState<any>('');
-    const [comment, setComment] = useState<any>('');
-    const [togglePanel, setTogglePanel] = useState(false)
-    const [showFileUploadDialog, setShowFileUploadDialog] = useState(false)
+    const [parentEvalutionType, setParentEvalutionType] = useState<any>('');
+    const [evaluationType, setEvaluationType] = useState<any>('');
+    const [togglePanel, setTogglePanel] = useState(false);
+    const [showFileUploadDialog, setShowFileUploadDialog] = useState(false);
     // const [regionList, setRegionList] = useState<any>([]);
     const [page, setPage] = useState<number>(1);
     const [limit, setLimit] = useState<number>(getRowLimitWithScreenHeight());
@@ -108,8 +73,11 @@ function AreaBase() {
     const [filters, setFilters] = useState({});
     const [searchText, setSearchText] = useState('');
 
-
-    const { data: regionList, totalRecords, isLoading: isFetchingRegions } = usePaginatedQuery(
+    const {
+        data: regionList,
+        totalRecords,
+        isLoading: isFetchingRegions
+    } = usePaginatedQuery(
         ['regions', { page, limit, filters, searchText }],
         async () => {
             const params = { page, limit, filters };
@@ -119,7 +87,7 @@ function AreaBase() {
             return {
                 data: response.data || [],
                 total: response.total || 0
-            }
+            };
         },
         {
             placeholderData: (previousData: any) => previousData,
@@ -148,7 +116,7 @@ function AreaBase() {
         onSettled: () => {
             setLoading(false);
         }
-    })
+    });
 
     const updateRegionMutatation = useMutation({
         mutationFn: ({ id, payload }: any) => PutCall(`/mrkt/api/mrkt/region/${id}`, payload),
@@ -170,9 +138,7 @@ function AreaBase() {
         onSettled: () => {
             setLoading(false);
         }
-
     });
-
 
     const deleteRegionMutation = useMutation({
         mutationFn: (id: any) => DeleteCall(`/mrkt/api/mrkt/region/${id}`),
@@ -196,21 +162,21 @@ function AreaBase() {
         onSettled: () => {
             setLoading(false);
         }
-    })
+    });
 
     const handleSubmit = async () => {
         if (!validateRegion(region)) return;
         const payload = { regionName: region };
 
         if (isEditMode) {
-            updateRegionMutatation.mutate({ id: selectedRegionId, payload })
+            updateRegionMutatation.mutate({ id: selectedRegionId, payload });
         } else {
-            addRegionMutation.mutate(payload)
+            addRegionMutation.mutate(payload);
         }
     };
 
     const onDelete = async () => {
-        deleteRegionMutation.mutate(selectedRegionId)
+        deleteRegionMutation.mutate(selectedRegionId);
     };
 
     const resetInput = () => {
@@ -235,11 +201,8 @@ function AreaBase() {
             setSelectedRegionId(perm.regionId);
         }
         if (action === ACTIONS.EDIT) {
-            setCountry(perm.country);
-            setArea(perm.areaScorecard);
-            setRegion(perm.region)
-            setComment(perm.comment)
-            // setSelectedRegionId(perm.regionId);
+            setRegion(perm.regionName);
+            setSelectedRegionId(perm.regionId);
             setIsEditMode(true);
         }
     };
@@ -251,137 +214,73 @@ function AreaBase() {
     };
 
     const handleTogglePanel = () => {
-        setTogglePanel((prev) => !prev)
-    }
+        setTogglePanel((prev) => !prev);
+    };
 
     return (
-        <div className='card'>
-            <div className='inner p-4 border-1 surface-border border-round'>
+        <div className="card">
+            <div className="inner p-4 border-1 surface-border border-round">
                 <div className="flex flex-wrap justify-content-between align-items-center mb-2">
                     {/* Title + Breadcrumb Block */}
                     <div className="flex flex-column">
-                        <h2 className="m-0">Area Base List</h2>
-                        <p className="text-sm text-gray-600 mt-1"><Breadcrumbs /></p>
+                        <h2 className="m-0">Evaluation Type</h2>
+                        <p className="text-sm text-gray-600 mt-1">
+                            <Breadcrumbs />
+                        </p>
                     </div>
 
                     {/* Buttons Block */}
                     <div className="flex flex-wrap gap-3">
+                        <ImportExportButton label="Import" icon="pi pi-upload" onClick={() => setShowFileUploadDialog(true)} />
+                        <ImportExportButton label="Export" icon="pi pi-download" onClick={handleTogglePanel} />
 
-                        <ImportExportButton
-                            label='Import'
-                            icon="pi pi-upload"
-                            onClick={() => setShowFileUploadDialog(true)}
-                        />
-                        <ImportExportButton
-                            label='Export'
-                            icon="pi pi-download"
-                            onClick={handleTogglePanel}
-                        />
-
-                        <Button
-                            label="Add New"
-                            icon="pi pi-plus"
-                            onClick={handleTogglePanel}
-                        />
+                        <Button label="Add New" icon="pi pi-plus" onClick={handleTogglePanel} />
                     </div>
                 </div>
 
-                {
-                    togglePanel &&
+                {togglePanel && (
                     <div className="flex flex-column gap-4 w-full border-1 border-round surface-border p-3 input-fields-add-new">
                         {/* Input Fields */}
                         <div className="flex flex-wrap w-full justify-content-between gap-4 ">
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 20%' }}>
-                                <label htmlFor="country">Country <span style={{ color: 'red' }}>*</span></label>
-                                <InputText
-                                    id="country"
-                                    value={country}
-                                    onChange={(e) => setCountry(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Enter Country"
-                                />
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                                <label htmlFor="parentEvaluationType">
+                                    Parent Evaluation Type <span style={{ color: 'red' }}>*</span>
+                                </label>
+                                <InputText id="parentEvaluationType" value={parentEvalutionType} onChange={(e) => setParentEvalutionType(e.target.value)} className="w-full" placeholder="Enter Parent Evaluation Type" />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 20%' }}>
-                                <label htmlFor="area">Area Scorecard <span style={{ color: 'red' }}>*</span></label>
-                                <InputText
-                                    id="area"
-                                    value={area}
-                                    onChange={(e) => setArea(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Enter Area"
-                                />
-                                {regionError && <small className="p-error">{regionError}</small>}
-                            </div>
-
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 20%' }}>
-                                <label htmlFor="region">Region <span style={{ color: 'red' }}>*</span></label>
-                                <InputText
-                                    id="region"
-                                    value={region}
-                                    onChange={(e) => setRegion(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Enter Region"
-                                />
-                                {regionError && <small className="p-error">{regionError}</small>}
-                            </div>
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 20%' }}>
-                                <label htmlFor="comment">Comment <span style={{ color: 'red' }}>*</span></label>
-                                <InputText
-                                    id="comment"
-                                    value={comment}
-                                    onChange={(e) => setComment(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Enter Comment"
-                                />
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                                <label htmlFor="evaluationType">
+                                    Evaluation Type <span style={{ color: 'red' }}>*</span>
+                                </label>
+                                <InputText id="evaluationType" value={evaluationType} onChange={(e) => setEvaluationType(e.target.value)} className="w-full" placeholder="Evaluation Type" />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
                         </div>
 
                         {/* Action Buttons */}
                         <div className="flex justify-content-end gap-3 mt-3">
-                            <Button label="Cancel" className="cancle-btn-outline" onClick={handleTogglePanel} />
-                            <Button label="Save" className='save-btn' />
+                            <Button label="Cancel" className="cancle-btn-outline" />
+                            <Button label="Save" className="save-btn" />
                         </div>
                     </div>
-                }
+                )}
+                <div className="flex gap-2 justify-content-between align-items-center mt-2">
+                    <div className="flex gap-2">
+                        <Dropdown placeholder="Filter" className="w-10rem" showClear />
+                        <Dropdown placeholder="Filter" className="w-10rem" showClear />
 
-                <div className="flex gap-2 justify-content-between align-items-center mt-3">
-
-                    <div className='flex gap-2'>
-                        <Dropdown
-                            placeholder="Filter"
-                            className="w-10rem"
-                            showClear
-                        />
-                        <Dropdown
-                            placeholder="Filter"
-                            className="w-10rem"
-                            showClear
-                        />
-
-                        <Dropdown
-                            placeholder="Filter"
-                            className="w-10rem"
-                            showClear
-                        />
+                        <Dropdown placeholder="Filter" className="w-10rem" showClear />
                     </div>
 
-                    <div className='flex'>
+                    <div className="flex">
                         <span className="p-input-icon-left">
                             <i className="pi pi-search" />
-                            <InputText
-                                value={searchText}
-                                onChange={(e) => setSearchText(e.target.value)}
-                                placeholder="Search"
-                                className="w-full"
-                            />
+                            <InputText value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search" className="w-full" />
                         </span>
                     </div>
-
                 </div>
-
                 <div className="mt-3">
                     {isFetchingRegions ? (
                         <TableSkeletonSimple columns={2} rows={5} />
@@ -398,12 +297,18 @@ function AreaBase() {
                             //     regionId: item?.regionId,
                             //     regionName: item?.regionName
                             // }))}
-                            data={AreaList}
+                            data={EvaluationTypeList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
-                            showGridlines
                             columns={[
-
+                                // {
+                                //     header: 'Role ID',
+                                //     field: 'roleId',
+                                //     filter: true,
+                                //     sortable: true,
+                                //     bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                //     filterPlaceholder: 'Role ID'
+                                // },
                                 {
                                     header: 'Sr. No.',
                                     body: (data: any, options: any) => {
@@ -415,33 +320,19 @@ function AreaBase() {
                                     bodyStyle: { minWidth: 50, maxWidth: 50 }
                                 },
                                 {
-                                    header: 'COUNTRY',
-                                    field: 'country',
+                                    header: 'Parent Evaluation Type',
+                                    field: 'parentEvaluationType',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
-                                    filterPlaceholder: 'Country'
+                                    filterPlaceholder: 'Role'
                                 },
                                 {
-                                    header: 'AREA SCORECARD',
-                                    field: 'areaScorecard',
+                                    header: 'Evaluation Type',
+                                    field: 'evaluationType',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
-                                    filterPlaceholder: 'Area Scorecard'
-                                },
-                                {
-                                    header: 'REGION',
-                                    field: 'region',
-                                    filter: true,
-                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
-                                    filterPlaceholder: 'Region'
-                                },
-                                {
-                                    header: 'COMMENT',
-                                    field: 'comment',
-                                    filter: true,
-                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
-                                    filterPlaceholder: 'Comment'
-                                },
+                                    filterPlaceholder: 'Role'
+                                }
                             ]}
                             // onLoad={(params: any) => fetchData(params)}
                             onDelete={(item: any) => onRowSelect(item, 'delete')}
@@ -463,7 +354,6 @@ function AreaBase() {
                     }
                     onHide={closeDeleteDialog}
                 >
-
                     <div className="flex flex-column w-full surface-border p-2 text-center gap-4">
                         <i className="pi pi-info-circle text-6xl" style={{ marginRight: 10, color: '#DF1740' }}></i>
 
@@ -474,7 +364,6 @@ function AreaBase() {
                     </div>
                 </Dialog>
             </div>
-
 
             {showFileUploadDialog && (
                 <ReusableFileUploadDialog
@@ -488,15 +377,13 @@ function AreaBase() {
                     apiEndpoint="/mrkt/api/mrkt/bulkuploadmaster"
                     maxFileSizeInBytes={1 * 1024 * 1024} // 1MB
                     acceptedFileExtensions={['xlsx', 'xls', 'xlsm']}
-
                     onHideDialog={() => setShowFileUploadDialog(false)}
                     // onUploadSuccess={handleDialogUploadSuccess}
                     onUploadSuccess={() => setShowFileUploadDialog(false)}
                 />
             )}
-
-        </div >
-    )
+        </div>
+    );
 }
 
-export default AreaBase
+export default EvaluationType;

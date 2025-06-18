@@ -865,7 +865,7 @@ $spacing-sizes: (
 /* Add highlight effect for editable fields */
 .p-highlight {
   transition: all 0.2s;
-  box-shadow: 0 0 0 1px #6366F1;
+  // box-shadow: 0 0 0 1px #6366F1;
 }
 
 /* Add hover effect for non-editable fields */
@@ -1082,6 +1082,9 @@ div[style*="cursor: pointer"]:hover {
   color: var(--primary-color) !important;
 }
 
+ .p-submenu-list {
+    z-index: 5 !important;
+ }
 //input fields panel
 .input-fields-add-new{
   background-color: #F8FAFC;

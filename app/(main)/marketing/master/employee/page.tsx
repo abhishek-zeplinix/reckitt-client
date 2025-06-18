@@ -25,159 +25,162 @@ const ACTIONS = {
     DELETE: 'delete'
 };
 
-const vendorList = [
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    },
-    {
-        vendorCode: "0000345575",
-        vendorName: "Havas Media Peru SAC",
-        defaultParentVendor: "Havas Group",
-        vendorNameGiven: "Havas Media",
-        company: "PE02-RB Peru",
-        bu: "Health",
-        country: "ES-Spain",
-        areaScorecard: "Europe",
-        mraRegion: "Iberia"
-    }
-]
 
-function AreaBase() {
+const EmployeeList = [
+    {
+        assessorGroup: "Reckitt",
+        userGroup: "ProcurementIndirectGlobalmarketing",
+        scorecardRole: "Reviewer",
+        department: "Procurement",
+        status: "Active",
+        firstName: "Employee",
+        lastName: "Employee jr.",
+        email: "employee1@reckitt.com",
+        regulatoryRegion: "Netherlands",
+        location: "NL, Amsterdam, ENA HQ",
+        typeOfLocation: "Office",
+        positionTitle: "Sr. Buyer",
+        directIndirect: "Indirect",
+        globalLocal: "Global",
+        division: "Marketing",
+        seniority: "LT"
+    },
+    {
+        assessorGroup: "Reckitt",
+        userGroup: "Procurement/Indirect/Global/marketing",
+        scorecardRole: "Admin",
+        department: "Procurement",
+        status: "Active",
+        firstName: "Employee",
+        lastName: "Employee jr.",
+        email: "employee1@reckitt.com",
+        regulatoryRegion: "Netherlands",
+        location: "NL, Amsterdam, ENA HQ",
+        typeOfLocation: "Office",
+        positionTitle: "Sr. Buyer",
+        directIndirect: "Indirect",
+        globalLocal: "Global",
+        division: "Marketing",
+        seniority: "LT"
+    },
+    {
+        assessorGroup: "Agency",
+        userGroup: "Procurement/Indirect/Global/marketing",
+        scorecardRole: "Evaluator",
+        department: "Procurement",
+        status: "Active",
+        firstName: "Employee",
+        lastName: "Employee jr.",
+        email: "employee1@agency.com",
+        regulatoryRegion: "Netherlands",
+        location: "NL, Amsterdam, ENA HQ",
+        typeOfLocation: "Office",
+        positionTitle: "Sr. Buyer",
+        directIndirect: "Indirect",
+        globalLocal: "Global",
+        division: "Marketing",
+        seniority: "LT"
+    },
+    {
+        assessorGroup: "Reckitt",
+        userGroup: "Procurement/Indirect/Global/marketing",
+        scorecardRole: "Creator",
+        department: "Procurement",
+        status: "Active",
+        firstName: "Employee",
+        lastName: "Employee jr.",
+        email: "employee1@reckitt.com",
+        regulatoryRegion: "Netherlands",
+        location: "NL, Amsterdam, ENA HQ",
+        typeOfLocation: "Office",
+        positionTitle: "Sr. Buyer",
+        directIndirect: "Indirect",
+        globalLocal: "Global",
+        division: "Marketing",
+        seniority: "LT"
+    },
+    {
+        assessorGroup: "Reckitt",
+        userGroup: "Procurement/Indirect/Global/marketing",
+        scorecardRole: "Admin",
+        department: "Procurement",
+        status: "Active",
+        firstName: "Employee",
+        lastName: "Employee jr.",
+        email: "employee1@reckitt.com",
+        regulatoryRegion: "Netherlands",
+        location: "NL, Amsterdam, ENA HQ",
+        typeOfLocation: "Office",
+        positionTitle: "Sr. Buyer",
+        directIndirect: "Indirect",
+        globalLocal: "Global",
+        division: "Marketing",
+        seniority: "LT"
+    },
+    {
+        assessorGroup: "Agency",
+        userGroup: "Procurement/Indirect/Global/marketing",
+        scorecardRole: "Evaluator",
+        department: "Procurement",
+        status: "Active",
+        firstName: "Employee",
+        lastName: "Employee jr.",
+        email: "employee1@agency.com",
+        regulatoryRegion: "Netherlands",
+        location: "NL, Amsterdam, ENA HQ",
+        typeOfLocation: "Office",
+        positionTitle: "Sr. Buyer",
+        directIndirect: "Indirect",
+        globalLocal: "Global",
+        division: "Marketing",
+        seniority: "LT"
+    },
+    {
+        assessorGroup: "Reckitt",
+        userGroup: "ProcurementIndirectGlobalmarketing",
+        scorecardRole: "Reviewer",
+        department: "Procurement",
+        status: "Active",
+        firstName: "Employee",
+        lastName: "Employee jr.",
+        email: "employee1@reckitt.com",
+        regulatoryRegion: "Netherlands",
+        location: "NL, Amsterdam, ENA HQ",
+        typeOfLocation: "Office",
+        positionTitle: "Sr. Buyer",
+        directIndirect: "Indirect",
+        globalLocal: "Global",
+        division: "Marketing",
+        seniority: "LT"
+    },
+    {
+        assessorGroup: "Reckitt",
+        userGroup: "ProcurementIndirectGlobalmarketing",
+        scorecardRole: "Reviewer",
+        department: "Procurement",
+        status: "Active",
+        firstName: "Employee",
+        lastName: "Employee jr.",
+        email: "employee1@reckitt.com",
+        regulatoryRegion: "Netherlands",
+        location: "NL, Amsterdam, ENA HQ",
+        typeOfLocation: "Office",
+        positionTitle: "Sr. Buyer",
+        directIndirect: "Indirect",
+        globalLocal: "Global",
+        division: "Marketing",
+        seniority: "LT"
+    },
+];
+
+function EmployeeData() {
     const [region, setRegion] = useState<string>('');
-    const [vendorCode, setVendorCode] = useState<string>('');
-    const [area, setArea] = useState<string>('');
-    const [country, setCountry] = useState<string>('');
-    const [vendorName, setVendorName] = useState<string>('');
-    const [defaultParentVendor, setDefaultParentVendor] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [firstName, setFirstName] = useState<string>('');
+    const [lastName, setLastName] = useState<string>('');
+    const [department, setDepartment] = useState<string>('');
+    const [scorecardRole, setScorecardRole] = useState<string>('');
+    const [buNew, setBUNew] = useState<string>('');
     const [vendorNameGiven, setVendorNameGiven] = useState<string>('');
     const [company, setCompany] = useState<string>('');
     const [bu, setBU] = useState<string>('');
@@ -348,7 +351,7 @@ function AreaBase() {
                 <div className="flex flex-wrap justify-content-between align-items-center mb-2">
                     {/* Title + Breadcrumb Block */}
                     <div className="flex flex-column">
-                        <h2 className="m-0">Vendor Base</h2>
+                        <h2 className="m-0">Employee Data</h2>
                         <p className="text-sm text-gray-600 mt-1"><Breadcrumbs /></p>
                     </div>
 
@@ -376,77 +379,74 @@ function AreaBase() {
 
                 {
                     togglePanel &&
-                    <div className="flex flex-column gap-4 w-full border-1 border-round surface-border p-3 input-fields-add-new">
+                    <div className="relative  flex flex-column gap-4 w-full border-1 border-round surface-border p-3 input-fields-add-new">
 
                         {/* Input Fields */}
                         <div className="flex flex-wrap w-full justify-content-between gap-4 ">
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="country">Vendor Code<span style={{ color: 'red' }}>*</span></label>
+                                <label htmlFor="Email ID">Email ID<span style={{ color: 'red' }}>*</span></label>
                                 <InputText
-                                    id="vendor-code"
-                                    value={vendorCode}
-                                    onChange={(e) => setVendorCode(e.target.value)}
+                                    id="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className="w-full"
-                                    placeholder="Enter Vendor Code"
+                                    placeholder="Enter Email ID"
                                 />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
 
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="BU">BU <span style={{ color: 'red' }}>*</span></label>
-                                <Dropdown
-                                    id="bu"
-                                    // value={templateTypeId}
-                                    // options={templateTypeOptions}
-                                    onChange={(e) => setBU(e.value)}
-                                    placeholder="Select BU"
-                                    className="w-full sm:w-30rem"
-                                    filter
-                                    showClear
-                                // disabled={loading || !reviewTypeId}
+                                <label htmlFor="First Name">First Name <span style={{ color: 'red' }}>*</span></label>
+                                <InputText
+                                    id="firstName"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    className="w-full"
+                                    placeholder="Enter First Name"
                                 />
-
+                                {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
+
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="country">Country <span style={{ color: 'red' }}>*</span></label>
+                                <label htmlFor="Last Name">Last Name <span style={{ color: 'red' }}>*</span></label>
                                 <InputText
-                                    id="country"
-                                    value={country}
-                                    onChange={(e) => setCountry(e.target.value)}
+                                    id="lastName"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
                                     className="w-full"
-                                    placeholder="Enter Country"
+                                    placeholder="Enter Last Name"
                                 />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="country">Vendor Name<span style={{ color: 'red' }}>*</span></label>
+                                <label htmlFor="Department">Department<span style={{ color: 'red' }}>*</span></label>
                                 <InputText
-                                    id="vendor-name"
-                                    value={vendorName}
-                                    onChange={(e) => setVendorName(e.target.value)}
+                                    id="department"
+                                    value={department}
+                                    onChange={(e) => setDepartment(e.target.value)}
                                     className="w-full"
-                                    placeholder="Enter Vendor Name"
+                                    placeholder="Enter Department"
                                 />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="country">Default Parent Vendor<span style={{ color: 'red' }}>*</span></label>
+                                <label htmlFor="Scorecard Role">Scorecard Role<span style={{ color: 'red' }}>*</span></label>
                                 <InputText
-                                    id="default-parent"
-                                    value={defaultParentVendor}
-                                    onChange={(e) => setDefaultParentVendor(e.target.value)}
+                                    id="scorecard-role"
+                                    value={scorecardRole}
+                                    onChange={(e) => setScorecardRole(e.target.value)}
                                     className="w-full"
-                                    placeholder="Enter Default Parent Vendor"
+                                    placeholder="Enter Scorecard Role"
                                 />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="country">Vendor Name Given<span style={{ color: 'red' }}>*</span></label>
+                                <label htmlFor="Vendor Name Given">Vendor Name Given<span style={{ color: 'red' }}>*</span></label>
                                 <InputText
                                     id="vendor-name-given"
                                     value={vendorNameGiven}
@@ -460,11 +460,35 @@ function AreaBase() {
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
                                 <label htmlFor="country">Company</label>
                                 <InputText
-                                    id="comapany"
+                                    id="company"
                                     value={company}
                                     onChange={(e) => setCompany(e.target.value)}
                                     className="w-full"
                                     placeholder="Enter Company"
+                                />
+                                {regionError && <small className="p-error">{regionError}</small>}
+                            </div>
+
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                                <label htmlFor="BU">BU</label>
+                                <InputText
+                                    id="bu"
+                                    value={bu}
+                                    onChange={(e) => setBU(e.target.value)}
+                                    className="w-full"
+                                    placeholder="Enter BU"
+                                />
+                                {regionError && <small className="p-error">{regionError}</small>}
+                            </div>
+
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                                <label htmlFor="BU New">BU New</label>
+                                <InputText
+                                    id="bu-new"
+                                    value={buNew}
+                                    onChange={(e) => setBUNew(e.target.value)}
+                                    className="w-full"
+                                    placeholder="Enter BU New"
                                 />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
@@ -478,7 +502,6 @@ function AreaBase() {
                         </div>
                     </div>
                 }
-
 
                 <div className="flex gap-2 justify-content-between align-items-center mt-3">
 
@@ -515,7 +538,6 @@ function AreaBase() {
 
                 </div>
 
-
                 <div className="mt-3">
                     {isFetchingRegions ? (
                         <TableSkeletonSimple columns={2} rows={5} />
@@ -528,12 +550,11 @@ function AreaBase() {
                             isView={false}
                             isEdit={true} // show edit button
                             isDelete={true} // show delete button
-                            data={vendorList}
+                            data={EmployeeList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             showGridlines
                             columns={[
-
                                 {
                                     header: 'Sr. No.',
                                     body: (data: any, options: any) => {
@@ -545,60 +566,116 @@ function AreaBase() {
                                     bodyStyle: { minWidth: 50, maxWidth: 50 }
                                 },
                                 {
-                                    header: 'Vendor Code',
-                                    field: 'vendorCode',
-                                    filter: true,
-                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
-                                    filterPlaceholder: 'Vendor Code'
-                                },
-                                {
-                                    header: 'Default Parent Vendor',
-                                    field: 'defaultParentVendor',
-                                    filter: true,
-                                    bodyStyle: { minWidth: 180, maxWidth: 200 },
-                                    filterPlaceholder: 'Default Parent Vendor'
-                                },
-                                {
-                                    header: 'Vendor Name Given',
-                                    field: 'vendorNameGiven',
-                                    filter: true,
-                                    bodyStyle: { minWidth: 180, maxWidth: 200 },
-                                    filterPlaceholder: 'Vendor Name Given'
-                                },
-                                {
-                                    header: 'Company',
-                                    field: 'company',
+                                    header: 'Assessor Group',
+                                    field: 'assessorGroup',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 180 },
-                                    filterPlaceholder: 'Company'
+                                    filterPlaceholder: 'Assessor Group'
                                 },
                                 {
-                                    header: 'BU',
-                                    field: 'bu',
+                                    header: 'User Group',
+                                    field: 'userGroup',
                                     filter: true,
-                                    bodyStyle: { minWidth: 100, maxWidth: 120 },
-                                    filterPlaceholder: 'BU'
+                                    bodyStyle: { minWidth: 150, maxWidth: 180, overflowWrap: 'break-word' },
+                                    filterPlaceholder: 'User Group'
                                 },
                                 {
-                                    header: 'Country',
-                                    field: 'country',
-                                    filter: true,
-                                    bodyStyle: { minWidth: 120, maxWidth: 150 },
-                                    filterPlaceholder: 'Country'
-                                },
-                                {
-                                    header: 'Area Scorecard',
-                                    field: 'areaScorecard',
+                                    header: 'Scorecard Role',
+                                    field: 'scorecardRole',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 180 },
-                                    filterPlaceholder: 'Area Scorecard'
+                                    filterPlaceholder: 'Scorecard Role'
                                 },
                                 {
-                                    header: 'MRA Region',
-                                    field: 'mraRegion',
+                                    header: 'Department',
+                                    field: 'department',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 180 },
-                                    filterPlaceholder: 'MRA Region'
+                                    filterPlaceholder: 'Department'
+                                },
+                                {
+                                    header: 'STATUS',
+                                    field: 'status',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 120, maxWidth: 120 },
+                                    filterPlaceholder: 'STATUS'
+                                },
+                                {
+                                    header: 'First Name',
+                                    field: 'firstName',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 180 },
+                                    filterPlaceholder: 'First Name'
+                                },
+                                {
+                                    header: 'Last Name',
+                                    field: 'lastName',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 180 },
+                                    filterPlaceholder: 'Last Name'
+                                },
+                                {
+                                    header: 'Email Address',
+                                    field: 'email',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 200, maxWidth: 250 },
+                                    filterPlaceholder: 'Email Address'
+                                },
+                                {
+                                    header: 'Regulatory Region',
+                                    field: 'regulatoryRegion',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 180 },
+                                    filterPlaceholder: 'Regulatory Region'
+                                },
+                                {
+                                    header: 'Location',
+                                    field: 'location',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 180 },
+                                    filterPlaceholder: 'Location'
+                                },
+                                {
+                                    header: 'Type of location',
+                                    field: 'typeOfLocation',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 180 },
+                                    filterPlaceholder: 'Type of location'
+                                },
+                                {
+                                    header: 'Position Title',
+                                    field: 'positionTitle',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 180 },
+                                    filterPlaceholder: 'Position Title'
+                                },
+                                {
+                                    header: 'Direct/indirect',
+                                    field: 'directIndirect',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 130, maxWidth: 150 },
+                                    filterPlaceholder: 'Direct/indirect'
+                                },
+                                {
+                                    header: 'Global/Local',
+                                    field: 'globalLocal',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 130, maxWidth: 150 },
+                                    filterPlaceholder: 'Global/Local'
+                                },
+                                {
+                                    header: 'Division',
+                                    field: 'division',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 130, maxWidth: 150 },
+                                    filterPlaceholder: 'Division'
+                                },
+                                {
+                                    header: 'Seniority',
+                                    field: 'seniority',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 130, maxWidth: 150 },
+                                    filterPlaceholder: 'Seniority'
                                 }
                             ]}
                             // onLoad={(params: any) => fetchData(params)}
@@ -637,12 +714,10 @@ function AreaBase() {
             {showFileUploadDialog && (
                 <ReusableFileUploadDialog
                     visible={showFileUploadDialog}
-                    // These props would be dynamically set based on which "upload" button was clicked,
-                    // or which master data type the user intends to upload.
-                    header={'Upload Vendors List'}
+                    header={'Upload Employee Data'}
                     uploadContextLabel="This is Context Label"
-                    demoFileLink="https://aistudio.google.com/"
-                    demoFileLabel="Download Vendors Sample Template"
+                    demoFileLink="https://google.com/"
+                    demoFileLabel="Download Employee Data Sample Template"
                     apiEndpoint="/mrkt/api/mrkt/bulkuploadmaster"
                     maxFileSizeInBytes={1 * 1024 * 1024} // 1MB
                     acceptedFileExtensions={['xlsx', 'xls', 'xlsm']}
@@ -657,4 +732,4 @@ function AreaBase() {
     )
 }
 
-export default AreaBase
+export default EmployeeData
