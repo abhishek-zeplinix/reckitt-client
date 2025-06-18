@@ -44,7 +44,7 @@ const ReviewTypeList = [
 ];
 function ReviewType() {
     const [region, setRegion] = useState<any>('');
-    const [reviewType, setReviewType] = useState<any>('');
+    const [reviewType, setReviewType] = useState<any>('Reckitt to Agency');
     const [area, setArea] = useState<any>('');
     const [togglePanel, setTogglePanel] = useState(false);
     const [questionPanel, setQuestionPanel] = useState(false);
@@ -65,14 +65,14 @@ function ReviewType() {
     const [mode, setMode] = useState<'create' | 'upload'>('create');
 
     // Form states
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [minRating, setMinRating] = useState('');
-    const [maxRating, setMaxRating] = useState('');
-    const [compulsory, setCompulsory] = useState<boolean | null>(null);
-    const [commentCondition, setCommentCondition] = useState('');
-    const [segment, setSegment] = useState('');
-    const [ratio, setRatio] = useState('');
+    const [title, setTitle] = useState('Client provides a clear and consistent strategic direction with relevant research and data as part of their briefs (open to do more research if needed).');
+    const [description, setDescription] = useState('description');
+    const [minRating, setMinRating] = useState('1');
+    const [maxRating, setMaxRating] = useState('5');
+    const [compulsory, setCompulsory] = useState<boolean | null>(true);
+    const [commentCondition, setCommentCondition] = useState('comment');
+    const [segment, setSegment] = useState('STRATEGY & PLANNING');
+    const [ratio, setRatio] = useState('50');
     const [na, setNa] = useState(true);
 
     const compulsoryOptions = [
@@ -416,6 +416,8 @@ function ReviewType() {
                             data={ReviewTypeList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
+                            stripedRows
                             columns={[
                                 // {
                                 //     header: 'Role ID',

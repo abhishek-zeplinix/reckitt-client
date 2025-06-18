@@ -121,18 +121,7 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                 //     separator: true,
                 //     visible: checkPermission('manage_supply_glossary')
                 // },
-                {
-                    label: 'Escalation',
-                    icon: 'pi pi-wrench',
-                    command: () => handleNavigation('/evaluation-setup'),
-                    visible: checkPermission('manage_supply_glossary')
-                },
-                {
-                    label: 'Analysis & Setup',
-                    icon: 'pi pi-chart-line',
-                    command: () => handleNavigation('/evaluation-progress'),
-                    visible: checkPermission('manage_supply_glossary')
-                }
+               
             ]
         }
 
