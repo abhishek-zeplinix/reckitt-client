@@ -94,11 +94,12 @@ const stats = [
 // ];
 const EvaluationPeriodList = [
     {
+        reviewType: 'Reckitt to Agency',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Allerfre',
         startDate: '2025-06-12',
         endDate: '2025-06-29',
         status: 'Active',
@@ -106,11 +107,12 @@ const EvaluationPeriodList = [
         total: 12
     },
     {
+        reviewType: 'Reckitt to Agency',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Allerfre',
         startDate: '2025-06-12',
         endDate: '2025-06-29',
         status: 'Completed',
@@ -118,11 +120,12 @@ const EvaluationPeriodList = [
         total: 12
     },
     {
+        reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Allerfre',
         startDate: '2025-06-12',
         endDate: '2025-06-29',
         status: 'In Progress',
@@ -130,11 +133,12 @@ const EvaluationPeriodList = [
         total: 12
     },
     {
+        reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: ' Attest',
         startDate: '2025-06-12',
         endDate: '2025-06-29',
         status: 'Active',
@@ -142,11 +146,12 @@ const EvaluationPeriodList = [
         total: 12
     },
     {
+        reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Buprex',
         startDate: '2025-06-12',
         endDate: '2025-06-29',
         status: 'Active',
@@ -154,11 +159,12 @@ const EvaluationPeriodList = [
         total: 12
     },
     {
+        reviewType: 'Reckitt to Agency',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Attest',
         startDate: '2025-06-12',
         endDate: '2025-06-29',
         status: 'Active',
@@ -178,46 +184,51 @@ const kpiCards = [
 const EvaluationPopupList = [
     {
         evaluationType: 'Media-TV',
+        reviewType: 'Reckitt to Agency',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Allerfre',
         vendor: 30,
         userGroups: ['ProcurementDirectLocalPPM (Evaluator)']
     },
     {
+        reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Allerfre',
         vendor: 12,
         userGroups: ['ProcurementDirectLocalPPM (Reviewer)']
     },
     {
+        reviewType: 'Reckitt to Agency',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Allerfre',
         vendor: 57,
         userGroups: ['ProcurementDirectGlobalEMO (Evaluator)', 'ProcurementIndirectLocalIMEX (Creator)', 'ProcurementDirectLocalPPM (Reviewer)', 'ProcurementDirectLocalPPM (Evaluator)']
     },
     {
+        reviewType: 'Reckitt to Agency',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Allerfre',
         vendor: 26,
         userGroups: ['ProcurementDirectGlobalEMO (Evaluator)']
     },
     {
+        reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Allerfre',
         startDate: '2025-06-12',
         endDate: '2025-06-29',
         status: 'Active',
@@ -226,11 +237,12 @@ const EvaluationPopupList = [
         userGroups: ['ProcurementDirectGlobalEMO (Evaluator)', 'ProcurementIndirectLocalIMEX (Creator)', 'ProcurementDirectLocalPPM (Reviewer)', 'ProcurementDirectLocalPPM (Evaluator)']
     },
     {
+        reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
-        brand: 'Allerfre, Attest, Buprex...+3',
+        brand: 'Allerfre',
         startDate: '2025-06-12',
         endDate: '2025-06-29',
         status: 'Active',
@@ -534,6 +546,13 @@ function EvaluationCalendar() {
                                     bodyStyle: { minWidth: 50, maxWidth: 50 }
                                 },
                                 {
+                                    header: 'Review Type',
+                                    field: 'reviewType',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Role'
+                                },
+                                {
                                     header: 'Evaluation Type',
                                     field: 'evaluationType',
                                     filter: true,
@@ -711,6 +730,13 @@ function EvaluationCalendar() {
                                                 return <span>{srNo}</span>;
                                             },
                                             bodyStyle: { minWidth: 50, maxWidth: 50 }
+                                        },
+                                        {
+                                            header: 'Review Type',
+                                            field: 'reviewType',
+                                            filter: true,
+                                            bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                            filterPlaceholder: 'Role'
                                         },
                                         {
                                             header: 'Evaluation Type',
