@@ -16,7 +16,7 @@ interface TopNavBarProps {
 
 const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
     const router = useRouter();
-    const { hasPermission, hasAnyPermission, isSupplier } = useAuth();
+    const { hasPermission, hasAnyPermission } = useAuth();
     const { user } = useAppContext();
     const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
     const mobileMenuRef = useRef<Menu>(null);
@@ -54,7 +54,7 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                 {
                     label: 'Dashboard',
                     icon: 'pi pi-cog',
-                    command: () => handleNavigation('/marketing-master'),
+                    command: () => handleNavigation('/'),
                     visible: checkPermission('manage_faq')
                 },
                 {
@@ -102,19 +102,19 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                 {
                     label: 'Employee Data',
                     icon: 'pi pi-file-edit',
-                    command: () => handleNavigation('/marketing-evaluation'),
+                    command: () => handleNavigation('/marketing/master/employee'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 {
                     label: 'Vendor Base',
                     icon: 'pi pi-info-circle',
-                    command: () => handleNavigation('/marketing-details'),
+                    command: () => handleNavigation('/marketing/master/vendor-base'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 {
                     label: 'Question Base',
                     icon: 'pi pi-question-circle',
-                    command: () => handleNavigation('marketing/marketing-details-dev'),
+                    command: () => handleNavigation('/marketing/marketing-details-dev'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 {
@@ -127,61 +127,11 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                 //     separator: true,
                 //     visible: checkPermission('manage_supply_glossary')
                 // },
-                {
-                    label: 'Escalation',
-                    icon: 'pi pi-wrench',
-                    command: () => handleNavigation('/evaluation-setup'),
-                    visible: checkPermission('manage_supply_glossary')
-                },
-                {
-                    label: 'Analysis & Setup',
-                    icon: 'pi pi-chart-line',
-                    command: () => handleNavigation('/evaluation-progress'),
-                    visible: checkPermission('manage_supply_glossary')
-                }
+               
             ]
         }
 
-        // {
-        //     label: 'Reports',
-        //     icon: 'pi pi-chart-bar',
-        //     visible: checkPermission((user) => get(user, 'role') === 'admin' || get(user, 'isSuperAdmin')),
-        //     items: [
-        //         {
-        //             label: 'Sales Report',
-        //             icon: 'pi pi-dollar',
-        //             command: () => handleNavigation('/'),
-        //             visible: checkPermission('view_sales_reports')
-        //         },
-        //         {
-        //             label: 'User Analytics',
-        //             icon: 'pi pi-users',
-        //             command: () => handleNavigation('/'),
-        //             visible: checkPermission('view_analytics')
-        //         },
-        //         {
-        //             separator: true
-        //         },
-        //         {
-        //             label: 'Export Data',
-        //             icon: 'pi pi-download',
-        //             items: [
-        //                 {
-        //                     label: 'CSV Export',
-        //                     icon: 'pi pi-file',
-        //                     command: () => handleNavigation('/'),
-        //                     visible: checkPermission('export_data')
-        //                 },
-        //                 {
-        //                     label: 'PDF Export',
-        //                     icon: 'pi pi-file-pdf',
-        //                     command: () => handleNavigation('/'),
-        //                     visible: checkPermission('export_data')
-        //                 }
-        //             ]
-        //         }
-        //     ]
-        // },
+       
     ];
 
     // Filter menu items based on visibility
@@ -265,17 +215,19 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
         </div>
     );
 
+    console.log('Filtered Menu Items:', JSON.stringify(filteredMenuItems, null, 2));
+
     return (
         <div className={`surface-0 shadow-2 ${className}`}>
             <Menubar
                 model={filteredMenuItems}
                 // start={start}
                 // end={end}
-                className="border-none surface-0 font-bold app-top-menu-custom"
+                className="border-none surface-0 font-bold"
                 style={{
                     padding: '0.75rem 1rem',
                     borderRadius: '0'
-                }}
+                }}  
             />
         </div>
     );

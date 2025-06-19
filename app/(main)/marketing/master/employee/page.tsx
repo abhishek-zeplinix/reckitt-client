@@ -50,7 +50,7 @@ const EmployeeList = [
         userGroup: "Procurement/Indirect/Global/marketing",
         scorecardRole: "Admin",
         department: "Procurement",
-        status: "Active", 
+        status: "Active",
         firstName: "Employee",
         lastName: "Employee jr.",
         email: "employee1@reckitt.com",
@@ -104,7 +104,7 @@ const EmployeeList = [
         userGroup: "Procurement/Indirect/Global/marketing",
         scorecardRole: "Admin",
         department: "Procurement",
-        status: "Active", 
+        status: "Active",
         firstName: "Employee",
         lastName: "Employee jr.",
         email: "employee1@reckitt.com",
@@ -117,7 +117,7 @@ const EmployeeList = [
         division: "Marketing",
         seniority: "LT"
     },
-     {
+    {
         assessorGroup: "Agency",
         userGroup: "Procurement/Indirect/Global/marketing",
         scorecardRole: "Evaluator",
@@ -173,16 +173,63 @@ const EmployeeList = [
     },
 ];
 
+const Departments = [
+    {
+        id: "1",
+        department: "Marketing"
+    },
+    {
+        id: "2",
+        department: "Quality"
+    },
+    {
+        id: "3",
+        department: "Sustainability"
+    },
+    {
+        id: "4",
+        department: "Planning"
+    },
+    {
+        id: "5",
+        department: "R&D"
+    },
+    {
+        id: "6",
+        department: "Supply Service"
+    },
+    {
+        id: "7",
+        department: "Procurement"
+    }
+]
+
+const Roles = [
+    {
+        id: "1",
+        role: "Admin"
+    },
+    {
+        id: "2",
+        role: "Evaluator"
+    },
+    {
+        id: "3",
+        role: "Reviewer"
+    },
+    {
+        id: "4",
+        role: "Creator"
+    }
+]
+
 function EmployeeData() {
     const [region, setRegion] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [firstName, setFirstName] = useState<string>('');
-    const [lastName, setLastName] = useState<string>('');
-    const [department, setDepartment] = useState<string>('');
-    const [scorecardRole, setScorecardRole] = useState<string>('');
-    const [buNew, setBUNew] = useState<string>('');
-    const [vendorNameGiven, setVendorNameGiven] = useState<string>('');
-    const [company, setCompany] = useState<string>('');
+    const [email, setEmail] = useState<string>('employee1@reckitt.com');
+    const [firstName, setFirstName] = useState<string>('Employee');
+    const [lastName, setLastName] = useState<string>('Employee jr');
+    const [department, setDepartment] = useState<string>('Procurement');
+    const [scorecardRole, setScorecardRole] = useState<string>('Reviewer');
     const [bu, setBU] = useState<string>('');
 
     const [togglePanel, setTogglePanel] = useState(false)
@@ -348,7 +395,7 @@ function EmployeeData() {
     return (
         <div className='card'>
             <div className='inner p-4 border-1 surface-border border-round'>
-                <div className="flex flex-wrap justify-content-between align-items-center mb-4">
+                <div className="flex flex-wrap justify-content-between align-items-center mb-2">
                     {/* Title + Breadcrumb Block */}
                     <div className="flex flex-column">
                         <h2 className="m-0">Employee Data</h2>
@@ -379,11 +426,11 @@ function EmployeeData() {
 
                 {
                     togglePanel &&
-                    <div className="flex flex-column gap-4 w-full border-1 border-round surface-border p-3 input-fields-add-new">
+                    <div className="relative  flex flex-column gap-4 w-full border-1 border-round surface-border p-3 input-fields-add-new">
 
                         {/* Input Fields */}
                         <div className="flex flex-wrap w-full justify-content-between gap-4 ">
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 15%' }}>
                                 <label htmlFor="Email ID">Email ID<span style={{ color: 'red' }}>*</span></label>
                                 <InputText
                                     id="email"
@@ -396,7 +443,7 @@ function EmployeeData() {
                             </div>
 
 
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 15%' }}>
                                 <label htmlFor="First Name">First Name <span style={{ color: 'red' }}>*</span></label>
                                 <InputText
                                     id="firstName"
@@ -409,7 +456,7 @@ function EmployeeData() {
                             </div>
 
 
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 15%' }}>
                                 <label htmlFor="Last Name">Last Name <span style={{ color: 'red' }}>*</span></label>
                                 <InputText
                                     id="lastName"
@@ -421,77 +468,48 @@ function EmployeeData() {
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="Department">Department<span style={{ color: 'red' }}>*</span></label>
-                                <InputText
+
+
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 15%' }}>
+                                <label htmlFor="Department">
+                                    Department <span style={{ color: 'red' }}>*</span>
+                                </label>
+
+                                <Dropdown
                                     id="department"
                                     value={department}
                                     onChange={(e) => setDepartment(e.target.value)}
+                                    options={Departments.map(item => ({
+                                        label: item.department,
+                                        value: item.department
+                                    }))}
                                     className="w-full"
-                                    placeholder="Enter Department"
+                                    placeholder="Select Department"
                                 />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="Scorecard Role">Scorecard Role<span style={{ color: 'red' }}>*</span></label>
-                                <InputText
+                            
+
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 15%' }}>
+                                <label htmlFor="Scorecard Role">
+                                    Scorecard Role <span style={{ color: 'red' }}>*</span>
+                                </label>
+
+                                <Dropdown
                                     id="scorecard-role"
                                     value={scorecardRole}
                                     onChange={(e) => setScorecardRole(e.target.value)}
+                                    options={Roles.map(item => ({
+                                        label: item.role,
+                                        value: item.role
+                                    }))}
                                     className="w-full"
-                                    placeholder="Enter Scorecard Role"
+                                    placeholder="Select Role"
                                 />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="Vendor Name Given">Vendor Name Given<span style={{ color: 'red' }}>*</span></label>
-                                <InputText
-                                    id="vendor-name-given"
-                                    value={vendorNameGiven}
-                                    onChange={(e) => setVendorNameGiven(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Enter Vendor Name Given"
-                                />
-                                {regionError && <small className="p-error">{regionError}</small>}
-                            </div>
-
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="country">Company</label>
-                                <InputText
-                                    id="company"
-                                    value={company}
-                                    onChange={(e) => setCompany(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Enter Company"
-                                />
-                                {regionError && <small className="p-error">{regionError}</small>}
-                            </div>
-
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="BU">BU</label>
-                                <InputText
-                                    id="bu"
-                                    value={bu}
-                                    onChange={(e) => setBU(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Enter BU"
-                                />
-                                {regionError && <small className="p-error">{regionError}</small>}
-                            </div>
-
-                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
-                                <label htmlFor="BU New">BU New</label>
-                                <InputText
-                                    id="bu-new"
-                                    value={buNew}
-                                    onChange={(e) => setBUNew(e.target.value)}
-                                    className="w-full"
-                                    placeholder="Enter BU New"
-                                />
-                                {regionError && <small className="p-error">{regionError}</small>}
-                            </div>
 
                         </div>
 
@@ -503,9 +521,44 @@ function EmployeeData() {
                     </div>
                 }
 
-                <div className="mt-4">
+                <div className="flex gap-2 justify-content-between align-items-center mt-3">
+
+                    <div className='flex gap-2'>
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+                    </div>
+
+                    <div className='flex'>
+                        <span className="p-input-icon-left">
+                            <i className="pi pi-search" />
+                            <InputText
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
+                                placeholder="Search"
+                                className="w-full"
+                            />
+                        </span>
+                    </div>
+
+                </div>
+
+                <div className="mt-3">
                     {isFetchingRegions ? (
-                        <TableSkeletonSimple columns={2} rows={5} />
+                        <TableSkeletonSimple columns={8} rows={10} />
                     ) : (
                         <CustomDataTable
                             ref={regionList}
@@ -518,6 +571,8 @@ function EmployeeData() {
                             data={EmployeeList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
+                            stripedRows
                             columns={[
                                 {
                                     header: 'Sr. No.',
@@ -540,7 +595,7 @@ function EmployeeData() {
                                     header: 'User Group',
                                     field: 'userGroup',
                                     filter: true,
-                                    bodyStyle: { minWidth: 150, maxWidth: 180, overflowWrap: 'break-word'},
+                                    bodyStyle: { minWidth: 150, maxWidth: 180, overflowWrap: 'break-word' },
                                     filterPlaceholder: 'User Group'
                                 },
                                 {

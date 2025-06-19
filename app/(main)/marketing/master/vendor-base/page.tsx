@@ -25,6 +25,34 @@ const ACTIONS = {
     DELETE: 'delete'
 };
 
+const BuMasterList = [
+    {
+        bu: 'Nutrition ',
+        buNew: '-',
+        effectiveDate: '2/2/2024'
+    },
+    {
+        bu: 'Reckitt',
+        buNew: '-',
+        effectiveDate: '12/2/2025'
+    },
+    {
+        bu: 'Essential Home',
+        buNew: '-',
+        effectiveDate: '4/12/2024'
+    },
+    {
+        bu: 'Health',
+        buNew: '-',
+        effectiveDate: '6/3/2024'
+    },
+    {
+        bu: 'Hygiene',
+        buNew: '-',
+        effectiveDate: '13/2/2024'
+    }
+];
+
 const vendorList = [
     {
         vendorCode: "0000345575",
@@ -37,7 +65,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -48,7 +76,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -59,7 +87,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -70,7 +98,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -81,7 +109,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -92,7 +120,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -103,7 +131,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -114,7 +142,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -125,7 +153,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -136,7 +164,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -147,7 +175,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -158,7 +186,7 @@ const vendorList = [
         areaScorecard: "Europe",
         mraRegion: "Iberia"
     },
-      {
+    {
         vendorCode: "0000345575",
         vendorName: "Havas Media Peru SAC",
         defaultParentVendor: "Havas Group",
@@ -173,14 +201,14 @@ const vendorList = [
 
 function AreaBase() {
     const [region, setRegion] = useState<string>('');
-    const [vendorCode, setVendorCode] = useState<string>('');
-    const [area, setArea] = useState<string>('');
-    const [country, setCountry] = useState<string>('');
+    const [vendorCode, setVendorCode] = useState<string>('0000345575');
+    const [area, setArea] = useState<string>('Europe');
+    const [country, setCountry] = useState<string>('ES-Spain	');
     const [vendorName, setVendorName] = useState<string>('');
-    const [defaultParentVendor, setDefaultParentVendor] = useState<string>('');
-    const [vendorNameGiven, setVendorNameGiven] = useState<string>('');
-    const [company, setCompany] = useState<string>('');
-    const [bu, setBU] = useState<string>('');
+    const [defaultParentVendor, setDefaultParentVendor] = useState<string>('Havas Group');
+    const [vendorNameGiven, setVendorNameGiven] = useState<string>('Havas Media');
+    const [company, setCompany] = useState<string>('PE02-RB Peru');
+    const [bu, setBU] = useState<string>('Health');
 
     const [togglePanel, setTogglePanel] = useState(false)
     const [showFileUploadDialog, setShowFileUploadDialog] = useState(false)
@@ -345,7 +373,7 @@ function AreaBase() {
     return (
         <div className='card'>
             <div className='inner p-4 border-1 surface-border border-round'>
-                <div className="flex flex-wrap justify-content-between align-items-center mb-4">
+                <div className="flex flex-wrap justify-content-between align-items-center mb-2">
                     {/* Title + Breadcrumb Block */}
                     <div className="flex flex-column">
                         <h2 className="m-0">Vendor Base</h2>
@@ -473,13 +501,50 @@ function AreaBase() {
 
                         {/* Action Buttons */}
                         <div className="flex justify-content-end gap-3 mt-3">
-                            <Button label="Cancel" className="cancle-btn-outline" onClick={handleTogglePanel}/>
+                            <Button label="Cancel" className="cancle-btn-outline" onClick={handleTogglePanel} />
                             <Button label="Save" className='save-btn' />
                         </div>
                     </div>
                 }
 
-                <div className="mt-4">
+
+                <div className="flex gap-2 justify-content-between align-items-center mt-3">
+
+                    <div className='flex gap-2'>
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+                    </div>
+
+                    <div className='flex'>
+                        <span className="p-input-icon-left">
+                            <i className="pi pi-search" />
+                            <InputText
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
+                                placeholder="Search"
+                                className="w-full"
+                            />
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div className="mt-3">
                     {isFetchingRegions ? (
                         <TableSkeletonSimple columns={2} rows={5} />
                     ) : (
@@ -494,9 +559,10 @@ function AreaBase() {
                             data={vendorList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
                             columns={[
-                               
-                               {
+
+                                {
                                     header: 'Sr. No.',
                                     body: (data: any, options: any) => {
                                         const normalizedRowIndex = options.rowIndex % limit;

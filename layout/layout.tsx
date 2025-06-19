@@ -15,7 +15,7 @@ import TopLinerLoader from '@/components/TopLineLoader';
 import AppMenuTop from './AppMenuTop';
 
 const Layout = ({ children }: ChildContainerProps) => {
-    const { user, isScroll } = useAppContext();
+    const { user, isScroll, isLoading } = useAppContext();
     const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);
     const topbarRef = useRef<AppTopbarRef>(null);
     const sidebarRef = useRef<HTMLDivElement>(null);
@@ -112,6 +112,15 @@ const Layout = ({ children }: ChildContainerProps) => {
         unbindProfileMenuOutsideClickListener();
     });
 
+    const containerClass = classNames('layout-wrapper', {
+        'layout-overlay': layoutConfig.menuMode === 'overlay',
+        'layout-static': layoutConfig.menuMode === 'static',
+        'layout-static-inactive': layoutState.staticMenuDesktopInactive && layoutConfig.menuMode === 'static',
+        'layout-overlay-active': layoutState.overlayMenuActive,
+        'layout-mobile-active': layoutState.staticMenuMobileActive,
+        'p-input-filled': layoutConfig.inputStyle === 'filled',
+        'p-ripple-disabled': !layoutConfig.ripple
+    });
 
     if (!user) {
         return (
@@ -121,18 +130,28 @@ const Layout = ({ children }: ChildContainerProps) => {
         );
     }
 
+    // if (isLoading) {
+    //     return (
+    //         <>
+    //             <Preloader />
+    //         </>
+    //     );
+    // }
+
+
     return (
         <React.Fragment>
             <TopLinerLoader />
-            <div>
+            <div >
                 <AppTopbar ref={topbarRef} />
 
                 <div className="layout-main-container">
-                    <AppMenuTop  className=''/>
+                    <AppMenuTop className='' />
+
                     <div className="layout-main">
                         {children}
                     </div>
-                    <AppFooter />
+                    {/* <AppFooter /> */}
                 </div>
                 <AppConfig />
                 <div className="layout-mask"></div>

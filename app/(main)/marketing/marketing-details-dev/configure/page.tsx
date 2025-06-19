@@ -11,21 +11,24 @@ import { MultiSelect } from 'primereact/multiselect';
 import { DataTableExpandedRows } from 'primereact/datatable';
 import { Panel } from 'primereact/panel';
 import { FilterMatchMode } from 'primereact/api';
+import { useRouter } from 'next/navigation';
 
 const STORAGE_KEYS = {
     MARKETING_TEMPLATE_QUESTIONS: 'marketingTemplateQuestions',
     FINAL_REVIEW_DATA: 'finalReviewData'
 };
 
-interface Question {
-    id: number;
-    segment?: string;
-    questionTitle: string;
-    minRating: number;
-    maxRating: number;
-    isCompulsary?: { isCompulsary: boolean };
-    // other fields...
-}
+type Question = {
+  id: string;
+  questionTitle: string;
+  questionDescription: string;
+  minRating: number;
+  maxRating: number;
+  isCompulsary: string; // "yes" | "no"
+  ratingComment: string;
+  ratio: number;
+  segment?: string;
+};
 
 const MarketingDetails = () => {
     const toast = useRef<Toast>(null);
@@ -47,7 +50,7 @@ const MarketingDetails = () => {
     const [reviewTypeOptions, setReviewTypeOptions] = useState<{ label: string; value: string }[]>([]);
 
     // Form state
-    const [selectedEval, setSelectedEval] = useState<string | null>(null);
+    // const [selectedEval, setSelectedEval] = useState<string | null>(null);
     const [selectedVendor, setSelectedVendor] = useState<string | null>(null);
     const [selectedChildVendor, setSelectedChildVendor] = useState<string | null>(null);
     const [administrator, setAdministrator] = useState<string>('');
@@ -64,11 +67,12 @@ const MarketingDetails = () => {
     const [selectedQuestions, setSelectedQuestions] = useState<any[]>([]);
     const [comboList, setComboList] = useState<any[]>([]);
     const [savedCombos, setSavedCombos] = useState<any[]>([]);
+    const router = useRouter();
 
     const [editingCombo, setEditingCombo] = useState<any>(null);
     const [isEditing, setIsEditing] = useState(false);
 
-    const [questionsByTemplateType, setQuestionsByTemplateType] = useState<Record<string, any[]>>({});
+    // const [questionsByTemplateType, setQuestionsByTemplateType] = useState<Record<string, any[]>>({});
 
 
     const [filters, setFilters] = useState<any>({
@@ -84,49 +88,258 @@ const MarketingDetails = () => {
     const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
     const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
     const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+    const [selectedEval, setSelectedEval] = useState<string>('');
+const [questionsByTemplateType, setQuestionsByTemplateType] = useState<Record<string, Question[]>>({});
 
-    useEffect(() => {
-        // Flatten all questions from all template types
-        const allQuestions = Object.values(questionsByTemplateType).flat();
+const handleReviewTypeChange = (reviewType: string) => {
+    setSelectedEval(reviewType);
 
-        setSelectedQuestions(allQuestions);
-    }, [questionsByTemplateType]);
+    // Simulate API or static data mapping
+    const mappedQuestions = questionsMapByReviewType[reviewType] || [];
+
+    // Group questions by templateType (if applicable), here assuming all questions belong to one type
+    const groupedByTemplateType = {
+        [reviewType]: mappedQuestions
+    };
+
+    setQuestionsByTemplateType(groupedByTemplateType);
+};
+
+const questionsMapByReviewType: Record<string, Question[]> = {
+  'Reckitt to Agency': [
+    {
+      id: 'q1',
+      questionTitle: 'Client provides a clear and consistent strategic direction with relevant research and data as part of their briefs (open to do more research if needed).',
+      questionDescription: 'Evaluate how well the brand is visible in campaigns.',
+      minRating: 1,
+      maxRating: 5,
+      isCompulsary: 'yes',
+      ratingComment: '',
+      ratio: 10,
+      segment: 'STRATEGY & PLANNING'
+    },
+    {
+      id: 'q2',
+      questionTitle: 'Client provides clear target segments, growth audiences / the community(ies) the brand can disproportionately benefit and creative bullseye per brief and is open to new insights from Agency to drive growth with as part of its Fight and Superior Solutions.',
+      questionDescription: 'Are messages consistent across platforms?',
+      minRating: 1,
+      maxRating: 5,
+      isCompulsary: 'no',
+      ratingComment: '',
+      ratio: 5,
+      segment: 'STRATEGY & PLANNING'
+    },
+    {
+      id: 'q1',
+      questionTitle: 'When briefed to deliver creative, Client greenlights breakthough ideas in line with Brand Fight and/or its Superior Solutions worthy of being shortlisted or winning creative and/or effectiveness awards.',
+      questionDescription: '',
+      minRating: 1,
+      maxRating: 5,
+      isCompulsary: 'yes',
+      ratingComment: '',
+      ratio: 10,
+      segment: 'CREATIVE EFFECTIVENESS'
+    },
+    {
+      id: 'q1',
+      questionTitle: 'Client sets up a cross functional team of experts to encourage multi-channel ideas.',
+      questionDescription: '',
+      minRating: 1,
+      maxRating: 5,
+      isCompulsary: 'yes',
+      ratingComment: '',
+      ratio: 10,
+      segment: 'OMNI-CHANNEL THINKING'
+    },
+  ],
+  'Agency to Reckitt': [
+    {
+      id: 'q3',
+      questionTitle: 'client gives Agency reasonable timelines at the start of the project and plays an active role in ensuring that project timelines are followed and adapting as work progresses.',
+      questionDescription: 'Was the brief clear and actionable?',
+      minRating: 1,
+      maxRating: 5,
+      isCompulsary: 'yes',
+      ratingComment: '',
+      ratio: 8,
+      segment: 'CLIENT-AGENCY PARTNERSHIP'
+    },
+    {
+      id: 'q4',
+      questionTitle: 'Client is transparent about the assigned budget before work commences, and advises Agency when funding limitations can affect ongoing projects.',
+      questionDescription: 'Was feedback given on time?',
+      minRating: 1,
+      maxRating: 5,
+      isCompulsary: 'no',
+      ratingComment: '',
+      ratio: 6,
+      segment: 'CLIENT-AGENCY PARTNERSHIP'
+    },
+    {
+      id: 'q4',
+      questionTitle: 'Production Director is an active part of the agency briefing, having worked closely with their Brand team counterparts to ensure the brief has clear objectives, a production budget and outlines outcome expecations and actionable recommendations to maximize creativity.',
+      questionDescription: 'Was feedback given on time?',
+      minRating: 1,
+      maxRating: 5,
+      isCompulsary: 'no',
+      ratingComment: '',
+      ratio: 6,
+      segment: 'COPPOLA'
+    },
+  ]
+};
+
+
+
+    const evaluationData = [
+  "Media - TV",
+  "Media - Digital",
+  "Media - TV/Digital/Planning",
+  "Media - Strategy",
+  "Media - Agency",
+  "Creative - CMM/BM",
+  "Creative - CDM",
+  "Creative - PD",
+  "Creative - CDO",
+  "Creative - MX",
+  "Creative - PRO"
+];
+
+const buMapping: Record<string, string[]> = {
+  "Media - TV": ["Reckitt", "Hygiene"],
+  "Media - Digital": ["Health", "Nutrition"],
+  "Media - TV/Digital/Planning": ["Essential Home", "Health"],
+  "Media - Strategy": ["Reckitt"],
+  "Media - Agency": ["Nutrition"],
+  "Creative - CMM/BM": ["Health"],
+  "Creative - CDM": ["Reckitt", "Essential Home"],
+  "Creative - PD": ["Hygiene"],
+  "Creative - CDO": ["Health"],
+  "Creative - MX": ["Essential Home"],
+  "Creative - PRO": ["Reckitt"]
+};
+
+const countryMapping: Record<string, string[]> = {
+  Reckitt: ["AE-Utd.Arab Emir.", "BE-Belgium", "BH-Bahrain"],
+  Nutrition: ["BD-Bangladesh", "BR-Brazil"],
+  Essential: ["AT-Austria", "AU-Australia", "CL-Chile"],
+  Health: ["AR-Argentina", "CA-Canada", "CH-Switzerland"],
+  Hygiene: ["AU-Australia", "BR-Brazil", "CL-Chile"]
+};
+
+const versionMapping: Record<string, string[]> = {
+  "AE-Utd.Arab Emir.": ["Original"],
+  "AR-Argentina": ["Original"],
+  "AT-Austria": ["BENELUX"],
+  "AU-Australia": ["Mexico Hygiene"],
+  "BD-Bangladesh": ["Poland Health"],
+  "BE-Belgium": ["Vietnam Health"],
+  "BH-Bahrain": ["Original"],
+  "BR-Brazil": ["Original"],
+  "CA-Canada": ["Original"],
+  "CH-Switzerland": ["Original"],
+  "CL-Chile": ["Original"]
+};
+useEffect(() => {
+    const dummyReviewTypes = [
+        { label: 'Reckitt to Agency', value: 'Reckitt to Agency' },
+        { label: 'Agency to Reckitt', value: 'Agency to Reckitt' }
+    ];
+    setEvaluationOptions(dummyReviewTypes);
+}, []);
+
+useEffect(() => {
+    // Step 1: Set Evaluation Type
+    const evalOptions = evaluationData.map((e) => ({ label: e, value: e }));
+    setVendorOptions(evalOptions);
+}, []);
+
+useEffect(() => {
+    if (!selectedVendor) {
+        setChildVendorOptions([]);
+        setSelectedChildVendor('');
+        return;
+    }
+
+    const buList = buMapping[selectedVendor] || [];
+    setChildVendorOptions(buList.map(b => ({ label: b, value: b })));
+    setSelectedChildVendor('');
+    setCountryOptions([]);
+    setSelectedCountry('');
+    setBuOptions([]);
+    setSelectedBU('');
+}, [selectedVendor]);
+
+useEffect(() => {
+    if (!selectedChildVendor) {
+        setCountryOptions([]);
+        setSelectedCountry('');
+        return;
+    }
+
+    const countries = countryMapping[selectedChildVendor] || [];
+    setCountryOptions(countries.map(c => ({ label: c, value: c })));
+    setSelectedCountry('');
+    setBuOptions([]);
+    setSelectedBU('');
+}, [selectedChildVendor]);
+
+useEffect(() => {
+    if (!selectedCountry) {
+        setBuOptions([]);
+        setSelectedBU('');
+        return;
+    }
+
+    const versions = versionMapping[selectedCountry] || [];
+    setBuOptions(versions.map(v => ({ label: v, value: v })));
+    setSelectedBU('');
+}, [selectedCountry]);
+
+
+
+    // useEffect(() => {
+    //     // Flatten all questions from all template types
+    //     const allQuestions = Object.values(questionsByTemplateType).flat();
+
+    //     setSelectedQuestions(allQuestions);
+    // }, [questionsByTemplateType]);
     // Load all initial data from localStorage
-    useEffect(() => {
-        // Load evaluation data
-        const evaluations = JSON.parse(localStorage.getItem('evaluationData') || '[]');
+    // useEffect(() => {
+    //     // Load evaluation data
+    //     const evaluations = JSON.parse(localStorage.getItem('evaluationData') || '[]');
 
-        setEvaluationOptions(
-            evaluations.map((e: string) => ({
-                label: e,
-                value: e
-            }))
-        );
+    //     setEvaluationOptions(
+    //         evaluations.map((e: string) => ({
+    //             label: formatLabel(e),
+    //             value: e
+    //         }))
+    //     );
 
         // Load vendors and child vendors
-        const vendorsData = JSON.parse(localStorage.getItem('vendors') || '[]');
-        setVendorOptions(
-            vendorsData.map((v: any) => ({
-                label: v.name,
-                value: v.name
-            }))
-        );
+        // const vendorsData = JSON.parse(localStorage.getItem('vendors') || '[]');
+        // setVendorOptions(
+        //     vendorsData.map((v: any) => ({
+        //         label: v.name,
+        //         value: v.name
+        //     }))
+        // );
 
         // Load other options
-        setCountryOptions(getStoredOptions('Country'));
-        setBuOptions(getStoredOptions('BU'));
-        setBrandOptions(getStoredOptions('Brand'));
-        setReviewTypeOptions(getStoredOptions('Review Type'));
+        // setCountryOptions(getStoredOptions('Country'));
+        // setBuOptions(getStoredOptions('BU'));
+        // setBrandOptions(getStoredOptions('Brand'));
+        // setReviewTypeOptions(getStoredOptions('Review Type'));
 
         // Load questions
-        const savedQuestions = JSON.parse(localStorage.getItem(STORAGE_KEYS.MARKETING_TEMPLATE_QUESTIONS) || '[]');
-        setQuestions(savedQuestions);
+    //     const savedQuestions = JSON.parse(localStorage.getItem(STORAGE_KEYS.MARKETING_TEMPLATE_QUESTIONS) || '[]');
+    //     setQuestions(savedQuestions);
 
-        // Load saved combos
-        const savedCombos = JSON.parse(localStorage.getItem(STORAGE_KEYS.FINAL_REVIEW_DATA) || '[]');
+    //     // Load saved combos
+    //     const savedCombos = JSON.parse(localStorage.getItem(STORAGE_KEYS.FINAL_REVIEW_DATA) || '[]');
 
-        setComboList(savedCombos);
-    }, []);
+    //     setComboList(savedCombos);
+    // }, []);
 
     // helper function to get options from localStorage
     const getStoredOptions = (key: string) => {
@@ -141,29 +354,35 @@ const MarketingDetails = () => {
             return [];
         }
     };
+    const formatLabel = (val: string) => {
+    if (val === "2025-1-H1, Creative-Ind") return "Reckitt to Agency";
+    if (val === "2025-1-H1, Brand Experience-Ind") return "Agency to Reckitt";
+    return val;
+};
+
 
     // Update child vendors when vendor changes
-    useEffect(() => {
-        if (!selectedVendor) {
-            setChildVendorOptions([]);
-            return;
-        }
+    // useEffect(() => {
+    //     if (!selectedVendor) {
+    //         setChildVendorOptions([]);
+    //         return;
+    //     }
 
-        const vendorsData = JSON.parse(localStorage.getItem('vendors') || '[]');
-        const selectedVendorData = vendorsData.find((v: any) => v.name === selectedVendor);
+    //     const vendorsData = JSON.parse(localStorage.getItem('vendors') || '[]');
+    //     const selectedVendorData = vendorsData.find((v: any) => v.name === selectedVendor);
 
-        if (selectedVendorData?.children) {
-            setChildVendorOptions(
-                selectedVendorData.children.map((child: any) => ({
-                    label: child.name,
-                    value: child.name
-                }))
-            );
-        } else {
-            setChildVendorOptions([]);
-        }
-        setSelectedChildVendor(null);
-    }, [selectedVendor]);
+    //     if (selectedVendorData?.children) {
+    //         setChildVendorOptions(
+    //             selectedVendorData.children.map((child: any) => ({
+    //                 label: child.name,
+    //                 value: child.name
+    //             }))
+    //         );
+    //     } else {
+    //         setChildVendorOptions([]);
+    //     }
+    //     setSelectedChildVendor(null);
+    // }, [selectedVendor]);
 
     // Update template types when evaluation name changes
     useEffect(() => {
@@ -241,8 +460,9 @@ const MarketingDetails = () => {
             setSelectedQuestions(allQuestions);
         }
     };
+    console.log('selectedQuestions:', selectedEval);
     const handleFinalSave = () => {
-        if (!selectedEval || !selectedVendor || !administrator || !selectedCountry || !selectedBU || !selectedStatus || !selectedBrand || !selectedTemplateTypes.length) {
+        if (!selectedEval || !selectedVendor || !selectedChildVendor || !selectedCountry || !selectedBU ) {
             toast.current?.show({
                 severity: 'warn',
                 summary: 'Missing!',
@@ -263,10 +483,7 @@ const MarketingDetails = () => {
         }
 
         // Create account name (e.g., "Creative-India-Finish")
-        const [yearMonth, reviewCountry] = selectedEval.split(', ');
-        const country = reviewCountry.split('-')[1];
         const newCombo = {
-            accountName: `${selectedReviewType}-${country}-${selectedBrand}`,
             evaluation: selectedEval,
             vendor: selectedVendor,
             childVendor: selectedChildVendor,
@@ -290,9 +507,10 @@ const MarketingDetails = () => {
             detail: 'Final review saved successfully',
             life: 3000
         });
+        router.push('/marketing/marketing-details-dev');
 
         // Reset form (except vendor and administrator)
-        setSelectedEval(null);
+        // setSelectedEval(null);
         setSelectedCountry(null);
         setSelectedBU(null);
         setSelectedStatus(null);
@@ -364,23 +582,23 @@ const MarketingDetails = () => {
     });
 
     // Filter questions based on both review type and template types
-    useEffect(() => {
-        if (!selectedReviewType || !selectedTemplateTypes.length) {
-            setQuestionsByTemplateType({});
-            return;
-        }
+    // useEffect(() => {
+    //     if (!selectedReviewType || !selectedTemplateTypes.length) {
+    //         setQuestionsByTemplateType({});
+    //         return;
+    //     }
 
-        const filtered: Record<string, any[]> = {};
+    //     const filtered: Record<string, any[]> = {};
 
-        // Get questions from localStorage
-        const allQuestions = JSON.parse(localStorage.getItem(STORAGE_KEYS.MARKETING_TEMPLATE_QUESTIONS) || '[]');
+    //     // Get questions from localStorage
+    //     const allQuestions = JSON.parse(localStorage.getItem(STORAGE_KEYS.MARKETING_TEMPLATE_QUESTIONS) || '[]');
 
-        selectedTemplateTypes.forEach((templateType) => {
-            filtered[templateType] = allQuestions.filter((q: any) => q.reviewType?.reviewTypeName === selectedReviewType && q.templateType?.templateTypeName === templateType);
-        });
+    //     selectedTemplateTypes.forEach((templateType) => {
+    //         filtered[templateType] = allQuestions.filter((q: any) => q.reviewType?.reviewTypeName === selectedReviewType && q.templateType?.templateTypeName === templateType);
+    //     });
 
-        setQuestionsByTemplateType(filtered);
-    }, [selectedReviewType, selectedTemplateTypes]);
+    //     setQuestionsByTemplateType(filtered);
+    // }, [selectedReviewType, selectedTemplateTypes]);
 
     const renderQuestionsTables = () => {
         return Object.entries(questionsByTemplateType).map(([templateType, questions]) => {
@@ -449,7 +667,7 @@ const MarketingDetails = () => {
                                             <td className="border px-2 py-1">{question.questionTitle}</td>
                                             <td className="border px-2 py-1">{question.minRating}</td>
                                             <td className="border px-2 py-1">{question.maxRating}</td>
-                                            <td className="border px-2 py-1">{question.isCompulsary?.isCompulsary ? 'Yes' : 'No'}</td>
+                                            <td className="border px-2 py-1"> {question.isCompulsary === 'yes' ? 'Yes' : 'No'}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -567,6 +785,9 @@ const MarketingDetails = () => {
         setEditingCombo(null);
         // Reset form fields if needed
     };
+    const handleCancel = () => {
+       setSelectedEval('');
+    };
 
 
     const renderHeader = () => {
@@ -616,35 +837,43 @@ const MarketingDetails = () => {
     };
 
     const header = renderHeader();
-
+console.log(evaluationOptions,'savedCombos');
     return (
-        <div className="p-4 card">
+        <div className="p-4 card bg-bluegray-50">
             <Toast ref={toast} />
 
-            <div className="flex justify-content-between items-center mb-4">
-                <h2 className="text-xl font-semibold">Final Review Configuration</h2>
+            <div className="flex justify-content-between items-center mb-4 ">
+                <h2 className="text-xl font-semibold">Create Question</h2>
                 {/* <Button label="View Saved Reviews" icon="pi pi-eye" onClick={handleViewSaved} className="" /> */}
             </div>
-
+        <div className="card p-fluid bg-white border-round">
             <div className="grid formgrid gap-3 mb-4">
                 <div className="flex row col-12">
                     <div className="col-4">
-                        <label>Evaluation Name</label>
-                        <Dropdown value={selectedEval} options={evaluationOptions} onChange={(e) => setSelectedEval(e.value)} placeholder="Select Evaluation" className="w-full mt-2" filter />
+                        <label>Review Type</label>
+                        <Dropdown
+                            value={selectedEval}
+                            options={evaluationOptions}
+                            onChange={(e) => handleReviewTypeChange(e.value)}
+                            placeholder="Select Review Type"
+                            className="w-full mt-2"
+                            filter
+                        />
+
                     </div>
                     <div className="col-4">
-                        <label>Vendor</label>
-                        <Dropdown value={selectedVendor} options={vendorOptions} onChange={(e) => setSelectedVendor(e.value)} placeholder="Select Vendor" className="w-full mt-2" filter />
+                        <label>Evaluation Type</label>
+                        <Dropdown value={selectedVendor} options={vendorOptions} onChange={(e) => setSelectedVendor(e.value)} placeholder="Select Evaluation Type" className="w-full mt-2" filter />
                     </div>
                     <div className="col-4">
-                        <label>Child Vendor (Optional)</label>
+                        <label>BU</label>
                         <Dropdown
                             value={selectedChildVendor}
                             options={childVendorOptions}
                             onChange={(e) => setSelectedChildVendor(e.value)}
-                            placeholder="Select Child Vendor"
+                            placeholder="Select BU"
                             className="w-full mt-2"
-                            disabled={!selectedVendor || childVendorOptions.length === 0}
+                            // disabled={!selectedVendor || childVendorOptions.length === 0}
                             filter
                         />
                     </div>
@@ -652,34 +881,15 @@ const MarketingDetails = () => {
 
                 <div className="flex row col-12">
                     <div className="col-4">
-                        <label>Administrator</label>
-                        <InputText value={administrator} onChange={(e) => setAdministrator(e.target.value)} placeholder="Enter Administrator" className="w-full mt-2" />
-                    </div>
-                    <div className="col-4">
                         <label>Country</label>
                         <Dropdown value={selectedCountry} options={countryOptions} onChange={(e) => setSelectedCountry(e.value)} placeholder="Select Country" className="w-full mt-2" filter />
                     </div>
                     <div className="col-4">
-                        <label>BU</label>
-                        <Dropdown value={selectedBU} options={buOptions} onChange={(e) => setSelectedBU(e.value)} placeholder="Select BU" className="w-full mt-2" filter />
+                        <label>Version</label>
+                        <Dropdown value={selectedBU} options={buOptions} onChange={(e) => setSelectedBU(e.value)} placeholder="Select Version" className="w-full mt-2" filter />
                     </div>
                 </div>
-
-                <div className="flex row col-12">
-                    <div className="col-4">
-                        <label>Brand</label>
-                        <Dropdown value={selectedBrand} options={brandOptions} onChange={(e) => setSelectedBrand(e.value)} placeholder="Select Brand" className="w-full mt-2" filter />
-                    </div>
-                    <div className="col-4">
-                        <label>Status</label>
-                        <Dropdown value={selectedStatus} options={statusOptions} onChange={(e) => setSelectedStatus(e.value)} placeholder="Select Status" className="w-full mt-2" />
-                    </div>
-                    {/* <div className="col-4">
-                        <label>Review Type</label>
-                        <InputText value={selectedReviewType || ''} readOnly className="w-full mt-2" />
-                    </div> */}
                 </div>
-
                 {selectedReviewType && (
                     <div className="flex row col-12">
                         <div className="col-12">
@@ -690,7 +900,7 @@ const MarketingDetails = () => {
                 )}
             </div>
 
-            {selectedReviewType && selectedTemplateTypes.length > 0 && (
+            {selectedEval.length > 0 && (
                 <div className="mt-4">
                     <h3>Available Questions</h3>
                     <p className="mb-3">
@@ -698,14 +908,21 @@ const MarketingDetails = () => {
                     </p>
 
                     {Object.keys(questionsByTemplateType).length > 0 ? renderQuestionsTables() : <p>No questions found for the selected criteria.</p>}
-
+                    <div className="flex justify-content-end mt-4 gap-2">
                     <Button
-                        label={isEditing ? "Update Review" : "Save Final Review"}
+                        label='Cancel'
+                        className="cancle-btn-outline mt-4"
+                        onClick={handleCancel}
+                    />
+                    <Button
+                    
+                        label={isEditing ? "Update" : "Save"}
                         icon={isEditing ? "pi pi-check" : "pi pi-save"}
                         className="mt-4"
                         onClick={isEditing ? handleUpdate : handleFinalSave}
                         disabled={selectedQuestions.length === 0}
                     />
+                    
                     {isEditing && (
                         <Button
                             label="Cancel"
@@ -715,11 +932,13 @@ const MarketingDetails = () => {
                         />
                         
                     )}
+                    </div>
                     {/* <Button label="Save Final Review" icon="pi pi-save" className="mt-4" onClick={handleFinalSave} disabled={selectedQuestions.length === 0} /> */}
                 </div>
             )}
-            <hr className="my-4" />
-            {savedCombos.length > 0 ? (
+            
+            {/* <hr className="my-4" /> */}
+            {/* {savedCombos.length > 0 ? (
                 <DataTable
                     value={savedCombos}
                     expandedRows={expandedRows}
@@ -758,61 +977,15 @@ const MarketingDetails = () => {
                     />
                     <Column expander style={{ width: '3em' }} />
                     <Column header="#" body={(_, { rowIndex }) => rowIndex + 1} />
-                    <Column field="accountName" header="Account Name" sortable filter filterField="accountName" />
-                    <Column field="evaluation" header="Evaluation" sortable filter filterField="evaluation" />
-                    <Column field="vendor" header="Vendor" sortable filter filterField="vendor" />
-                    <Column
-                        field="country"
-                        header="Country"
-                        sortable
-                        filter
-                        filterField="country"
-                        filterElement={(options) => (
-                            <MultiSelect
-                                value={options.value}
-                                options={countryOptions}
-                                onChange={(e) => options.filterCallback(e.value)}
-                                placeholder="Any"
-                                className="p-column-filter"
-                            />
-                        )}
-                    />
-                    <Column
-                        field="brand"
-                        header="Brand"
-                        sortable
-                        filter
-                        filterField="brand"
-                        filterElement={(options) => (
-                            <MultiSelect
-                                value={options.value}
-                                options={brandOptions}
-                                onChange={(e) => options.filterCallback(e.value)}
-                                placeholder="Any"
-                                className="p-column-filter"
-                            />
-                        )}
-                    />
-                    <Column
-                        field="status"
-                        header="Status"
-                        sortable
-                        filter
-                        filterField="status"
-                        filterElement={(options) => (
-                            <MultiSelect
-                                value={options.value}
-                                options={statusOptions}
-                                onChange={(e) => options.filterCallback(e.value)}
-                                placeholder="Any"
-                                className="p-column-filter"
-                            />
-                        )}
-                    />
+                    <Column field="templateTypes" header="Review Type"  />
+                    <Column field="vendor" header="Evaluation Type"   />
+                    <Column field="childVendor" header="BU"  />
+                    <Column field="country" header="Country"   />
+                    <Column field="bu" header="Version"  />
                 </DataTable>
             ) : (
                 <p>No saved reviews found.</p>
-            )}
+            )} */}
         </div>
     );
 };

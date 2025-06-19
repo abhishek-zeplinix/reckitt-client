@@ -82,7 +82,7 @@ const EvaluationPeriodList = [
 ];
 function EvaluationPeriod() {
     const [region, setRegion] = useState<any>('');
-    const [evaluationPeriod, setEvaluationPeriod] = useState<any>('');
+    const [evaluationPeriod, setEvaluationPeriod] = useState<any>('H1');
     const [area, setArea] = useState<any>('');
     const [togglePanel, setTogglePanel] = useState(false);
     const [showFileUploadDialog, setShowFileUploadDialog] = useState(false);
@@ -318,6 +318,8 @@ function EvaluationPeriod() {
                             data={EvaluationPeriodList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
+                            stripedRows
                             columns={[
                                 // {
                                 //     header: 'Role ID',

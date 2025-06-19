@@ -14,6 +14,7 @@ import { reviewTypeSchema } from '@/utils/validationSchemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog';
+import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import React, { useContext, useState } from 'react'
 
@@ -25,73 +26,104 @@ const ACTIONS = {
 };
 
 const AreaList = [
-    {
-        country: "AR-Argentina",
-        areaScorecard: "Latin America",
-        region: "LATAM",
-        comment: "Comment 1"
-    },
-    {
-        country: "IN-India",
-        areaScorecard: "Asia",
-        region: "APAC",
-        comment: "Comment 2"
-    },
-    {
-        country: "US-United States",
-        areaScorecard: "North America",
-        region: "NA",
+     {
+        country: "AT-Austria",
+        areaScorecard: "Europe",
+        region: "Central Europe",
         comment: "Comment 3"
     },
     {
-        country: "CN-China",
-        areaScorecard: "Asia",
-        region: "APAC",
+        country: "AE-Utd.Arab Emir.",
+        areaScorecard: "Emerging Markets",
+        region: "MENARP",
+        comment: "Comment 1"
+    },
+    {
+        country: "AR-Argentina",
+        areaScorecard: "Emerging Markets",
+        region: "LATAM",
+        comment: "Comment 2"
+    },
+   
+    {
+        country: "AU-Australia",
+        areaScorecard: "Europe", 
+        region: "Global",
         comment: "Comment 4"
     },
     {
-        country: "BR-Brazil",
-        areaScorecard: "Latin America",
-        region: "LATAM",
+        country: "AU-Australia",
+        areaScorecard: "Europe",
+        region: "Australia & NZ",
         comment: "Comment 5"
     },
     {
-        country: "GB-United Kingdom",
-        areaScorecard: "Europe",
-        region: "EMEA",
+        country: "BD-Bangladesh",
+        areaScorecard: "Emerging Markets",
+        region: "South Asia",
         comment: "Comment 6"
     },
     {
-        country: "DE-Germany",
+        country: "BE-Belgium",
         areaScorecard: "Europe",
-        region: "EMEA",
+        region: "West Europe", 
         comment: "Comment 7"
     },
     {
-        country: "ZA-South Africa",
-        areaScorecard: "Africa",
-        region: "MEA",
+        country: "BH-Bahrain",
+        areaScorecard: "Emerging Markets",
+        region: "MENARP",
         comment: "Comment 8"
     },
     {
-        country: "JP-Japan",
-        areaScorecard: "Asia",
-        region: "APAC",
+        country: "BR-Brazil",
+        areaScorecard: "Emerging Markets",
+        region: "LATAM",
         comment: "Comment 9"
     },
     {
-        country: "AU-Australia",
-        areaScorecard: "Oceania",
-        region: "APAC",
+        country: "CA-Canada", 
+        areaScorecard: "North America",
+        region: "North America",
         comment: "Comment 10"
+    },
+    {
+        country: "CH-Switzerland",
+        areaScorecard: "Europe",
+        region: "Central Europe",
+        comment: "Comment 11"
+    },
+    {
+        country: "CL-Chile",
+        areaScorecard: "Emerging Markets",
+        region: "LATAM",
+        comment: "Comment 12"
+    },
+    {
+        country: "CN-China",
+        areaScorecard: "Emerging Markets",
+        region: "Greater China and North Asia",
+        comment: "Comment 13"
+    },
+    {
+        country: "CO-Colombia",
+        areaScorecard: "Emerging Markets",
+        region: "LATAM",
+        comment: "Comment 14"
+    },
+    {
+        country: "CR-Costa Rica",
+        areaScorecard: "Emerging Markets", 
+        region: "LATAM",
+        comment: "Comment 15"
     }
 ]
 
 function AreaBase() {
-    const [region, setRegion] = useState<any>('');
-    const [country, setCountry] = useState<any>('');
-    const [area, setArea] = useState<any>('');
-    const [comment, setComment] = useState<any>('');
+    const [region, setRegion] = useState<any>('Central Europe');
+    const [country, setCountry] = useState<any>('AT-Austria');
+    const [area, setArea] = useState<any>('Europe');
+    const [comment, setComment] = useState<any>('Comment 3');
     const [togglePanel, setTogglePanel] = useState(false)
     const [showFileUploadDialog, setShowFileUploadDialog] = useState(false)
     // const [regionList, setRegionList] = useState<any>([]);
@@ -256,7 +288,7 @@ function AreaBase() {
     return (
         <div className='card'>
             <div className='inner p-4 border-1 surface-border border-round'>
-                <div className="flex flex-wrap justify-content-between align-items-center mb-4">
+                <div className="flex flex-wrap justify-content-between align-items-center mb-2">
                     {/* Title + Breadcrumb Block */}
                     <div className="flex flex-column">
                         <h2 className="m-0">Area Base List</h2>
@@ -340,17 +372,50 @@ function AreaBase() {
 
                         {/* Action Buttons */}
                         <div className="flex justify-content-end gap-3 mt-3">
-                            <Button label="Cancel" className="cancle-btn-outline" onClick={handleTogglePanel}/>
+                            <Button label="Cancel" className="cancle-btn-outline" onClick={handleTogglePanel} />
                             <Button label="Save" className='save-btn' />
                         </div>
                     </div>
                 }
 
+                <div className="flex gap-2 justify-content-between align-items-center mt-3">
 
+                    <div className='flex gap-2'>
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
 
-                <div className="mt-4">
+                        <Dropdown
+                            placeholder="Filter"
+                            className="w-10rem"
+                            showClear
+                        />
+                    </div>
+
+                    <div className='flex'>
+                        <span className="p-input-icon-left">
+                            <i className="pi pi-search" />
+                            <InputText
+                                value={searchText}
+                                onChange={(e) => setSearchText(e.target.value)}
+                                placeholder="Search"
+                                className="w-full"
+                            />
+                        </span>
+                    </div>
+
+                </div>
+
+                <div className="mt-3">
                     {isFetchingRegions ? (
-                        <TableSkeletonSimple columns={2} rows={5} />
+                        <TableSkeletonSimple columns={6} rows={10} />
                     ) : (
                         <CustomDataTable
                             ref={regionList}
@@ -367,8 +432,10 @@ function AreaBase() {
                             data={AreaList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
+                            stripedRows
                             columns={[
-                              
+
                                 {
                                     header: 'Sr. No.',
                                     body: (data: any, options: any) => {
@@ -400,7 +467,7 @@ function AreaBase() {
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Region'
                                 },
-                                 {
+                                {
                                     header: 'COMMENT',
                                     field: 'comment',
                                     filter: true,

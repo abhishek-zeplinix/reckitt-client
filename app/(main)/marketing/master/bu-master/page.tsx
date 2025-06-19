@@ -27,35 +27,36 @@ const ACTIONS = {
 };
 const BuMasterList = [
     {
+        bu: 'Health',
+        buNew: 'Reckitt',
+        effectiveDate: '6/3/2024'
+    },
+    {
         bu: 'Nutrition ',
-        buNew: '-',
+        buNew: 'Reckitt',
         effectiveDate: '2/2/2024'
     },
     {
         bu: 'Reckitt',
-        buNew: '-',
+        buNew: 'Reckitt',
         effectiveDate: '12/2/2025'
     },
     {
         bu: 'Essential Home',
-        buNew: '-',
+        buNew: 'Reckitt',
         effectiveDate: '4/12/2024'
     },
-    {
-        bu: 'Health',
-        buNew: '-',
-        effectiveDate: '6/3/2024'
-    },
+    
     {
         bu: 'Hygiene',
-        buNew: '-',
+        buNew: 'Reckitt',
         effectiveDate: '13/2/2024'
     }
 ];
 function BUMaster() {
-    const [effectiveDate, setEffectiveDate] = useState<any>('');
-    const [buNew, setBuNew] = useState<any>('');
-    const [bu, setBU] = useState<any>('');
+    const [effectiveDate, setEffectiveDate] = useState<any>(new Date('2/2/2024'));
+    const [buNew, setBuNew] = useState<any>('Reckitt');
+    const [bu, setBU] = useState<any>('Health');
     const [togglePanel, setTogglePanel] = useState(false);
     const [showFileUploadDialog, setShowFileUploadDialog] = useState(false);
     // const [regionList, setRegionList] = useState<any>([]);
@@ -252,7 +253,18 @@ function BUMaster() {
                                 <label htmlFor="bu">
                                     BU <span style={{ color: 'red' }}>*</span>
                                 </label>
-                                <Dropdown id="bu" value={bu} onChange={(e) => setBU(e.target.value)} className="w-full" placeholder="Enter BU" />
+
+                                <Dropdown
+                                    id="bu"
+                                    value={bu}
+                                    onChange={(e) => setBU(e.target.value)}
+                                    options={BuMasterList.map(item => ({
+                                        label: item.bu,
+                                        value: item.bu
+                                    }))}
+                                    className="w-full"
+                                    placeholder="Enter BU"
+                                />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
@@ -306,6 +318,8 @@ function BUMaster() {
                             data={BuMasterList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
+                            stripedRows
                             columns={[
                                 // {
                                 //     header: 'Role ID',
