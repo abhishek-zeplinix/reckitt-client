@@ -31,7 +31,7 @@ const stats = [
     { label: 'Country', value: 512 },
     { label: 'Brand', value: 167 },
     { label: 'Vendors', value: 512 },
-    { label: 'Total Reviews', value: 200 / 1000 },
+    { label: 'Total Reviews', value: '200 / 1000' },
     { label: 'Assigned', value: 200 },
     { label: 'Unassigned', value: 800 }
 ];
@@ -321,23 +321,23 @@ function AddEvaluationStep2() {
 
     const [selectedRows, setSelectedRows] = useState<any[]>([]);
 
-const isRowSelected = (row: any) => selectedRows.includes(row);
+    const isRowSelected = (row: any) => selectedRows.includes(row);
 
-const toggleRow = (row: any) => {
-    if (isRowSelected(row)) {
-        setSelectedRows(selectedRows.filter(r => r !== row));
-    } else {
-        setSelectedRows([...selectedRows, row]);
-    }
-};
+    const toggleRow = (row: any) => {
+        if (isRowSelected(row)) {
+            setSelectedRows(selectedRows.filter((r) => r !== row));
+        } else {
+            setSelectedRows([...selectedRows, row]);
+        }
+    };
 
-const toggleAllRows = () => {
-    if (selectedRows.length === EvaluationPopupList.length) {
-        setSelectedRows([]);
-    } else {
-        setSelectedRows([...EvaluationPopupList]);
-    }
-};
+    const toggleAllRows = () => {
+        if (selectedRows.length === EvaluationPopupList.length) {
+            setSelectedRows([]);
+        } else {
+            setSelectedRows([...EvaluationPopupList]);
+        }
+    };
 
     const addRegionMutation = useMutation({
         mutationFn: (payload: any) => PostCall('/mrkt/api/mrkt/region', payload),
@@ -471,44 +471,41 @@ const toggleAllRows = () => {
             <div className="inner p-4 border-1 surface-border border-round">
                 <div className="flex flex-wrap justify-content-between align-items-center mb-2 border-bottom-1 border-300">
                     {/* Title + Breadcrumb Block */}
-                    <div className="flex justify-content-between align-items-center px-4 py-3 border-bottom-1 border-gray-300">
-                        <div className="flex justify-content-between align-items-center">
-                            {/* Left Side: Back Arrow + Title */}
-                            <div className="flex align-items-center gap-2">
-                                <Link href="/your-back-link">
-                                    <i className="pi pi-arrow-left text-black text-lg cursor-pointer"></i>
-                                </Link>
-                                <h3 className="m-0 text-lg font-semibold">Add Evaluation Calendar</h3>
-                            </div>
-
-                            {/* Right Side: Metadata Summary */}
-                            <div className="flex align-items-center gap-4 text-sm text-gray-700">
-                                <div className="flex flex-column text-right">
-                                    <span className="text-xs text-gray-500">Year</span>
-                                    <span className="font-medium">2025</span>
-                                </div>
-                                <span className="border-left-1 h-full border-gray-300 mx-2"></span>
-
-                                <div className="flex flex-column text-right">
-                                    <span className="text-xs text-gray-500">Evaluation Period</span>
-                                    <span className="font-medium">H2</span>
-                                </div>
-                                <span className="border-left-1 h-full border-gray-300 mx-2"></span>
-
-                                <div className="flex flex-column text-right">
-                                    <span className="text-xs text-gray-500">Review Type</span>
-                                    <span className="font-medium">Reckitt to Agency</span>
-                                </div>
-                                <span className="border-left-1 h-full border-gray-300 mx-2"></span>
-
-                                <div className="flex flex-column text-right">
-                                    <span className="text-xs text-gray-500">Evaluation Type</span>
-                                    <span className="font-medium">Media</span>
-                                </div>
-                            </div>
-                            </div>
+                    <div className="flex justify-content-between align-items-center px-4 py-3 border-bottom-1 border-gray-300 w-full">
+                        {/* Left Side */}
+                        <div className="flex align-items-center gap-2">
+                            <Link href="/your-back-link">
+                                <i className="pi pi-arrow-left text-black text-lg cursor-pointer"></i>
+                            </Link>
+                            <h3 className="m-0 text-lg font-semibold">Add Evaluation Calendar</h3>
                         </div>
 
+                        {/* Right Side: Metadata Summary */}
+                        <div className="flex align-items-center gap-4 text-sm text-gray-700">
+                            <div className="flex flex-column text-right">
+                                <span className="text-xs text-gray-500">Year</span>
+                                <span className="font-medium">2025</span>
+                            </div>
+                            <span className="border-left-1 h-full border-gray-300 mx-2"></span>
+
+                            <div className="flex flex-column text-right">
+                                <span className="text-xs text-gray-500">Evaluation Period</span>
+                                <span className="font-medium">H2</span>
+                            </div>
+                            <span className="border-left-1 h-full border-gray-300 mx-2"></span>
+
+                            <div className="flex flex-column text-right">
+                                <span className="text-xs text-gray-500">Review Type</span>
+                                <span className="font-medium">Reckitt to Agency</span>
+                            </div>
+                            <span className="border-left-1 h-full border-gray-300 mx-2"></span>
+
+                            <div className="flex flex-column text-right">
+                                <span className="text-xs text-gray-500">Evaluation Type</span>
+                                <span className="font-medium">Media</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="p-4 border-round-md">
                     <div className="grid">
@@ -617,16 +614,10 @@ const toggleAllRows = () => {
                                 onLoad={handleLoad}
                                 columns={[
                                     {
-            header:'Select',
-            body: (rowData: any) => (
-                <input
-                    type="checkbox"
-                    checked={isRowSelected(rowData)}
-                    onChange={() => toggleRow(rowData)}
-                />
-            ),
-            bodyStyle: { minWidth: 50, maxWidth: 50 }
-        },
+                                        header: 'Select',
+                                        body: (rowData: any) => <input type="checkbox" checked={isRowSelected(rowData)} onChange={() => toggleRow(rowData)} />,
+                                        bodyStyle: { minWidth: 50, maxWidth: 50 }
+                                    },
                                     {
                                         header: 'Sr. No.',
                                         body: (data: any, options: any) => {
@@ -790,14 +781,8 @@ const toggleAllRows = () => {
                                     onLoad={handleLoad}
                                     columns={[
                                         {
-                                            header:'Select',
-                                            body: (rowData: any) => (
-                                                <input
-                                                    type="checkbox"
-                                                    checked={isRowSelected(rowData)}
-                                                    onChange={() => toggleRow(rowData)}
-                                                />
-                                            ),
+                                            header: 'Select',
+                                            body: (rowData: any) => <input type="checkbox" checked={isRowSelected(rowData)} onChange={() => toggleRow(rowData)} />,
                                             bodyStyle: { minWidth: 50, maxWidth: 50 }
                                         },
                                         {
