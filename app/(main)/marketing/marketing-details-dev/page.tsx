@@ -60,7 +60,7 @@ const DUMMY_COMBOS = [
     vendor: "Media - TV",
     childVendor: "Nutrition",
     country: "India",
-    bu: "V1",
+    bu: "original",
     questions: [{
         segment: "Segment 1",
         questionTitle: "Question 1",
@@ -89,7 +89,7 @@ const DUMMY_COMBOS = [
     vendor: "Creative - CMM/BM",
     childVendor: "Reckitt",
     country: "UK",
-    bu: "V2",
+    bu: "original",
     questions: [{
         segment: "Segment 1",
         questionTitle: "Question 1",
@@ -117,7 +117,7 @@ const DUMMY_COMBOS = [
     vendor: "Media - TV",
     childVendor: "Nutrition",
     country: "India",
-    bu: "V1",
+    bu: "original",
     questions: [
       {
         id: "q1",
@@ -137,7 +137,7 @@ const DUMMY_COMBOS = [
     vendor: "Creative - CMM/BM",
     childVendor: "Reckitt",
     country: "UK",
-    bu: "V2",
+    bu: "original",
     questions: [
       {
         id: "q2",
@@ -168,7 +168,7 @@ const DUMMY_COMBOS = [
     vendor: "Media - Digital",
     childVendor: "Health",
     country: "India",
-    bu: "V3",
+    bu: "original",
     questions: [
       {
         id: "q4",
@@ -188,7 +188,7 @@ const DUMMY_COMBOS = [
     vendor: "Creative - PRO",
     childVendor: "Dettol",
     country: "Singapore",
-    bu: "V1",
+    bu: "original",
     questions: [
       {
         id: "q5",
@@ -208,7 +208,7 @@ const DUMMY_COMBOS = [
     vendor: "Media - Strategy",
     childVendor: "Hygiene",
     country: "India",
-    bu: "V4",
+    bu: "original",
     questions: [
       {
         id: "q6",
@@ -244,15 +244,18 @@ const DUMMY_COMBOS = [
         useEffect(() => {
     const savedData = localStorage.getItem(STORAGE_KEYS.FINAL_REVIEW_DATA);
 
-    if (!savedData) {
-        // Store dummy data if not present
-        localStorage.setItem(STORAGE_KEYS.FINAL_REVIEW_DATA, JSON.stringify(DUMMY_COMBOS));
-        setSavedCombos(DUMMY_COMBOS);
-    } else {
-        const parsedData = JSON.parse(savedData);
-        setSavedCombos(Array.isArray(parsedData) ? parsedData : []);
-    }
+    const parsedData = savedData ? JSON.parse(savedData) : [];
+
+    // Merge only if dummy entries are not already present (optional deduplication logic can be added)
+    const combinedData = Array.isArray(parsedData)
+        ? [...parsedData, ...DUMMY_COMBOS]
+        : [...DUMMY_COMBOS];
+
+    // Save the merged data
+    localStorage.setItem(STORAGE_KEYS.FINAL_REVIEW_DATA, JSON.stringify(combinedData));
+    setSavedCombos(combinedData);
 }, []);
+
 console.log(savedCombos, 'savedCombos');
 
     const handleCreateNavigation = () => {
