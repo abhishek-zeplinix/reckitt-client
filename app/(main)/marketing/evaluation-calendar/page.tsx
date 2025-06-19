@@ -12,6 +12,7 @@ import { LayoutContext } from '@/layout/context/layoutcontext';
 import { buildQueryParams, getRowLimitWithScreenHeight } from '@/utils/utils';
 import { reviewTypeSchema } from '@/utils/validationSchemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Checkbox } from 'primereact/checkbox';
@@ -432,7 +433,9 @@ function EvaluationCalendar() {
                         {/* <ImportExportButton label="Import" icon="pi pi-upload" onClick={() => setShowFileUploadDialog(true)} /> */}
                         <ImportExportButton label="Export" icon="pi pi-download" onClick={handleTogglePanel} />
 
-                        <Button label="Add New" icon="pi pi-plus" onClick={handleTogglePanel} />
+                        <Link href={'/marketing/evaluation-calendar/add-evaluation-calendar'}>
+                            <Button label="Add New" icon="pi pi-plus" />
+                        </Link>
                     </div>
                 </div>
 
