@@ -13,6 +13,8 @@ import { Dropdown } from 'primereact/dropdown';
 import { TabPanel, TabView } from 'primereact/tabview';
 import { InputText } from 'primereact/inputtext';
 import ImportExportButton from '@/components/buttons/import-export';
+import Breadcrumbs from '@/components/breadcrumbs/breadcrumbs';
+import ReusableFileUploadDialog from '@/components/dialog-box/file-upload-dialog';
  
 const ACTIONS = {
     ADD: 'add',
@@ -38,7 +40,7 @@ const MarketingQuestionsTable = () => {
     const { layoutState } = useContext(LayoutContext);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const [savedCombos, setSavedCombos] = useState<any[]>([]);
- 
+    const [showFileUploadDialog, setShowFileUploadDialog] = useState(false)
     //filters
     const [filters, setFilters] = useState<any>({
         masterCountryId: null,
@@ -51,12 +53,179 @@ const MarketingQuestionsTable = () => {
     MARKETING_TEMPLATE_QUESTIONS: 'marketingTemplateQuestions',
     FINAL_REVIEW_DATA: 'finalReviewData'
 };
- 
- 
-    useEffect(() => {
-        // fetchData();
-        // fetchOptions();
-    }, []);
+
+const DUMMY_COMBOS = [
+  {
+    evaluation: "Reckitt to Agency",
+    vendor: "Media - TV",
+    childVendor: "Nutrition",
+    country: "India",
+    bu: "original",
+    questions: [{
+        segment: "Segment 1",
+        questionTitle: "Question 1",
+        questionDescription: "Description 1",
+        templateType: "Template Type 1",
+        reviewType: "Review Type 1",
+        minRating: "Min Rating 1",
+        maxRating: "Max Rating 1",
+        isCompulsary: "Is Compulsary 1",
+        ratio: "Ratio 1"
+    },
+    {
+        segment: "Segment 2",
+        questionTitle: "Question 2",
+        questionDescription: "Description 2",
+        templateType: "Template Type 2",
+        reviewType: "Review Type 2",
+        minRating: "Min Rating 2",
+        maxRating: "Max Rating 2",
+        isCompulsary: "Is Compulsary 2",
+        ratio: "Ratio 2"
+    }],
+  },
+  {
+    evaluation: "Agency to Reckitt",
+    vendor: "Creative - CMM/BM",
+    childVendor: "Reckitt",
+    country: "UK",
+    bu: "original",
+    questions: [{
+        segment: "Segment 1",
+        questionTitle: "Question 1",
+        questionDescription: "Description 1",
+        templateType: "Template Type 1",
+        reviewType: "Review Type 1",
+        minRating: "Min Rating 1",
+        maxRating: "Max Rating 1",
+        isCompulsary: "Is Compulsary 1",
+        ratio: "Ratio 1"
+    },{
+        segment: "Segment 2",
+        questionTitle: "Question 2",
+        questionDescription: "Description 2",
+        templateType: "Template Type 2",
+        reviewType: "Review Type 2",
+        minRating: "Min Rating 2",
+        maxRating: "Max Rating 2",
+        isCompulsary: "Is Compulsary 2",
+        ratio: "Ratio 2"
+    }],
+  },
+  {
+    evaluation: "Reckitt to Agency",
+    vendor: "Media - TV",
+    childVendor: "Nutrition",
+    country: "India",
+    bu: "original",
+    questions: [
+      {
+        id: "q1",
+        questionTitle: "Brand Visibility",
+        questionDescription: "Evaluate how well the brand is visible in campaigns.",
+        minRating: 1,
+        maxRating: 5,
+        isCompulsary: "yes",
+        ratingComment: "",
+        ratio: 10,
+        segment: "Marketing"
+      }
+    ]
+  },
+  {
+    evaluation: "Agency to Reckitt",
+    vendor: "Creative - CMM/BM",
+    childVendor: "Reckitt",
+    country: "UK",
+    bu: "original",
+    questions: [
+      {
+        id: "q2",
+        questionTitle: "Brief Clarity",
+        questionDescription: "Was the brief clear and actionable?",
+        minRating: 1,
+        maxRating: 5,
+        isCompulsary: "yes",
+        ratingComment: "",
+        ratio: 8,
+        segment: "Communication"
+      },
+      {
+        id: "q3",
+        questionTitle: "Timely Feedback",
+        questionDescription: "Was feedback given on time?",
+        minRating: 1,
+        maxRating: 5,
+        isCompulsary: "no",
+        ratingComment: "",
+        ratio: 5,
+        segment: "Process"
+      }
+    ]
+  },
+  {
+    evaluation: "Reckitt to Agency",
+    vendor: "Media - Digital",
+    childVendor: "Health",
+    country: "India",
+    bu: "original",
+    questions: [
+      {
+        id: "q4",
+        questionTitle: "Digital Spend ROI",
+        questionDescription: "Was the ROI tracked and efficient?",
+        minRating: 1,
+        maxRating: 5,
+        isCompulsary: "yes",
+        ratingComment: "",
+        ratio: 12,
+        segment: "Media"
+      }
+    ]
+  },
+  {
+    evaluation: "Agency to Reckitt",
+    vendor: "Creative - PRO",
+    childVendor: "Dettol",
+    country: "Singapore",
+    bu: "original",
+    questions: [
+      {
+        id: "q5",
+        questionTitle: "Creative Consistency",
+        questionDescription: "Were creatives aligned with brand guidelines?",
+        minRating: 1,
+        maxRating: 5,
+        isCompulsary: "no",
+        ratingComment: "",
+        ratio: 7,
+        segment: "Creative"
+      }
+    ]
+  },
+  {
+    evaluation: "Reckitt to Agency",
+    vendor: "Media - Strategy",
+    childVendor: "Hygiene",
+    country: "India",
+    bu: "original",
+    questions: [
+      {
+        id: "q6",
+        questionTitle: "Strategic Clarity",
+        questionDescription: "Was the media strategy clearly communicated?",
+        minRating: 1,
+        maxRating: 5,
+        isCompulsary: "yes",
+        ratingComment: "",
+        ratio: 9,
+        segment: "Strategy"
+      }
+    ]
+  }
+];
+
+
  
     useEffect(() => {
         setPage(1);
@@ -73,88 +242,26 @@ const MarketingQuestionsTable = () => {
     }, [filters, searchText]);
 
         useEffect(() => {
-            // Flatten all questions from all template types
-             const savedData = localStorage.getItem(STORAGE_KEYS.FINAL_REVIEW_DATA);
+    const savedData = localStorage.getItem(STORAGE_KEYS.FINAL_REVIEW_DATA);
 
-            const parsedData = savedData ? JSON.parse(savedData) : [];
-            setSavedCombos(Array.isArray(parsedData) ? parsedData : []);
-        }, []);
- 
+    const parsedData = savedData ? JSON.parse(savedData) : [];
+
+    // Merge only if dummy entries are not already present (optional deduplication logic can be added)
+    const combinedData = Array.isArray(parsedData)
+        ? [...parsedData, ...DUMMY_COMBOS]
+        : [...DUMMY_COMBOS];
+
+    // Save the merged data
+    localStorage.setItem(STORAGE_KEYS.FINAL_REVIEW_DATA, JSON.stringify(combinedData));
+    setSavedCombos(combinedData);
+}, []);
+
+console.log(savedCombos, 'savedCombos');
+
     const handleCreateNavigation = () => {
         router.push('marketing-details-dev/configure');
     };
  
-    // const fetchOptions = async () => {
-    //     try {
-    //         const params = { pagination: false };
-    //         const queryString = buildQueryParams(params);
-    //         const responseCountries = await GetCall(`/mrkt/api/mrkt/country?${queryString}`);
-    //         if (responseCountries.code?.toLowerCase() === 'success') {
-    //             setCountryOptions(responseCountries.data);
-    //         } else {
-    //             setCountryOptions([]);
-    //             setAlert('error', responseCountries.message || 'Failed to load country options');
-    //         }
- 
- 
-    //         const responseBrands = await GetCall(`/mrkt/api/mrkt/brand?${queryString}`);
-    //         if (responseBrands.code?.toLowerCase() === 'success') {
-    //             setBrandOptions(responseBrands.data);
-    //         } else {
-    //             setBrandOptions([]);
-    //             setAlert('error', responseBrands.message || 'Failed to load brand options');
-    //         }
-    //     } catch (err) {
-    //         setAlert('error', 'Failed to load filter options');
-    //     }
-    // };
- 
-    // const fetchData = async (params?: any) => {
-    //     setLoading(true);
-    //     if (!params) {
-    //         params = {
-    //             page: page,
-    //             limit: limit,
-    //             ...(filters.brandId && { 'filters.brandId': filters.brandId }),
-    //             ...(filters.masterCountryId && { 'filters.countryId': filters.masterCountryId }),
-    //             ...(filters.status && { 'filters.status': filters.status }),
-    //             searchText: searchText ? searchText.trim().toLowerCase() : ''
-    //         };
-    //     }
- 
-    //     console.log(params.filters, 'params.filters');
- 
-    //     const queryString = buildQueryParams(params);
- 
-    //     try {
-    //         const response = await GetCall(`/mrkt/api/mrkt/evaluation-details?${queryString}`);
-    //         if (response.code?.toLowerCase() === 'success') {
-    //             setAccounts(response.data);
-    //             setTotalRecords(response.total || response.data.length);
-    //         } else {
-    //             setAlert('error', response.message || 'Failed to fetch data');
-    //             setAccounts([]);
-    //             setTotalRecords(0);
-    //         }
-    //     } catch (err) {
-    //         setAlert('error', 'Something went wrong!');
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
- 
-    // const handleDeleteAccount = async (accountToDelete: { evaluationAccountId: any; }) => {
-    //     try {
-    //         await DeleteCall(`/mrkt/api/mrkt/evaluation-account/${accountToDelete.evaluationAccountId}`);
-    //         await fetchData();
-    //         setAlert('success', 'Account deleted successfully!');
-    //     } catch (err) {
-    //         setAlert('error', 'Something went wrong!');
-    //     } finally {
-    //         setIsDeleteDialogVisible(false);
-    //         setSelectedAccountForDelete(null);
-    //     }
-    // };
  
     const openDeleteDialog = (account: any) => {
         setSelectedAccountForDelete(account);
@@ -188,19 +295,6 @@ const MarketingQuestionsTable = () => {
         }
     };
  
-    const statusBodyTemplate = (rowData: any) => {
-        const isActive = rowData.status?.toLowerCase() === 'active';
-        return (
-            <Tag
-                value={rowData.status}
-                severity={isActive ? 'success' : 'danger'}
-                style={{
-                    backgroundColor: isActive ? '#4CAF50' : '#F44336',
-                    color: 'white'
-                }}
-            />
-        );
-    };
     const handleTogglePanel = () => {
         setTogglePanel((prev) => !prev)
     }
@@ -225,8 +319,8 @@ const MarketingQuestionsTable = () => {
                 limit={50}
                 totalRecords={filteredQuestions.length}
                 isView={false}
-                isEdit={false}
-                isDelete={false}
+                isEdit={true}
+                isDelete={true}
                 data={filteredQuestions}
                 columns={[
                     {
@@ -284,16 +378,19 @@ const MarketingQuestionsTable = () => {
             />
         );
     };
- console.log('countryOptions:', savedCombos);
     return (
-        <div className="">
-            <div className="flex justify-content-between items-center m-4">
-                <h3>Question Base</h3>
-                <div className="flex gap-2">
+        <div className='card'>
+            <div className='inner p-4 border-1 surface-border border-round'>
+                <div className="flex flex-wrap justify-content-between align-items-center mb-2">
+                <div className="flex flex-column">
+                        <h2 className="m-0">Question Base</h2>
+                        <p className="text-sm text-gray-600 mt-1"><Breadcrumbs /></p>
+                    </div>
+                <div className="flex flex-wrap gap-3">
                     <ImportExportButton
                             label='Import'
                             icon="pi pi-upload"
-                            onClick={handleTogglePanel}
+                            onClick={() => setShowFileUploadDialog(true)}
                         />
                         <ImportExportButton
                             label='Export'
@@ -307,66 +404,56 @@ const MarketingQuestionsTable = () => {
                     />
                 </div>
             </div>
-            <hr className="my-4" />
  
-            <div className="flex gap-2 align-items-center">
-                <Dropdown
-                    value={filters.masterCountryId}
-                    options={[
-                        { label: 'All Countries', value: null },
-                        ...countryOptions.map((c: any) => ({ label: c.countryName, value: c.masterCountryId }))
-                    ]}
-                    onChange={(e) => setFilters({ ...filters, masterCountryId: e.value })}
-                    placeholder="Select Country"
-                    className="w-10rem"
-                    showClear
-                />
- 
-                <Dropdown
-                    value={filters.brandId}
-                    options={[
-                        { label: 'All Brands', value: null },
-                        ...brandOptions.map((b: any) => ({ label: b.brandName, value: b.brandId }))
-                    ]}
-                    onChange={(e) => setFilters({ ...filters, brandId: e.value })}
-                    placeholder="Select Brand"
-                    className="w-10rem"
-                    showClear
-                />
- 
-                <Dropdown
-                    value={filters.status}
-                    options={[
-                        { label: 'All Status', value: null },
-                        { label: 'Active', value: 'active' },
-                        { label: 'Inactive', value: 'inactive' }
-                    ]}
-                    onChange={(e) => setFilters({ ...filters, status: e.value })}
-                    placeholder="Select Status"
-                    className="w-10rem"
-                    showClear
-                />
- 
-                <span className="p-input-icon-left">
-                    <i className="pi pi-search" />
-                    <InputText
-                        ref={searchInputRef}
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                        placeholder="Search review types..."
-                        className="w-full"
-                    />
-                </span>
- 
-            </div>
+            <div className="flex gap-2 justify-content-between align-items-center mt-3">
+            
+                                <div className='flex gap-2'>
+                                    <Dropdown
+                                        placeholder="Filter"
+                                        className="w-10rem"
+                                        showClear
+                                    />
+                                    <Dropdown
+                                        placeholder="Filter"
+                                        className="w-10rem"
+                                        showClear
+                                    />
+            
+                                    <Dropdown
+                                        placeholder="Filter"
+                                        className="w-10rem"
+                                        showClear
+                                    />
+                                </div>
+            
+                                <div className='flex'>
+                                    <span className="p-input-icon-left">
+                                        <i className="pi pi-search" />
+                                        <InputText
+                                            value={searchText}
+                                            onChange={(e) => setSearchText(e.target.value)}
+                                            placeholder="Search"
+                                            className="w-full"
+                                        />
+                                    </span>
+                                </div>
+            
+                            </div>
             <CustomDataTable
                 page={page}
                 limit={limit}
                 totalRecords={totalRecords}
-                isView={true}
-                isEdit={false}
-                isDelete={false}
+                // isView={true}
+                isEdit={true}
+                isDelete={true}
                 data={savedCombos}
+                extraButtons={(item: any) => [
+                    {
+                        icon: 'pi pi-copy',
+                        tooltip: 'Copy',
+                        // onClick: () => onRowSelect(item, ACTIONS.EDIT)
+                    },
+                ]}
                 columns={[
                     {
                         header: '#',
@@ -406,8 +493,8 @@ const MarketingQuestionsTable = () => {
                     }
                 ]}
                 // onLoad={(params: any) => fetchData(params)}
-                onDelete={(item: any) => onRowSelect(item, ACTIONS.DELETE)}
-                onEdit={(item: any) => onRowSelect(item, ACTIONS.EDIT)}
+                // onDelete={(item: any) => onRowSelect(item, ACTIONS.DELETE)}
+                // onEdit={(item: any) => onRowSelect(item, ACTIONS.EDIT)}
                 onView={(item: any) => onRowSelect(item, ACTIONS.VIEW)}
             />
  
@@ -444,6 +531,7 @@ const MarketingQuestionsTable = () => {
                     </div>
                 </div>
             </Dialog>
+            </div>
  
             <Dialog
                 header="Account Template Questions"
@@ -493,7 +581,26 @@ const MarketingQuestionsTable = () => {
                     )}
                 </div>
             </Dialog>
+             {showFileUploadDialog && (
+                <ReusableFileUploadDialog
+                    visible={showFileUploadDialog}
+                    // These props would be dynamically set based on which "upload" button was clicked,
+                    // or which master data type the user intends to upload.
+                    header={'Upload Bulk Area List'}
+                    uploadContextLabel="This is Context Label"
+                    demoFileLink="Link"
+                    demoFileLabel="Download sample Template"
+                    apiEndpoint="/mrkt/api/mrkt/bulkuploadmaster"
+                    maxFileSizeInBytes={1 * 1024 * 1024} // 1MB
+                    acceptedFileExtensions={['xlsx', 'xls', 'xlsm']}
+
+                    onHideDialog={() => setShowFileUploadDialog(false)}
+                    // onUploadSuccess={handleDialogUploadSuccess}
+                    onUploadSuccess={() => setShowFileUploadDialog(false)}
+                />
+            )}
         </div>
+        
     );
 };
  
