@@ -29,8 +29,8 @@ const Breadcrumbs = () => {
           <div key={index} className="flex items-center gap-1">
             {!isLast ? (
               <p
-                onClick={() => handleClick(index)}
-                className="text-blue-600 hover:underline capitalize cursor-pointer"
+                // onClick={() => handleClick(index)}
+                // className="text-blue-600 hover:underline capitalize"
               >
                 {label}
               </p>

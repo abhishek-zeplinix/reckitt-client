@@ -13,6 +13,7 @@ import { buildQueryParams, getRowLimitWithScreenHeight } from '@/utils/utils';
 import { reviewTypeSchema } from '@/utils/validationSchemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from 'primereact/button';
+import { Calendar } from 'primereact/calendar';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
@@ -24,55 +25,149 @@ const ACTIONS = {
     VIEW: 'view',
     DELETE: 'delete'
 };
-const BrandMasterList = [
+
+const BuMasterList = [
     {
-        brandName: 'Brand A',
-        bu: 'Nutrition',
-        category: 'Health Supplements',
-        brandSegment: 'Premium',
-        ifNotPowerBrandWhere: 'Local Market Only',
-        effectiveDate: '2/2/2024'
-    },
-    {
-        brandName: 'Brand B',
-        bu: 'Reckitt',
-        category: 'Cleaning',
-        brandSegment: 'Mass',
-        ifNotPowerBrandWhere: 'Online Only',
-        effectiveDate: '12/2/2025'
-    },
-    {
-        brandName: 'Brand C',
-        bu: 'Essential Home',
-        category: 'Home Essentials',
-        brandSegment: 'Value',
-        ifNotPowerBrandWhere: 'Export Only',
-        effectiveDate: '4/12/2024'
-    },
-    {
-        brandName: 'Brand D',
         bu: 'Health',
-        category: 'OTC',
-        brandSegment: 'Premium',
-        ifNotPowerBrandWhere: 'Pharmacy Chains',
+        buNew: 'Reckitt',
         effectiveDate: '6/3/2024'
     },
     {
-        brandName: 'Brand E',
+        bu: 'Nutrition ',
+        buNew: 'Reckitt',
+        effectiveDate: '2/2/2024'
+    },
+    {
+        bu: 'Reckitt',
+        buNew: 'Reckitt',
+        effectiveDate: '12/2/2025'
+    },
+    {
+        bu: 'Essential Home',
+        buNew: 'Reckitt',
+        effectiveDate: '4/12/2024'
+    },
+
+    {
         bu: 'Hygiene',
-        category: 'Personal Care',
-        brandSegment: 'Mass',
-        ifNotPowerBrandWhere: 'Tier 2 Cities',
+        buNew: 'Reckitt',
         effectiveDate: '13/2/2024'
+    }
+];
+const BrandMasterList = [
+     {
+        brandName: 'Bonjela',
+        bu: 'Health',
+        category: 'Self care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'Greater China and North Asia, MENARP, Africa,ASEAN,EU',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Aerogard (Reckitt)',
+        bu: 'Hygiene',
+        category: 'Household Care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'Greater China and North Asia',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Air Wick (Reckitt)', 
+        bu: 'Hygiene',
+        category: 'Household Care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'Greater China and North Asia,South Asia, MENARP, Africa,ASEAN',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Allerfre',
+        bu: 'Health',
+        category: 'Self care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'Europe',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Attest',
+        bu: '', 
+        category: '',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'Europe',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Benactiv Gola',
+        bu: 'Health',
+        category: 'Self care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'Europe',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Benagol',
+        bu: 'Health', 
+        category: 'Self care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'Europe',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Blitz',
+        bu: 'Hygiene',
+        category: 'Household Care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'MENARP, Africa',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Bonjela',
+        bu: 'Health',
+        category: 'Self care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'Greater China and North Asia, MENARP, Africa,ASEAN,EU',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Brasso (Reckitt)',
+        bu: 'Hygiene',
+        category: 'Household Care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'South Asia,MENARP, Africa,ASEAN',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Buprex',
+        bu: 'Health',
+        category: 'Self care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'Europe',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Calgon (Reckitt)',
+        bu: 'Hygiene',
+        category: 'Household Care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'MENARP, Africa',
+        effectiveDate: '1/1/2025'
+    },
+    {
+        brandName: 'Cardipirin',
+        bu: 'Health',
+        category: 'Self care',
+        brandSegment: 'Other',
+        ifNotPowerBrandWhere: 'Greater China and North Asia,South Asia,ASEAN,Europe',
+        effectiveDate: '1/1/2025'
     }
 ];
 
 function BrandMaster() {
-    const [category, setCategory] = useState<any>('');
-    const [brandName, setBrandName] = useState<any>('');
-    const [powerBrand, setPowerBrand] = useState<any>('');
-    const [brandSegment, setBrandSegment] = useState<any>('');
-    const [bu, setBU] = useState<any>('');
+    const [effectiveDate, setEffectiveDate] = useState<any>(new Date('1/1/2025'));
+    const [category, setCategory] = useState<any>('Self care');
+    const [brandName, setBrandName] = useState<any>('Bonjela');
+    const [powerBrand, setPowerBrand] = useState<any>('Greater China and North Asia, MENARP, Africa,ASEAN,EU');
+    const [brandSegment, setBrandSegment] = useState<any>('Other');
+    const [bu, setBU] = useState<any>('Health');
     const [togglePanel, setTogglePanel] = useState(false);
     const [showFileUploadDialog, setShowFileUploadDialog] = useState(false);
     // const [regionList, setRegionList] = useState<any>([]);
@@ -265,11 +360,23 @@ function BrandMaster() {
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
+
                             <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
                                 <label htmlFor="bu">
                                     BU <span style={{ color: 'red' }}>*</span>
                                 </label>
-                                <InputText id="bu" value={bu} onChange={(e) => setBU(e.target.value)} className="w-full" placeholder="Enter BU" />
+
+                                <Dropdown
+                                    id="bu"
+                                    value={bu}
+                                    onChange={(e) => setBU(e.target.value)}
+                                    options={BuMasterList.map(item => ({
+                                        label: item.bu,
+                                        value: item.bu
+                                    }))}
+                                    className="w-full"
+                                    placeholder="Enter BU"
+                                />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
 
@@ -292,6 +399,14 @@ function BrandMaster() {
                                     If not power brand where <span style={{ color: 'red' }}>*</span>
                                 </label>
                                 <InputText id="powerBrand" value={powerBrand} onChange={(e) => setPowerBrand(e.target.value)} className="w-full" placeholder="Enter If not power brand where " />
+                                {regionError && <small className="p-error">{regionError}</small>}
+                            </div>
+
+                            <div className="flex flex-column gap-2" style={{ flex: '1 1 30%' }}>
+                                <label htmlFor="effectiveDate">
+                                    Effective Date <span style={{ color: 'red' }}>*</span>
+                                </label>
+                                <Calendar id="effectiveDate" value={effectiveDate} onChange={(e) => setEffectiveDate(e.target.value)} className="w-full" placeholder="Enter Effective Date" />
                                 {regionError && <small className="p-error">{regionError}</small>}
                             </div>
                         </div>
@@ -337,6 +452,8 @@ function BrandMaster() {
                             data={BrandMasterList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
+                            stripedRows
                             columns={[
                                 // {
                                 //     header: 'Role ID',

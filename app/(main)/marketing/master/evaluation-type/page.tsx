@@ -26,38 +26,58 @@ const ACTIONS = {
 };
 const EvaluationTypeList = [
     {
-        parentEvaluationType: 'Media ',
-        evaluationType: 'Media-TV'
+        parentEvaluationType: 'Media',
+        evaluationType: 'Media - TV'
+    },
+    {
+        parentEvaluationType: 'Media',
+        evaluationType: 'Media - Digital'
+    },
+    {
+        parentEvaluationType: 'Media',
+        evaluationType: 'Media - TV/Digital/Planning'
+    },
+    {
+        parentEvaluationType: 'Media',
+        evaluationType: 'Media - Strategy'
+    },
+    {
+        parentEvaluationType: 'Media',
+        evaluationType: 'Media - Agency'
     },
     {
         parentEvaluationType: 'Creative',
-        evaluationType: 'Creative-CMM/BM'
+        evaluationType: 'Creative - CMM/BM'
     },
     {
-        parentEvaluationType: 'Media ',
-        evaluationType: 'Media-Digital'
+        parentEvaluationType: 'Creative',
+        evaluationType: 'Creative - CDM'
     },
     {
-        parentEvaluationType: 'Brand Experience ',
+        parentEvaluationType: 'Creative',
+        evaluationType: 'Creative - PD'
+    },
+    {
+        parentEvaluationType: 'Creative',
+        evaluationType: 'Creative - CDO'
+    },
+    {
+        parentEvaluationType: 'Creative',
+        evaluationType: 'Creative - MX'
+    },
+    {
+        parentEvaluationType: 'Creative',
+        evaluationType: 'Creative - PRO'
+    },
+    {
+        parentEvaluationType: 'Brand Experience',
         evaluationType: 'Brand Experience'
-    },
-    {
-        parentEvaluationType: 'Content Studio ',
-        evaluationType: '-'
-    },
-    {
-        parentEvaluationType: 'Media ',
-        evaluationType: '-'
-    },
-    {
-        parentEvaluationType: 'Digital Inhouse ',
-        evaluationType: '-'
     }
 ];
 function EvaluationType() {
     const [region, setRegion] = useState<any>('');
-    const [parentEvalutionType, setParentEvalutionType] = useState<any>('');
-    const [evaluationType, setEvaluationType] = useState<any>('');
+    const [parentEvalutionType, setParentEvalutionType] = useState<any>('Media');
+    const [evaluationType, setEvaluationType] = useState<any>('Media - TV');
     const [togglePanel, setTogglePanel] = useState(false);
     const [showFileUploadDialog, setShowFileUploadDialog] = useState(false);
     // const [regionList, setRegionList] = useState<any>([]);
@@ -300,6 +320,8 @@ function EvaluationType() {
                             data={EvaluationTypeList}
                             // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
+                            showGridlines
+                            stripedRows
                             columns={[
                                 // {
                                 //     header: 'Role ID',
