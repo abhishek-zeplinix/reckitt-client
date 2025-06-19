@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Menubar } from 'primereact/menubar';
 import { Menu } from 'primereact/menu';
 import { Button } from 'primereact/button';
@@ -115,6 +115,12 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                     label: 'Question Base',
                     icon: 'pi pi-question-circle',
                     command: () => handleNavigation('marketing/marketing-details-dev'),
+                    visible: checkPermission('manage_supply_glossary')
+                },
+                {
+                    label: 'Evaluation Calendar',
+                    icon: 'pi pi-question-circle',
+                    command: () => handleNavigation('marketing/evaluation-calendar'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 // {
