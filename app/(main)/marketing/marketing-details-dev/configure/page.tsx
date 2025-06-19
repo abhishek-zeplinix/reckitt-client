@@ -296,51 +296,6 @@ useEffect(() => {
     setSelectedBU('');
 }, [selectedCountry]);
 
-
-
-    // useEffect(() => {
-    //     // Flatten all questions from all template types
-    //     const allQuestions = Object.values(questionsByTemplateType).flat();
-
-    //     setSelectedQuestions(allQuestions);
-    // }, [questionsByTemplateType]);
-    // Load all initial data from localStorage
-    // useEffect(() => {
-    //     // Load evaluation data
-    //     const evaluations = JSON.parse(localStorage.getItem('evaluationData') || '[]');
-
-    //     setEvaluationOptions(
-    //         evaluations.map((e: string) => ({
-    //             label: formatLabel(e),
-    //             value: e
-    //         }))
-    //     );
-
-        // Load vendors and child vendors
-        // const vendorsData = JSON.parse(localStorage.getItem('vendors') || '[]');
-        // setVendorOptions(
-        //     vendorsData.map((v: any) => ({
-        //         label: v.name,
-        //         value: v.name
-        //     }))
-        // );
-
-        // Load other options
-        // setCountryOptions(getStoredOptions('Country'));
-        // setBuOptions(getStoredOptions('BU'));
-        // setBrandOptions(getStoredOptions('Brand'));
-        // setReviewTypeOptions(getStoredOptions('Review Type'));
-
-        // Load questions
-    //     const savedQuestions = JSON.parse(localStorage.getItem(STORAGE_KEYS.MARKETING_TEMPLATE_QUESTIONS) || '[]');
-    //     setQuestions(savedQuestions);
-
-    //     // Load saved combos
-    //     const savedCombos = JSON.parse(localStorage.getItem(STORAGE_KEYS.FINAL_REVIEW_DATA) || '[]');
-
-    //     setComboList(savedCombos);
-    // }, []);
-
     // helper function to get options from localStorage
     const getStoredOptions = (key: string) => {
         const data = localStorage.getItem(key);
@@ -359,30 +314,6 @@ useEffect(() => {
     if (val === "2025-1-H1, Brand Experience-Ind") return "Agency to Reckitt";
     return val;
 };
-
-
-    // Update child vendors when vendor changes
-    // useEffect(() => {
-    //     if (!selectedVendor) {
-    //         setChildVendorOptions([]);
-    //         return;
-    //     }
-
-    //     const vendorsData = JSON.parse(localStorage.getItem('vendors') || '[]');
-    //     const selectedVendorData = vendorsData.find((v: any) => v.name === selectedVendor);
-
-    //     if (selectedVendorData?.children) {
-    //         setChildVendorOptions(
-    //             selectedVendorData.children.map((child: any) => ({
-    //                 label: child.name,
-    //                 value: child.name
-    //             }))
-    //         );
-    //     } else {
-    //         setChildVendorOptions([]);
-    //     }
-    //     setSelectedChildVendor(null);
-    // }, [selectedVendor]);
 
     // Update template types when evaluation name changes
     useEffect(() => {
@@ -462,62 +393,59 @@ useEffect(() => {
     };
     console.log('selectedQuestions:', selectedEval);
     const handleFinalSave = () => {
-        if (!selectedEval || !selectedVendor || !selectedChildVendor || !selectedCountry || !selectedBU ) {
-            toast.current?.show({
-                severity: 'warn',
-                summary: 'Missing!',
-                detail: 'Please fill out all required fields',
-                life: 3000
-            });
-            return;
-        }
-
-        if (selectedQuestions.length === 0) {
-            toast.current?.show({
-                severity: 'warn',
-                summary: 'Missing!',
-                detail: 'Please select at least one question',
-                life: 3000
-            });
-            return;
-        }
-
-        // Create account name (e.g., "Creative-India-Finish")
-        const newCombo = {
-            evaluation: selectedEval,
-            vendor: selectedVendor,
-            childVendor: selectedChildVendor,
-            administrator,
-            country: selectedCountry,
-            bu: selectedBU,
-            status: selectedStatus,
-            brand: selectedBrand,
-            reviewType: selectedReviewType,
-            templateTypes: selectedTemplateTypes,
-            questions: selectedQuestions
-        };
-
-        const updatedCombos = [...comboList, newCombo];
-        setComboList(updatedCombos);
-        localStorage.setItem(STORAGE_KEYS.FINAL_REVIEW_DATA, JSON.stringify(updatedCombos));
-
+    if (!selectedEval || !selectedVendor || !selectedChildVendor || !selectedCountry || !selectedBU) {
         toast.current?.show({
-            severity: 'success',
-            summary: 'Success!',
-            detail: 'Final review saved successfully',
+            severity: 'warn',
+            summary: 'Missing!',
+            detail: 'Please fill out all required fields',
             life: 3000
         });
-        router.push('/marketing/marketing-details-dev');
+        return;
+    }
 
-        // Reset form (except vendor and administrator)
-        // setSelectedEval(null);
-        setSelectedCountry(null);
-        setSelectedBU(null);
-        setSelectedStatus(null);
-        setSelectedBrand(null);
-        setSelectedTemplateTypes([]);
-        setSelectedQuestions([]);
+    if (selectedQuestions.length === 0) {
+        toast.current?.show({
+            severity: 'warn',
+            summary: 'Missing!',
+            detail: 'Please select at least one question',
+            life: 3000
+        });
+        return;
+    }
+
+    const newCombo = {
+        evaluation: selectedEval,
+        vendor: selectedVendor,
+        childVendor: selectedChildVendor,
+        country: selectedCountry,
+        bu: selectedBU,
+        questions: selectedQuestions
     };
+
+    const existingData = localStorage.getItem(STORAGE_KEYS.FINAL_REVIEW_DATA);
+    const parsedData = existingData ? JSON.parse(existingData) : [];
+
+    const updatedCombos = [...parsedData, newCombo];
+    localStorage.setItem(STORAGE_KEYS.FINAL_REVIEW_DATA, JSON.stringify(updatedCombos));
+    setComboList(updatedCombos); // If you're tracking combos locally too
+
+    toast.current?.show({
+        severity: 'success',
+        summary: 'Success!',
+        detail: 'Final review saved successfully',
+        life: 3000
+    });
+
+    router.push('/marketing/marketing-details-dev');
+
+    // Reset form
+    setSelectedCountry(null);
+    setSelectedBU(null);
+    setSelectedStatus(null);
+    setSelectedBrand(null);
+    setSelectedTemplateTypes([]);
+    setSelectedQuestions([]);
+};
 
     // const handleViewSaved = () => {
     //     setSavedCombos(comboList);

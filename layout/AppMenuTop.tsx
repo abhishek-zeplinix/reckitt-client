@@ -47,6 +47,11 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
     // menu items configuration with permissions
     const menuItems: MenuItem[] = [
         {
+            icon: 'pi pi-home',
+            command: () => handleNavigation('/'),
+            visible: checkPermission(['manage_faq', 'manage_supply_glossary']),
+        },
+        {
             label: 'Marketing',
             icon: 'pi pi-megaphone',
             visible: checkPermission(['manage_faq', 'manage_supply_glossary']),

@@ -346,11 +346,6 @@ const CustomDataTable = forwardRef<CustomDataTableRef, CustomTableOption>((props
     const renderActions = (item: any) => {
         return (
             <div className="flex gap-1">
-                {props.isView && <Button type="button" icon={'pi pi-eye'} className="p-button-md p-button-text hover:bg-primary-main text-primary-main " onClick={() => props.onView && props.onView(item)} />}
-                {props.isEdit && <Button type="button" icon={'pi pi-user-edit'} className="p-button-md p-button-text hover:bg-primary-main text-primary-main " title="Edit" onClick={() => props.onEdit && props.onEdit(item)} />}
-                {props.isDelete && (
-                    <Button type="button" icon={'pi pi-trash'} className="p-button-md p-button-text hover:bg-primary-main text-primary-main " title="Delete" style={{ color: 'red' }} onClick={() => props.onDelete && props.onDelete(item)} />
-                )}
                 {props?.extraButtons &&
                     props
                         .extraButtons(item)
@@ -365,6 +360,12 @@ const CustomDataTable = forwardRef<CustomDataTableRef, CustomTableOption>((props
                                 tooltipOptions={{ style: { fontSize: '10px', padding: '2px 4px' } }}
                             />
                         ))}
+                {props.isView && <Button type="button" icon={'pi pi-eye'} className="p-button-md p-button-text hover:bg-primary-main text-primary-main " onClick={() => props.onView && props.onView(item)} />}
+                {props.isEdit && <Button type="button" icon={'pi pi-user-edit'} className="p-button-md p-button-text hover:bg-primary-main text-primary-main " title="Edit" onClick={() => props.onEdit && props.onEdit(item)} />}
+                {props.isDelete && (
+                    <Button type="button" icon={'pi pi-trash'} className="p-button-md p-button-text hover:bg-primary-main text-primary-main " title="Delete" style={{ color: 'red' }} onClick={() => props.onDelete && props.onDelete(item)} />
+                )}
+                
             </div>
         );
     };
