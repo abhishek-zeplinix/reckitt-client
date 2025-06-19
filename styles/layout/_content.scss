@@ -11,7 +11,6 @@
     /* Slim scrollbar styling for layout */
     scrollbar-width: thin; /* For Firefox */
     scrollbar-color: #ccc transparent; /* For Firefox */
-
     /* For WebKit-based browsers */
     &::-webkit-scrollbar {
         width: 4px; /* Slim scrollbar width */
