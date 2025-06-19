@@ -13,6 +13,8 @@ import { buildQueryParams, getRowLimitWithScreenHeight } from '@/utils/utils';
 import { reviewTypeSchema } from '@/utils/validationSchemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
+import { Checkbox } from 'primereact/checkbox';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
@@ -24,60 +26,216 @@ const ACTIONS = {
     VIEW: 'view',
     DELETE: 'delete'
 };
+const stats = [
+    { label: 'BU', value: 167 },
+    { label: 'Country', value: 512 },
+    { label: 'Brand', value: 167 },
+    { label: 'Total Vendors', value: 512 },
+    { label: 'Total Vendors', value: 512 },
+    { label: 'Evaluated Vendors', value: 200 },
+    { label: 'Pending Evaluations', value: 312 }
+];
+// const EvaluationPeriodList = [
+//     {
+//         evaluationPeriod: 'H1 '
+//     },
+//     {
+//         evaluationPeriod: 'H2'
+//     },
+//     {
+//         evaluationPeriod: 'Q1'
+//     },
+//     {
+//         evaluationPeriod: 'Q2'
+//     },
+//     {
+//         evaluationPeriod: 'Q3'
+//     },
+//     {
+//         evaluationPeriod: 'Q4'
+//     },
+//     {
+//         evaluationPeriod: 'JAN'
+//     },
+//     {
+//         evaluationPeriod: 'FEB'
+//     },
+//     {
+//         evaluationPeriod: 'MAR'
+//     },
+//     {
+//         evaluationPeriod: 'APR'
+//     },
+//     {
+//         evaluationPeriod: 'MAY'
+//     },
+//     {
+//         evaluationPeriod: 'JUN'
+//     },
+//     {
+//         evaluationPeriod: 'JUL'
+//     },
+//     {
+//         evaluationPeriod: 'AUG'
+//     },
+//     {
+//         evaluationPeriod: 'SEP'
+//     },
+//     {
+//         evaluationPeriod: 'OCT'
+//     },
+//     {
+//         evaluationPeriod: 'NOV'
+//     },
+//     {
+//         evaluationPeriod: 'DEC'
+//     }
+// ];
 const EvaluationPeriodList = [
     {
-        evaluationPeriod: 'H1 '
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        startDate: '2025-06-12',
+        endDate: '2025-06-29',
+        status: 'Active',
+        completed: 0,
+        total: 12
     },
     {
-        evaluationPeriod: 'H2'
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        startDate: '2025-06-12',
+        endDate: '2025-06-29',
+        status: 'Completed',
+        completed: 12,
+        total: 12
     },
     {
-        evaluationPeriod: 'Q1'
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        startDate: '2025-06-12',
+        endDate: '2025-06-29',
+        status: 'In Progress',
+        completed: 7,
+        total: 12
     },
     {
-        evaluationPeriod: 'Q2'
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        startDate: '2025-06-12',
+        endDate: '2025-06-29',
+        status: 'Active',
+        completed: 0,
+        total: 12
     },
     {
-        evaluationPeriod: 'Q3'
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        startDate: '2025-06-12',
+        endDate: '2025-06-29',
+        status: 'Active',
+        completed: 0,
+        total: 12
     },
     {
-        evaluationPeriod: 'Q4'
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        startDate: '2025-06-12',
+        endDate: '2025-06-29',
+        status: 'Active',
+        completed: 0,
+        total: 12
+    }
+];
+const kpiCards = [
+    { label: 'BU', value: 167 },
+    { label: 'Country', value: 512 },
+    { label: 'Brand', value: 167 },
+    { label: 'Total Vendors', value: 512 },
+    { label: 'Evaluated Vendors', value: 200 },
+    { label: 'Pending Evaluations', value: 312 }
+];
+
+const EvaluationPopupList = [
+    {
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        vendor: 30,
+        userGroups: ['ProcurementDirectLocalPPM (Evaluator)']
     },
     {
-        evaluationPeriod: 'JAN'
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        vendor: 12,
+        userGroups: ['ProcurementDirectLocalPPM (Reviewer)']
     },
     {
-        evaluationPeriod: 'FEB'
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        vendor: 57,
+        userGroups: ['ProcurementDirectGlobalEMO (Evaluator)', 'ProcurementIndirectLocalIMEX (Creator)', 'ProcurementDirectLocalPPM (Reviewer)', 'ProcurementDirectLocalPPM (Evaluator)']
     },
     {
-        evaluationPeriod: 'MAR'
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        vendor: 26,
+        userGroups: ['ProcurementDirectGlobalEMO (Evaluator)']
     },
     {
-        evaluationPeriod: 'APR'
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        startDate: '2025-06-12',
+        endDate: '2025-06-29',
+        status: 'Active',
+        completed: 0,
+        vendor: 26,
+        userGroups: ['ProcurementDirectGlobalEMO (Evaluator)', 'ProcurementIndirectLocalIMEX (Creator)', 'ProcurementDirectLocalPPM (Reviewer)', 'ProcurementDirectLocalPPM (Evaluator)']
     },
     {
-        evaluationPeriod: 'MAY'
-    },
-    {
-        evaluationPeriod: 'JUN'
-    },
-    {
-        evaluationPeriod: 'JUL'
-    },
-    {
-        evaluationPeriod: 'AUG'
-    },
-    {
-        evaluationPeriod: 'SEP'
-    },
-    {
-        evaluationPeriod: 'OCT'
-    },
-    {
-        evaluationPeriod: 'NOV'
-    },
-    {
-        evaluationPeriod: 'DEC'
+        evaluationType: 'Media-TV',
+        bu: 'Nutrition',
+        country: 'AE-Utd.Arab Emir.',
+        version: 'Original',
+        brand: 'Allerfre, Attest, Buprex...+3',
+        startDate: '2025-06-12',
+        endDate: '2025-06-29',
+        status: 'Active',
+        completed: 0,
+        vendor: 26,
+        userGroups: ['ProcurementDirectGlobalEMO (Evaluator)', 'ProcurementIndirectLocalIMEX (Creator)', 'ProcurementDirectLocalPPM (Reviewer)', 'ProcurementDirectLocalPPM (Evaluator)']
     }
 ];
 function EvaluationCalendar() {
@@ -98,6 +256,8 @@ function EvaluationCalendar() {
     const queryClient: any = useQueryClient();
     const [filters, setFilters] = useState({});
     const [searchText, setSearchText] = useState('');
+    const [showOverviewDialog, setShowOverviewDialog] = useState(false);
+    const [selectedRow, setSelectedRow] = useState<any>(null);
 
     const {
         data: regionList,
@@ -245,11 +405,23 @@ function EvaluationCalendar() {
 
     return (
         <div className="card">
+            <div className="p-4 border-round-md">
+                <div className="grid">
+                    {stats.map((stat, index) => (
+                        <div key={index} className="col-12 md:col-4 lg:col-3">
+                            <div className="text-left shadow-none border-1 border-round-lg  border-black-200 bg-white p-3">
+                                <div className="text-600 text-sm mb-2">{stat.label}</div>
+                                <div className="text-xl font-bold">{stat.value}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
             <div className="inner p-4 border-1 surface-border border-round">
                 <div className="flex flex-wrap justify-content-between align-items-center mb-2">
                     {/* Title + Breadcrumb Block */}
                     <div className="flex flex-column">
-                        <h2 className="m-0">Evaluation Period</h2>
+                        <h2 className="m-0">Evaluation Calendar</h2>
                         <p className="text-sm text-gray-600 mt-1">
                             <Breadcrumbs />
                         </p>
@@ -257,7 +429,7 @@ function EvaluationCalendar() {
 
                     {/* Buttons Block */}
                     <div className="flex flex-wrap gap-3">
-                        <ImportExportButton label="Import" icon="pi pi-upload" onClick={() => setShowFileUploadDialog(true)} />
+                        {/* <ImportExportButton label="Import" icon="pi pi-upload" onClick={() => setShowFileUploadDialog(true)} /> */}
                         <ImportExportButton label="Export" icon="pi pi-download" onClick={handleTogglePanel} />
 
                         <Button label="Add New" icon="pi pi-plus" onClick={handleTogglePanel} />
@@ -286,10 +458,12 @@ function EvaluationCalendar() {
                 )}
                 <div className="flex gap-2 justify-content-between align-items-center mt-2">
                     <div className="flex gap-2">
-                        <Dropdown placeholder="Filter" className="w-10rem" showClear />
-                        <Dropdown placeholder="Filter" className="w-10rem" showClear />
+                        <Dropdown placeholder="Review Type" className="w-10rem" showClear />
+                        <Dropdown placeholder="Evaluation Type" className="w-10rem" showClear />
 
-                        <Dropdown placeholder="Filter" className="w-10rem" showClear />
+                        <Dropdown placeholder="BU" className="w-10rem" showClear />
+                        <Dropdown placeholder="Country" className="w-10rem" showClear />
+                        <Dropdown placeholder="Status" className="w-10rem" showClear />
                     </div>
 
                     <div className="flex">
@@ -309,24 +483,43 @@ function EvaluationCalendar() {
                             limit={limit} // no of items per page
                             totalRecords={totalRecords} // total records from api response
                             isView={false}
-                            isEdit={true} // show edit button
-                            isDelete={true} // show delete button
                             // data={regionList?.map((item: any) => ({
                             //     regionId: item?.regionId,
-                            //     regionName: item?.regionName
+                            //     regionName: item?.regionName,
+                            //     evaluationPeriod: item?.evaluationPeriod,
+                            //     completed: item?.completed || 0, // ← Add this
+                            //     total: item?.total || 12 // ← And this
                             // }))}
+                            extraButtons={(item) => [
+                                {
+                                    icon: 'pi pi-eye',
+                                    tooltip: 'View',
+                                    onClick: (e) => {
+                                        // setSelectedRow(rowData);
+                                        setShowOverviewDialog(true);
+                                    }
+                                },
+                                {
+                                    icon: 'pi pi-copy',
+                                    tooltip: 'Copy'
+                                    // onClick: (e) => {
+                                    //     // setSelectedRow(rowData);
+                                    //     setShowOverviewDialog(true);
+                                    // }
+                                }
+                                // {
+                                //     icon: "pi pi-envelope",
+                                //     tooltip:'Send Superior',
+                                //     // onClick: (e) => {
+                                //     //     handleButtonClick('sendSuperior'); // Pass the item (row data) instead of e
+                                //     // }
+                                // }
+                            ]}
+                            isEdit={true} // show edit button
+                            isDelete={true} // show delete button
                             data={EvaluationPeriodList}
-                            // onLoad={() => handlePageChange}
                             onLoad={handleLoad}
                             columns={[
-                                // {
-                                //     header: 'Role ID',
-                                //     field: 'roleId',
-                                //     filter: true,
-                                //     sortable: true,
-                                //     bodyStyle: { minWidth: 150, maxWidth: 150 },
-                                //     filterPlaceholder: 'Role ID'
-                                // },
                                 {
                                     header: 'Sr. No.',
                                     body: (data: any, options: any) => {
@@ -338,19 +531,266 @@ function EvaluationCalendar() {
                                     bodyStyle: { minWidth: 50, maxWidth: 50 }
                                 },
                                 {
-                                    header: 'Evaluation Period',
-                                    field: 'evaluationPeriod',
+                                    header: 'Evaluation Type',
+                                    field: 'evaluationType',
                                     filter: true,
                                     bodyStyle: { minWidth: 150, maxWidth: 150 },
                                     filterPlaceholder: 'Role'
+                                },
+                                {
+                                    header: 'BU',
+                                    field: 'bu',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Role'
+                                },
+                                {
+                                    header: 'Country',
+                                    field: 'country',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Role'
+                                },
+                                {
+                                    header: 'Version',
+                                    field: 'version',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Role'
+                                },
+                                {
+                                    header: 'Brand',
+                                    field: 'brand',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Role'
+                                },
+                                {
+                                    header: 'Start Date',
+                                    field: 'startDate',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Role'
+                                },
+                                {
+                                    header: 'End Date',
+                                    field: 'endDate',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Role'
+                                },
+                                {
+                                    header: 'Status',
+                                    field: 'status',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Role'
+                                },
+                                {
+                                    header: 'Progress',
+                                    body: (data: any) => {
+                                        const completed = data?.completed || 0;
+                                        const total = data?.total || 12;
+                                        const percent = (completed / total) * 100;
+
+                                        return (
+                                            <div className="flex flex-column gap-1">
+                                                {/* Outer bar */}
+                                                <div className="h-2 border-round overflow-hidden bg-gray-200" style={{ height: '8px' }}>
+                                                    {/* Inner fill */}
+                                                    <div
+                                                        style={{
+                                                            width: `${percent > 0 ? percent : 0}%`, // avoids negative or NaN
+                                                            background: '#3f4b5b',
+                                                            height: '100%',
+                                                            minWidth: percent === 0 ? '2px' : undefined, // ensures visibility at 0
+                                                            transition: 'width 0.3s ease'
+                                                        }}
+                                                    ></div>
+                                                </div>
+
+                                                {/* Text below the bar */}
+                                                <span className="text-sm">
+                                                    {completed}/{total}
+                                                </span>
+                                            </div>
+                                        );
+                                    },
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 }
                                 }
                             ]}
-                            // onLoad={(params: any) => fetchData(params)}
                             onDelete={(item: any) => onRowSelect(item, 'delete')}
                             onEdit={(item: any) => onRowSelect(item, 'edit')}
                         />
                     )}
                 </div>
+                <Dialog header="Evaluation Overview" visible={showOverviewDialog} style={{ width: '90vw' }} onHide={() => setShowOverviewDialog(false)} modal>
+                    {/* KPI Cards */}
+                    <hr className="mt-0 pt-0" />
+                    <div className="grid mt-4">
+                        {stats.map((stat, index) => (
+                            <div key={index} className="col-12 md:col-4 lg:col-3">
+                                <div className="text-left shadow-none border-1 border-round-lg  border-black-200 bg-white p-3">
+                                    <div className="text-600 text-sm mb-2">{stat.label}</div>
+                                    <div className="text-xl font-bold">{stat.value}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="bg-[#CBD5E1] border border-1 px-4 py-5 border-round-lg mt-4">
+                        {/* Filters */}
+                        <div className="flex gap-2  flex-wrap">
+                            <Dropdown placeholder="BU" className="w-10rem" />
+                            <Dropdown placeholder="Country" className="w-10rem" />
+                            <Dropdown placeholder="Brand" className="w-10rem" />
+                            <Dropdown placeholder="Assigned" className="w-10rem" />
+                            <span className="p-input-icon-left ml-auto">
+                                <i className="pi pi-search" />
+                                <InputText placeholder="Search" className="w-12rem" />
+                            </span>
+                        </div>
+
+                        {/* Table */}
+                        <div className="overflow-auto ">
+                            {isFetchingRegions ? (
+                                <TableSkeletonSimple columns={2} rows={5} />
+                            ) : (
+                                <CustomDataTable
+                                    ref={regionList}
+                                    page={page}
+                                    limit={limit} // no of items per page
+                                    totalRecords={totalRecords} // total records from api response
+                                    isView={false}
+                                    // data={regionList?.map((item: any) => ({
+                                    //     regionId: item?.regionId,
+                                    //     regionName: item?.regionName,
+                                    //     evaluationPeriod: item?.evaluationPeriod,
+                                    //     completed: item?.completed || 0, // ← Add this
+                                    //     total: item?.total || 12 // ← And this
+                                    // }))}
+                                    // extraButtons={(item) => [
+                                    //     {
+                                    //         icon: 'pi pi-eye',
+                                    //         tooltip: 'View',
+                                    //         onClick: (e) => {
+                                    //             // setSelectedRow(rowData);
+                                    //             setShowOverviewDialog(true);
+                                    //         }
+                                    //     },
+                                    //     {
+                                    //         icon: 'pi pi-copy',
+                                    //         tooltip: 'Copy'
+                                    //         // onClick: (e) => {
+                                    //         //     // setSelectedRow(rowData);
+                                    //         //     setShowOverviewDialog(true);
+                                    //         // }
+                                    //     }
+                                    //     // {
+                                    //     //     icon: "pi pi-envelope",
+                                    //     //     tooltip:'Send Superior',
+                                    //     //     // onClick: (e) => {
+                                    //     //     //     handleButtonClick('sendSuperior'); // Pass the item (row data) instead of e
+                                    //     //     // }
+                                    //     // }
+                                    // ]}
+                                    // isEdit={true} // show edit button
+                                    // isDelete={true} // show delete button
+                                    data={EvaluationPopupList}
+                                    onLoad={handleLoad}
+                                    columns={[
+                                        {
+                                            header: 'Sr. No.',
+                                            body: (data: any, options: any) => {
+                                                const normalizedRowIndex = options.rowIndex % limit;
+                                                const srNo = (page - 1) * limit + normalizedRowIndex + 1;
+
+                                                return <span>{srNo}</span>;
+                                            },
+                                            bodyStyle: { minWidth: 50, maxWidth: 50 }
+                                        },
+                                        {
+                                            header: 'Evaluation Type',
+                                            field: 'evaluationType',
+                                            filter: true,
+                                            bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                            filterPlaceholder: 'Role'
+                                        },
+                                        {
+                                            header: 'BU',
+                                            field: 'bu',
+                                            filter: true,
+                                            bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                            filterPlaceholder: 'Role'
+                                        },
+                                        {
+                                            header: 'Country',
+                                            field: 'country',
+                                            filter: true,
+                                            bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                            filterPlaceholder: 'Role'
+                                        },
+                                        {
+                                            header: 'Version',
+                                            field: 'version',
+                                            filter: true,
+                                            bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                            filterPlaceholder: 'Role'
+                                        },
+                                        {
+                                            header: 'Brand',
+                                            field: 'brand',
+                                            filter: true,
+                                            bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                            filterPlaceholder: 'Role'
+                                        },
+                                        {
+                                            header: 'Vendors',
+                                            field: 'vendor',
+                                            filter: true,
+                                            bodyStyle: { minWidth: 150, maxWidth: 150, cursor: 'pointer', color: '#DF177C', fontStyle: 'bold' },
+                                            filterPlaceholder: 'Role'
+                                        },
+                                        {
+                                            header: 'User Groups',
+                                            field: 'userGroups',
+                                            filter: false,
+                                            bodyStyle: { minWidth: 200, maxWidth: 250 },
+                                            body: (rowData: any) => {
+                                                const dropdownOptions =
+                                                    rowData?.userGroups?.map((ug: string) => ({
+                                                        label: ug,
+                                                        value: ug
+                                                    })) || [];
+                                                if (!rowData.selectedUserGroup && dropdownOptions.length > 0) {
+                                                    rowData.selectedUserGroup = dropdownOptions[0].value;
+                                                }
+                                                return (
+                                                    <Dropdown
+                                                        value={rowData.selectedUserGroup}
+                                                        options={dropdownOptions}
+                                                        onChange={(e) => {
+                                                            rowData.selectedUserGroup = e.value;
+                                                        }}
+                                                        placeholder="Select Group"
+                                                        className="w-full"
+                                                    />
+                                                );
+                                            }
+                                        }
+                                    ]}
+                                    // onDelete={(item: any) => onRowSelect(item, 'delete')}
+                                    // onEdit={(item: any) => onRowSelect(item, 'edit')}
+                                />
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="flex justify-end mt-4">
+                        <Button label="Cancel" className="p-button-text" onClick={() => setShowOverviewDialog(false)} />
+                    </div>
+                </Dialog>
 
                 <Dialog
                     header="Delete confirmation"
