@@ -583,6 +583,7 @@ useEffect(() => {
                                         <th className="border px-2 py-1 text-left">Min Rating</th>
                                         <th className="border px-2 py-1 text-left">Max Rating</th>
                                         <th className="border px-2 py-1 text-left">Compulsory</th>
+                                        <th className="border px-2 py-1 text-left">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -596,6 +597,7 @@ useEffect(() => {
                                             <td className="border px-2 py-1">{question.minRating}</td>
                                             <td className="border px-2 py-1">{question.maxRating}</td>
                                             <td className="border px-2 py-1"> {question.isCompulsary === 'yes' ? 'Yes' : 'No'}</td>
+                                             <td className="border px-2 py-1"><Button type="button" tooltip='Edit' tooltipOptions={{ position: 'bottom' }} icon={'pi pi-user-edit'} className="p-button-md p-button-text hover:bg-primary-main text-primary-main " title="Edit" /></td>
                                         </tr>
                                     ))}
                                 </tbody>
