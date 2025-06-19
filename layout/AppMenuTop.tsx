@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Menubar } from 'primereact/menubar';
 import { Menu } from 'primereact/menu';
 import { Button } from 'primereact/button';
@@ -49,7 +49,7 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
         {
             icon: 'pi pi-home',
             command: () => handleNavigation('/'),
-            visible: checkPermission(['manage_faq', 'manage_supply_glossary']),
+            visible: checkPermission(['manage_faq', 'manage_supply_glossary'])
         },
         {
             label: 'Marketing',
@@ -102,7 +102,7 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                             command: () => handleNavigation('/marketing/master/brand-master'),
                             visible: checkPermission('export_data')
                         },
-                          {
+                        {
                             label: 'Version Mapping',
                             icon: 'pi pi-file',
                             command: () => handleNavigation('/marketing/master/version-mapping'),
@@ -125,18 +125,21 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                 {
                     label: 'Question Base',
                     icon: 'pi pi-question-circle',
-                    command: () => handleNavigation('/marketing/marketing-details-dev'),
+                    command: () => handleNavigation('/marketing/question-base'),
                     visible: checkPermission('manage_supply_glossary')
                 },
+                {
+                    label: 'Evaluation Calendar',
+                    icon: 'pi pi-question-circle',
+                    command: () => handleNavigation('/marketing/evaluation-calendar'),
+                    visible: checkPermission('manage_supply_glossary')
+                }
                 // {
                 //     separator: true,
                 //     visible: checkPermission('manage_supply_glossary')
                 // },
-               
             ]
         }
-
-       
     ];
 
     // Filter menu items based on visibility
@@ -232,7 +235,7 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                 style={{
                     padding: '0.75rem 1rem',
                     borderRadius: '0'
-                }}  
+                }}
             />
         </div>
     );
