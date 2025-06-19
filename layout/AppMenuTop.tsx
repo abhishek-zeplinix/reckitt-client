@@ -119,7 +119,7 @@ const AppMenuTop: React.FC<TopNavBarProps> = ({ className = '' }) => {
                 {
                     label: 'Question Base',
                     icon: 'pi pi-question-circle',
-                    command: () => handleNavigation('/marketing/marketing-details-dev'),
+                    command: () => handleNavigation('/marketing/question-base'),
                     visible: checkPermission('manage_supply_glossary')
                 },
                 // {
