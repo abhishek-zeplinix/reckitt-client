@@ -96,6 +96,8 @@ const EvaluationPeriodList = [
     {
         reviewType: 'Reckitt to Agency',
         evaluationType: 'Media-TV',
+        year: 2025,
+        evaluationPeriod: 'Q1',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
@@ -110,6 +112,8 @@ const EvaluationPeriodList = [
         reviewType: 'Reckitt to Agency',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
+        year: 2025,
+        evaluationPeriod: 'Q2',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
         brand: 'Allerfre',
@@ -123,6 +127,8 @@ const EvaluationPeriodList = [
         reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
+        year: 2025,
+        evaluationPeriod: 'Q1',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
         brand: 'Allerfre',
@@ -136,6 +142,8 @@ const EvaluationPeriodList = [
         reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
+        year: 2025,
+        evaluationPeriod: 'Q4',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
         brand: ' Attest',
@@ -149,6 +157,8 @@ const EvaluationPeriodList = [
         reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
+        year: 2025,
+        evaluationPeriod: 'Feb',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
         brand: 'Buprex',
@@ -162,6 +172,8 @@ const EvaluationPeriodList = [
         reviewType: 'Reckitt to Agency',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
+        year: 2025,
+        evaluationPeriod: 'Q1',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
         brand: 'Attest',
@@ -185,6 +197,8 @@ const EvaluationPopupList = [
     {
         evaluationType: 'Media-TV',
         reviewType: 'Reckitt to Agency',
+        year: 2025,
+        evaluationPeriod: 'Q1',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
@@ -195,6 +209,8 @@ const EvaluationPopupList = [
     {
         reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
+        year: 2025,
+        evaluationPeriod: 'Q1',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
@@ -205,6 +221,8 @@ const EvaluationPopupList = [
     {
         reviewType: 'Reckitt to Agency',
         evaluationType: 'Media-TV',
+        year: 2025,
+        evaluationPeriod: 'Q3',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
@@ -215,6 +233,8 @@ const EvaluationPopupList = [
     {
         reviewType: 'Reckitt to Agency',
         evaluationType: 'Media-TV',
+        year: 2025,
+        evaluationPeriod: 'Jan',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
@@ -226,6 +246,8 @@ const EvaluationPopupList = [
         reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
         bu: 'Nutrition',
+        year: 2025,
+        evaluationPeriod: 'Q1',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
         brand: 'Allerfre',
@@ -239,6 +261,8 @@ const EvaluationPopupList = [
     {
         reviewType: 'Agency to Reckitt',
         evaluationType: 'Media-TV',
+        year: 2025,
+        evaluationPeriod: 'Q4',
         bu: 'Nutrition',
         country: 'AE-Utd.Arab Emir.',
         version: 'Original',
@@ -473,6 +497,8 @@ function EvaluationCalendar() {
                 )}
                 <div className="flex gap-2 justify-content-between align-items-center mt-2">
                     <div className="flex gap-2">
+                         <Dropdown placeholder="Year" className="w-10rem" showClear />
+                          <Dropdown placeholder="Evaluation Period" className="w-10rem" showClear />
                         <Dropdown placeholder="Review Type" className="w-10rem" showClear />
                         <Dropdown placeholder="Evaluation Type" className="w-10rem" showClear />
 
@@ -544,6 +570,20 @@ function EvaluationCalendar() {
                                         return <span>{srNo}</span>;
                                     },
                                     bodyStyle: { minWidth: 50, maxWidth: 50 }
+                                },
+                                {
+                                    header: 'Year',
+                                    field: 'year',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Role'
+                                },
+                                {
+                                    header: 'Evaluation Period',
+                                    field: 'evaluationPeriod',
+                                    filter: true,
+                                    bodyStyle: { minWidth: 150, maxWidth: 150 },
+                                    filterPlaceholder: 'Role'
                                 },
                                 {
                                     header: 'Review Type',
